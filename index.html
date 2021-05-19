@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xmas Letter Logging</title>
+    <link rel="stylesheet" href="styles/master.css"/>
+    
+    
+  </head>
+  <body>
+    <header>
+      <p>Trial</p>
+      <img src="img/santa.png" alt="Cartoon Santa waving" />
+      <h1>North Pole Online</h1>
+      <img src="img/reindeer.png" alt="Cartoon Reindeer waving" />
+    </header>
+
+    <main>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="list.php">Naughty/Nice List</a></li>
+          <li><a href="map.html">Route Map</a></li>
+          <li><a href="complaint.php">Elf Complaints</a></li>
+        </ul>
+      </nav>
+      <section>
+        <h2>Logging 'Xmas Letters</h2>
+        <form id="requestform" action="index.html" method="post">
+          <div>
+            <label for="name">Child's Name:</label>
+            <input id="name" name="name" type="text" placeholder="John Smith" />
+          </div>
+          <div>
+            <label for="gps">GPS Co-ordinates:</label>
+            <input
+              id="gps"
+              name="gps"
+              type="text"
+              placeholder="(43.651890, -79.381706)"
+              required
+            />
+          </div>
+          <fieldset>
+            <legend>Behavior</legend>
+
+            <div>
+              <input id="naughty" name="status" type="radio" value="G" />
+              <label for="naughty">Naughty</label>
+            </div>
+
+            <div>
+              <input id="nice" name="status" type="radio" value="B" />
+              <label for="nice">Nice</label>
+            </div>
+          </fieldset>
+
+          <div>
+            <label for="primary">Primary Request</label>
+            <select name="primary" id="primary">
+              <option value="">Choose One</option>
+              <option value="1">Lightsaber</option>
+              <option value="2">Invisibility Cloak</option>
+              <option value="3">Sonic Screwdriver</option>
+              <option value="4">Arc Reactor</option>
+              <option value="5">Bag of Holding</option>
+            </select>
+          </div>
+          <div>
+            <label for="list">Remaining List</label>
+            <textarea name="list" id="list" cols="30" rows="10"></textarea>
+          </div>
+          <div>
+            <button id="submit">Save Request</button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <span>&copy; 2021 - COIS 3420 Web Applications</span>
+    </footer>
+  </body>
+</html>
