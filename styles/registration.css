@@ -1,0 +1,31 @@
+@import url("reset.css"); /*import reset*/
+
+body{
+    border: 0.2em solid black;
+    display: flex;
+    margin: 2em;
+    margin-left:4em;
+    margin-right:4em;
+    border-radius: 1em;
+    font-size: 1.2em;
+}
+
+h1{
+    font-size: 2em;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#createaccount{
+    padding: 2em;
+    border-right: 0.2em solid black;
+}
+
+#createaccount div{
+    display: flex;
+    flex-direction: column;
+}
+
+#have_an_account{
+    padding: 2em;
+}
