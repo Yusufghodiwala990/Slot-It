@@ -4,7 +4,59 @@
 
 
 
+body{
+  font-family: 'Krona One', sans-serif;
+  background: hsla(0, 0%, 100%, 1);
 
+background: linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
+
+}
+
+header{
+  margin: 2em 0em 5em 0em;
+}
+
+a{
+  text-decoration: none;
+}
+
+header nav{
+  font-size: 1.2em;
+}
+header nav ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+header nav ul div{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+header nav ul li{
+  margin:0em 1.5em 0em .5em;
+  padding:1em;
+  position: relative;
+  transition: .2s transform ease-in-out;
+  border-radius: 3em;
+}
+
+
+
+header nav ul a:visited{
+  color: #1532b4;
+}
+header nav ul div:last-of-type li:hover{
+  transform: scale(1.2);
+  background-color: #F72585;
+  color: white; 
+}
 
 /* daud */
 footer{
