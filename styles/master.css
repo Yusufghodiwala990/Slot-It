@@ -6,16 +6,11 @@
 
 body{
   font-family: 'Krona One', sans-serif;
-  background: hsla(0, 0%, 100%, 1);
 
-background: linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
-
-background: -moz-linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
-
-background: -webkit-linear-gradient(0deg, hsla(0, 0%, 100%, 1) 0%, hsla(221, 23%, 74%, 1) 100%);
 
 }
 
+/* yusuf */
 header{
   margin: 2em 0em 5em 0em;
 }
@@ -24,8 +19,9 @@ a{
   text-decoration: none;
 }
 
-header nav{
+header nav a{
   font-size: 1.2em;
+  color:black;
 }
 header nav ul{
   display: flex;
@@ -34,29 +30,37 @@ header nav ul{
   flex-wrap: wrap;
 }
 
-header nav ul div{
+header nav ul div:last-of-type{
   display: flex;
   flex-wrap: wrap;
+  box-shadow: 1px 2px 10px 3px rgb(173, 173, 173); /* no border but box-shadow */
+  margin-right: 2em;
+  border-radius: 2em;
+  min-width: 50vw;  /* for larger screens, it can grow*/
 }
 
 header nav ul li{
   margin:0em 1.5em 0em .5em;
   padding:1em;
   position: relative;
-  transition: .2s transform ease-in-out;
-  border-radius: 3em;
+  transition: .2s transform ease-in-out; /*scaling transformation*/
+  border-radius: 2em;
 }
 
 
 
 header nav ul a:visited{
-  color: #1532b4;
+  color: #F72585;
 }
 header nav ul div:last-of-type li:hover{
-  transform: scale(1.2);
-  background-color: #F72585;
+  transform: scale(0.85); 
+  background-color: #F72585; 
   color: white; 
 }
+
+
+
+
 
 /* daud */
 footer{
@@ -77,4 +81,8 @@ footer li a:visited{
 }
 footer li a:hover{
   color:red;
+}
+
+header nav ul li i{
+  margin-left: .5em;
 }
