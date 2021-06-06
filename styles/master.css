@@ -11,9 +11,40 @@ body{
 }
 
 /* yusuf */
+
+
+/* -- nav bar -- */
 header{
   margin: 2em 0em 5em 0em;
+  animation: navFade2 1.5s ease 0s forwards;
 }
+/* Copy this @keyframes block to your CSS*/
+@keyframes navFade2{
+  0.0%{
+    transform:rotate(0) translate(0%,-100%);
+    opacity: 0;
+  }
+  100%{
+    transform:rotate(0);
+    opacity: 1;
+  }
+}
+@keyframes navFade{
+  0.0%{
+    transform: rotate(0) translate(0,30%);
+   
+    opacity: 0;
+  }
+  100%{
+    transform: rotate(0) translate(0,0);
+    opacity: 1;
+  }
+}
+main section:first-of-type div:nth-of-type(2),
+main section:first-of-type div:nth-of-type(3){
+  font-size: 1em;
+}
+
 
 a{
   text-decoration: none;
@@ -42,7 +73,6 @@ header nav ul div:last-of-type{
 header nav ul li{
   margin:0em 1.5em 0em .5em;
   padding:1em;
-  position: relative;
   transition: .2s transform ease-in-out; /*scaling transformation*/
   border-radius: 2em;
 }
@@ -59,7 +89,75 @@ header nav ul div:last-of-type li:hover{
 }
 
 
+/* -- welcome section */
+main section:first-of-type{
+  border-radius: 3em;
+  border:.3em solid lightgray;
+  padding:2.5em;
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin:0em 3em 3em 1em;
+  justify-content: space-between;
+  animation: sectionFade 1.5s ease 0s forwards;
+  transition: .2s transform ease-in-out;
+}
+main section:first-of-type span{
+  color:#7209B7;
+}
 
+
+main section div{
+  display: flex;
+  margin-bottom: 2em;
+  align-items: center;
+  padding-top: 2em;
+}
+
+/* Copy this @keyframes block to your CSS*/
+@keyframes sectionFade{
+  0.0%{
+    transform: rotate(0) translate(-30%);
+    opacity: 0;
+  }
+  100%{
+    transform: rotate(0) translate(0,0);
+    opacity: 1;
+  }
+}
+main section:first-of-type div:nth-of-type(2),
+main section:first-of-type div:nth-of-type(3){
+  font-size: 1em;
+}
+
+main section:first-of-type h2{
+  font-size: 3em;
+  transition: .2s transform ease-in-out;
+  margin-bottom: 1em;
+}
+
+
+main section:first-of-type:hover{
+  background-color:#D90866;
+  color: white;
+  border: .3em solid #640530;
+  transform: scale(0.98);
+}
+
+main section:first-of-type button{
+  align-self: center;
+  font-weight: bolder;
+  font-size: 1em;
+  margin-left: 1em;
+  text-decoration: none;
+  border: .2em solid lightgray;
+  border-radius: 2em;
+  padding: 1em 3em 1em 3em;
+}
+
+main section:first-of-type button:hover{
+  border:.3em transparent #7209B7;
+}
 
 
 /* daud */
