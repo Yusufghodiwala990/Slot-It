@@ -17,8 +17,13 @@ $kris ="here";
   </head>
   <body>
   <section id="createaccount">
-  <h1>Create Account</h2>
+  <h1>Create Account</h1>
+  
   <form action="register.php" method="post">
+  <div id="profilepicture">
+  <i class="far fa-user-circle"></i>
+  <input type="file" id="profilepic" name="profilepic">
+  </div>
           <div id="firstname">
            <label for="firstname">First-Name:</label>
            <input               
