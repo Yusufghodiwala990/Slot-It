@@ -81,11 +81,11 @@ header nav ul li{
 
 
 header nav ul a:visited{
-  color: #F72585;
+  color: #4F97BA;
 }
 header nav ul div:last-of-type li:hover{
   transform: scale(0.85); 
-  background-color: #AF469A; 
+  background-color: #8AD5E5; 
   color: white; 
 }
 
@@ -107,7 +107,7 @@ main section:first-of-type{
   transition: .2s transform ease-in-out;
 }
 main section:first-of-type span{
-  color:#25D09D;
+  color:#FF9FB2;
 }
 
 
@@ -156,6 +156,7 @@ main section:first-of-type button{
 
 main section:first-of-type button:hover{
   transform: scale(1.08);
+  background-color: #FF9FB2;
 }
 
 
@@ -174,10 +175,10 @@ footer li a{
   color: white;
 }
 footer li a:visited{
-  color:rgb(189, 180, 79);
+  color:#94BBDB;
 }
 footer li a:hover{
-  color:red;
+  color:#d38796;
 }
 
 header nav ul li i{
