@@ -1,31 +1,81 @@
 @import url("reset.css"); /*import reset*/
-
 body{
+    background: #46494C;
+}
+main{
     border: 0.2em solid black;
     display: flex;
     margin: 2em;
-    margin-left:4em;
-    margin-right:4em;
+    margin-left:8em;
+    margin-right:8em;
     border-radius: 1em;
     font-size: 1.2em;
+    line-height: 2.5em;
+    background: #C5C3C6;
 }
 
 h1{
     font-size: 2em;
     text-decoration: underline;
-    font-weight: bold;
+    font-weight: bolder;
+    text-align: center;
+
 }
 
 #createaccount{
+    display: flex;
     padding: 2em;
     border-right: 0.2em solid black;
-}
-
-#createaccount div{
-    display: flex;
+    flex:3;
     flex-direction: column;
 }
 
 #have_an_account{
     padding: 2em;
 }
+
+#createaccount div input{
+  width: 35em;
+  height: 2em;
+    } 
+
+    .far{
+        font-size: 7em;
+    }
+
+
+    input:not(#profilepic){
+        display: flex;
+        border: 0.2em solid rgb(78, 73, 73);
+        border-radius: 1em;
+    }
+
+    ::placeholder{
+        font-style: italic;
+    }
+
+    button{
+        background: #DCDCDD;
+        width: 10em;
+        height: 2.5em;
+border-radius: 0.3em;
+    }
+    footer{
+        background: black;
+        color:white;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        padding: 1em;
+      font-size: 1.5em;
+      }
+      
+      footer li a{
+        color: white;
+      }
+      footer li a:visited{
+        color:rgb(189, 180, 79);
+      }
+      footer li a:hover{
+        color:red;
+      }
