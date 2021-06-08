@@ -1,81 +1,150 @@
-@import url("reset.css"); /*import reset*/
+@import url(./reset.css);
+@import url(//fonts.googleapis.com/css?family=Krona+One);
 body{
-    background: #46494C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Krona One', sans-serif;
+    background: hsla(210, 90%, 80%, 1);
+
+    background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+    
+    background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+    
+    background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
+   
 }
 main{
-    border: 0.2em solid black;
     display: flex;
-    margin: 2em;
-    margin-left:8em;
-    margin-right:8em;
-    border-radius: 1em;
-    font-size: 1.2em;
-    line-height: 2.5em;
-    background: #C5C3C6;
+    align-items: center;
+    justify-content: center;
 }
-
-h1{
-    font-size: 2em;
-    text-decoration: underline;
-    font-weight: bolder;
-    text-align: center;
-
-}
-
-#createaccount{
+section{
     display: flex;
-    padding: 2em;
-    border-right: 0.2em solid black;
-    flex:3;
     flex-direction: column;
+    width: 50vw;
+    margin: 2em;
+    padding: 1em;
+    border:.5em solid white;
+    border-radius: 2.5em;
+    background-color: white;
+}
+h1{
+    font-size: 2.5em;
+    margin-bottom: .5em;
+}
+form{
+    margin: 1em;
+}
+section h1{
+    align-self: center;
+}
+form >*{
+    margin-bottom: 1em;
 }
 
-#have_an_account{
-    padding: 2em;
+form div{
+    transition: all .3s;
+}
+form label:not(label[id="special"]){
+    font-size: 1.4em;
+    display: block;
+    transform:translate(.5em,-1.5em);
+    cursor:text;
+    transform-origin: 0 0;
+    transition: all .3s;
+    color: black;
+}
+form input{
+    font-weight:bolder;
+    font-size: 1.1em;
+    border-radius: .5em;
+    border-bottom: .25em solid #002D8F;
+    border-style: none none solid none;
+    padding:1em 0em 0.3em 1.5em;
+    width:100%;
+    box-shadow: none;
+    background-color: #EFF2EF;
+    transition: all .2s;
+    box-sizing: border-box; /* for the browser to account for the border and calculate padding
+     based on that for (input) and not overflow the parent*/
+ 
+}
+form input:focus{
+    box-shadow: none;
+    outline: none;
+    border-color: #FF007F ;
+    
 }
 
-#createaccount div input{
-  width: 35em;
-  height: 2em;
-    } 
+form{
+    display: flex;
+    flex-direction: column;
 
-    .far{
-        font-size: 7em;
-    }
+}
+
+form input::placeholder{
+    color: transparent;
+}
+/* focus within actually selects all elements that had focus*/
+form div:focus-within{
+    transform:scale(1.02)
+}
+/* only move the label when up (translateY) when the input is on focus and
+   keep the label up by checking if placeholder is not shown i.e there is some input
+   to avoid having the label back "on" the input even if there is data in it */
+
+   /* REF https://css-tricks.com/float-labels-css/ */
+form input:focus + label,form input:not(:placeholder-shown)+label{
+    transform: translateY(-3.3em);
+}
+
+form div:last-of-type{
+    display: flex;
+    justify-content: flex-end;
+
+}
+form button{
+    align-self: flex-end;
+    margin-left: 1em;
+    background-color: hsla(212, 65%, 49%, 1); /* 25D09D */
+    color: white;
+    font-weight: bolder;
+    font-size: 1em;
+    cursor: pointer;
+    border: .2em solid lightgray;
+    border-radius: 2em;
+    padding: 1em 3em 1em 3em;
+    transition: .2s transform ease-in-out;
+    align-self: flex-end;
+  }
 
 
-    input:not(#profilepic){
-        display: flex;
-        border: 0.2em solid rgb(78, 73, 73);
-        border-radius: 1em;
-    }
+  form a:first-of-type button{
+      background-color: #FF007F;
+  }
 
-    ::placeholder{
-        font-style: italic;
-    }
+form button:hover{
+    transform: scale(1.08);
+}
 
-    button{
-        background: #DCDCDD;
-        width: 10em;
-        height: 2.5em;
-border-radius: 0.3em;
-    }
-    footer{
-        background: black;
-        color:white;
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-        padding: 1em;
-      font-size: 1.5em;
-      }
-      
-      footer li a{
-        color: white;
-      }
-      footer li a:visited{
-        color:rgb(189, 180, 79);
-      }
-      footer li a:hover{
-        color:red;
-      }
+form a{
+    align-self: flex-end;
+}
+
+
+
+
+/*footer */
+footer{
+    color:white;
+    justify-content: center;
+    display: flex;
+  font-size: 1.5em;
+  }
+  
+  

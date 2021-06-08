@@ -107,7 +107,7 @@ main section:first-of-type{
   transition: .2s transform ease-in-out;
 }
 main section:first-of-type span{
-  color:#FF9FB2;
+  color:turquoise
 }
 
 
@@ -156,7 +156,8 @@ main section:first-of-type button{
 
 main section:first-of-type button:hover{
   transform: scale(1.08);
-  background-color: #FF9FB2;
+  background-color: #FF007F;
+  color: white;
 }
 
 
