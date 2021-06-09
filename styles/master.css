@@ -194,3 +194,46 @@ footer li a:hover{
 header nav ul li i{
   margin-left: .5em;
 }
+
+/* Kris - Panels*/
+
+@keyframes cardFade{
+  0.0%{
+    transform: rotate(0) translateY(40%);
+    opacity: 0;
+  }
+  100%{
+    transform: rotate(0) translate(0,0);
+    opacity: 1;
+  }
+}
+
+main section:last-of-type div:first-of-type{
+  display: flex;
+  flex-direction: row;
+  padding: 2em;
+}
+
+main section:last-of-type div{
+  animation: cardFade 1.5s ease 0s forwards;
+}
+main section:last-of-type div:first-of-type div{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-radius: 3em;
+  box-shadow: 1px 2px 10px 3px rgb(173 173 173);
+  padding: 2em;
+  margin-right: 1em;
+  text-align: center;
+  height: 20em;
+}
+
+main section:last-of-type div:first-of-type div h1{
+  padding-bottom: 1em;
+  font-size: 1.5em;
+}
+
+ul div img{
+  padding-left: 1em;
+}
