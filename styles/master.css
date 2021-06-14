@@ -42,6 +42,7 @@ header{
     opacity: 1;
   }
 }
+
 main section:first-of-type p{
   font-size: 1.3em;
 }
@@ -69,6 +70,7 @@ header nav ul div:last-of-type{
   margin-right: 2em;
   border-radius: 2em;
   min-width: 50vw;  /* for larger screens, it can grow*/
+  height: 3.5em;
 }
 
 header nav ul li{
@@ -191,6 +193,11 @@ footer li a:hover{
   color:#d38796;
 }
 
+footer ul li img{
+  height:3em;
+  width: 3em;
+}
+
 header nav ul li i{
   margin-left: .5em;
 }
@@ -234,6 +241,8 @@ main section:last-of-type div:first-of-type div h1{
   font-size: 1.5em;
 }
 
-ul div img{
-  padding-left: 1em;
+ul div img {
+    padding-left: 5em;
+    height: 10em;
+    width: 10em;
 }
