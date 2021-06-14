@@ -15,7 +15,7 @@
             <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
-          <a href=""><li>Home</li></a>
+          <a href="../index.html"><li>Home</li></a>
           <a href=""><li>Create</li></a>
           
           <a href="trentu.ca"><li>View</li></a>
