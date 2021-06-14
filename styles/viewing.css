@@ -1,10 +1,11 @@
 @import url(./reset.css);
+
 body{
     background: linear-gradient(white,#0974F1);
 }
 header{
     margin: 2em 0em 5em 0em;
-    animation: navFade2 1.5s ease 0s forwards;
+    animation: navFade2 1s ease 0s forwards;
   }
 
 @keyframes navFade2{
@@ -25,6 +26,11 @@ a{
     font-size: 1.2em;
     color:black;
   }
+    
+  header nav ul a:visited{
+    color: #4F97BA;
+  }
+
   header nav ul{
     display: flex;
     flex-direction: row;
@@ -32,11 +38,6 @@ a{
     flex-wrap: wrap;
   }
   
-  header nav ul div img {
-    padding-left: 5em;
-    height: 10em;
-    width: 10em;
-}
   header nav ul div:last-of-type{
     display: flex;
     flex-wrap: wrap;
@@ -45,6 +46,7 @@ a{
     border-radius: 2em;
     min-width: 40vw;  /* for larger screens, it can grow*/
     height: 3.5em;
+
   }
   
   header nav ul li{
@@ -53,10 +55,7 @@ a{
     transition: .2s transform ease-in-out; /*scaling transformation*/
     border-radius: 2em;
   }
-  
-  header nav ul a:visited{
-    color: #4F97BA;
-  }
+
   header nav ul div:last-of-type li:hover{
     transform: scale(0.85); 
     background-color: #8AD5E5; 
@@ -65,79 +64,45 @@ a{
   header nav ul li i{
     margin-left: .5em;
   }
-  main h1::first-letter{
-      font-size: 2em;
-  }
-main h1{
+
+header img{
+    height: 10em;
+    width: 10em;
+    padding-left: 7em;
+}
+h1{
+    font-size: 3em;
+    border: 0.1em solid black;
+    border-radius: 0.3em;
+    padding:0.4em;
+    box-shadow: black 6px 6px 8px;
+    margin-right: 5em;
+    margin-left: 5em;
     text-align: center;
-    margin-top: 2em;
-    font-size: 2em;
-    text-shadow: 1px 1px #0974F1;;
-    font-style: italic;
 }
 
-main ul{
-    display: flex;
-    justify-content: center;
-    margin-top: 6em;
-}
-
-li input{
-    width: 40em;
-    height: 3em;
-    border-radius: 0.4em;
-    border: 0.4em solid #7da9d181 ;
-    outline: none;
-    text-indent: 1em;
-}
-li input:focus{
-    border: 0.4em solid black ;
-
-}
-
-
-
-li button{
-    width: 5em; 
-    height: 3.7em;
-    border-radius: 1em;
-    border: 0.4em solid #7da9d181;
-    margin-left: 1em;
-}
-
-li button:hover{
-    background-color: rgb(230, 94, 116);
-}
-
-h2{
-    margin-left: 6em;
-    margin-top: 1.5em;
-text-decoration:underline;}
-
-table {
-    margin-top: 2em;
+main table{
+    margin: 2em;
     text-align: center;  /* Centre aligning the text */
-margin-left: 15em; 
-margin-bottom: 2em; }
-
-thead, th[scope="row"]{
-    color: white;
+    font-size: 2em;
 }
 
-  td,
+thead{
+    color: #0974F1;
+    font-style: italic;
+    font-weight: bold;
+}
+
+td,
 th {
   border: 0.2em solid rgba(255, 255, 255, 0.63); /* white borders */
   padding: 0.5em;
-  width: 12em;
+  width: 17em;
   height: 1.5em;
 }
-thead tr th:first-of-type{
-    border:none;
-}
 
-/* daud */
+
 footer{
-    display: block;
     background: black;
     color:white;
     padding: 1em;
@@ -166,9 +131,6 @@ footer{
     color:#d38796;
   }
   
-  header nav ul li i{
-    margin-left: .5em;
-  }
   footer ul li img{
     height:3em;
     width: 3em;
