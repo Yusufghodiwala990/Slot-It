@@ -81,11 +81,11 @@ header nav ul li{
 
 
 header nav ul a:visited{
-  color: #4F97BA;
+  color: #FF007F;
 }
 header nav ul div:last-of-type li:hover{
   transform: scale(0.85); 
-  background-color: #8AD5E5; 
+  background-color: #FF007F; 
   color: white; 
 }
 
@@ -107,7 +107,7 @@ main section:first-of-type{
   transition: .2s transform ease-in-out;
 }
 main section:first-of-type span{
-  color:turquoise
+  color: #FF007F
 }
 
 
@@ -216,7 +216,10 @@ main section:last-of-type div:first-of-type{
 
 main section:last-of-type div{
   animation: cardFade 1.5s ease 0s forwards;
+  transition: .2s transform ease-in-out;
+  
 }
+
 main section:last-of-type div:first-of-type div{
   display: flex;
   flex-direction: column;
@@ -228,7 +231,6 @@ main section:last-of-type div:first-of-type div{
   text-align: center;
   height: 20em;
 }
-
 main section:last-of-type div:first-of-type div h1{
   padding-bottom: 1em;
   font-size: 1.5em;

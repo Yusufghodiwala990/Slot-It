@@ -59,7 +59,7 @@ form label:not(label[id="special"]){
     transition: all .3s;
     color: black;
 }
-form input{
+form input:not(input[type="checkbox"]){
     font-weight:bolder;
     font-size: 1.1em;
     border-radius: .5em;
@@ -137,6 +137,14 @@ form a{
 }
 
 
+input[id="profilepic"]{
+    background-color: white;
+    border-style: none;
+}
+
+.fa-user-circle{
+    font-size: 1em;
+}
 
 
 /*footer */

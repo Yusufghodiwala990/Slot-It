@@ -4,5 +4,5 @@ This is a project for COIS 3420 - Web Application Development.
 
 Slot-It intended to be an open-source replacement for [Slottr](https://www.slottr.com) with better UI/UX and functionality.
 
-Slot-It uses HTML, PHP & CSS for the front-end, and an SQL database backend.
+Slot-It uses HTML & CSS for the front-end, PHP for backend.
 
