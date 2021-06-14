@@ -40,7 +40,7 @@ $kris = "here";
               <li><input type="text" autocomplete="on" placeholder="Title..."/></li>
               <li><button><i class="fa fa-search" aria-hidden="true"></i></button></li>
           </ul>
-<h2>result for keyword "appointment"</h2>
+<h2>Result for keyword "appointment"</h2>
           <table>
           <thead>
             <tr>

@@ -187,10 +187,10 @@ footer li a{
   color: white;
 }
 footer li a:visited{
-  color:#94BBDB;
+  color:#FF007F;
 }
 footer li a:hover{
-  color:#d38796;
+  color:#94BBDB;
 }
 
 footer ul li img{
@@ -245,6 +245,6 @@ main section:last-of-type div:first-of-type div h1{
 
 ul div img {
     padding-left: 5em;
-    height: 10em;
-    width: 10em;
+    height: 5em;
+    width: 5em;
 }
