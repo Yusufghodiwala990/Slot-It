@@ -19,8 +19,8 @@
           <a href=""><li>Create</li></a>
           
           <a href="trentu.ca"><li>View</li></a>
-          <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-          <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+          
+          <a href="login.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
         </ul>
       </nav>      
@@ -55,8 +55,8 @@
         </div>
      
         <div>
-          <a href=""><button>Back</button></a>
-          <a href=""><button>Update</button></a>
+        <a href="../index.html"><button type="button">Back</button></a>
+        <a href="registration.php"><button>Sign-Up</button></a>
         </div>
       </form>
     </section>

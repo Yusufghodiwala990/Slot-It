@@ -32,14 +32,14 @@ $kris = "here";
     <label id="special" for="rememberme">Remember Me?</label>
      </div>
     <div>
-    <a href=""><button>Back</button></a>
+    <a href="../index.html"><button type="button">Back</button></a>
     <a href=""><button>Login</button></a>
     </div>
     </form>
   </section>
   </main>
   <footer>
-  <img src= "logo.png" alt='The website logo'/>
+  
       <p>&copy; 2021 - Slot-It</p>
   </footer>
       

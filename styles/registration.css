@@ -20,14 +20,12 @@ body{
 }
 main{
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 section{
     display: flex;
     flex-direction: column;
     width: 50vw;
-    margin: 2em;
+    margin: 2em 2em 1em 2em;
     padding: 1em;
     border:.5em solid white;
     border-radius: 2.5em;
@@ -74,10 +72,10 @@ form input:not(input[type="checkbox"]){
      based on that for (input) and not overflow the parent*/
  
 }
-form input:focus{
+form input:not(input[type="checkbox"]):focus{
     box-shadow: none;
     outline: none;
-    border-color: #FF007F ;
+    border-color: #FF007F;
     
 }
 
@@ -153,6 +151,11 @@ footer{
     justify-content: center;
     display: flex;
   font-size: 1.5em;
+  margin-bottom: 1em;
   }
   
+footer img{
+    height: 2em;
+
+}
   

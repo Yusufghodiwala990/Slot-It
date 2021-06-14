@@ -79,6 +79,8 @@ header{
   main{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     
 }
   section{
@@ -87,7 +89,7 @@ header{
     width: 50vw;
     padding: 1em;
     border-radius: 2.5em;
-    margin:1em 1em 0em 1em;
+    margin:0em 1em 0em 1em;
   
     border-radius: 1.5em;
     
@@ -97,13 +99,13 @@ header{
 
  h2{
     align-self:center;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     font-size: 2em;
 }
 
 
 
-form div{
+form div:not(div:last-of-type){
     transition: all .3s;
     margin-bottom: 1em;
 }
@@ -144,7 +146,7 @@ form input{
 form input:focus{
     box-shadow: none;
     outline: none;
-    border-color: #FF007F ;
+    border-color: #FF007F;
     
 }
 
@@ -158,7 +160,7 @@ form input::placeholder{
     color: transparent;
 }
 /* focus within actually selects all elements that had focus*/
-form div:focus-within{
+form div:not(div:last-of-type):focus-within{
     transform:scale(1.02)
 }
 /* only move the label when up (translateY) when the input is on focus and
@@ -167,7 +169,7 @@ form div:focus-within{
 
    /* REF https://css-tricks.com/float-labels-css/ */
 form input:focus + label,form input:not(:placeholder-shown)+label{
-    transform: translateY(-3.4em);
+    transform: translateY(-3.45em);
 }
 
 
