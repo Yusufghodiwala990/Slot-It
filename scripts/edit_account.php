@@ -15,12 +15,12 @@
             <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
-          <a href=""><li>Home</li></a>
-          <a href=""><li>Create</li></a>
+          <a href="../index.html"><li>Home</li></a>
+          <a href="../create.html"><li>Create</li></a>
           
           <a href="trentu.ca"><li>View</li></a>
-          <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-          <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+          <a href="./login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
+          <a href="./edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
         </ul>
       </nav>      
@@ -55,7 +55,7 @@
         </div>
      
         <div>
-          <a href=""><button>Back</button></a>
+          <a href="../index.html"><button type="button">Back</button></a>
           <a href=""><button>Update</button></a>
         </div>
       </form>
