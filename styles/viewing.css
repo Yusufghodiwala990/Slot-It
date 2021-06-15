@@ -1,7 +1,17 @@
 @import url(./reset.css);
 
-body{
-    background: linear-gradient(white,#0974F1);
+@import url(//fonts.googleapis.com/css?family=Krona+One);
+body{    font-family: 'Krona One', sans-serif;
+  background: hsla(210, 90%, 80%, 1);
+
+  background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
+ 
 }
 header{
     margin: 2em 0em 5em 0em;
@@ -28,7 +38,7 @@ a{
   }
     
   header nav ul a:visited{
-    color: #4F97BA;
+    color: #FF007F;
   }
 
   header nav ul{
@@ -58,7 +68,7 @@ a{
 
   header nav ul div:last-of-type li:hover{
     transform: scale(0.85); 
-    background-color: #8AD5E5; 
+    background-color: #FF007F; 
     color: white; 
   }
   header nav ul li i{
@@ -70,15 +80,9 @@ header img{
     width: 10em;
     padding-left: 7em;
 }
-h1{
-    font-size: 3em;
-    border: 0.1em solid black;
-    border-radius: 0.3em;
-    padding:0.4em;
-    box-shadow: black 6px 6px 8px;
-    margin-right: 5em;
-    margin-left: 5em;
-    text-align: center;
+main p{
+    font-size: 1.3em;
+    padding-left: 5em;
 }
 
 main table{
@@ -99,6 +103,7 @@ th {
   padding: 0.5em;
   width: 17em;
   height: 1.5em;
+  font-size: 0.61em;
 }
 
 
@@ -125,10 +130,10 @@ footer{
     color: white;
   }
   footer li a:visited{
-    color:#94BBDB;
+    color:#FF007F;
   }
   footer li a:hover{
-    color:#d38796;
+    color:#94BBDB;
   }
   
   footer ul li img{

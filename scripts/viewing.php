@@ -28,7 +28,7 @@ $kris = "here";
           </div>
           <div>
           <a href="../index.html"><li>Home</li></a>
-          <a href=""><li>Create</li></a>          
+          <a href="../create.html"><li>Create</li></a>          
           <a href="trentu.ca"><li>View</li></a>
           <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
@@ -37,40 +37,47 @@ $kris = "here";
 </header>
 
 <main>
-<h1> Some specific sign-up sheet<br> Owned by: Someone</h1>   
+<p> Title: Some specific sign-up sheet</p>
+<p> Owner: Someone</p>   
     <table>
           <thead>
             <tr>
-              <th scope="col">For-what</th>
-              <th scope="col">Scheduled-time</th>
-              <th scope="col">Who-has-signed-up</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Name</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Dentist appointment</td>
+              <td>10th July 2021</td>
               <td>10:00am</td>
               <td>Daud</td>
             </tr>
             <tr>
               <td>Dentist appointment</td>
+              <td>11th July 2021</td>
               <td>10:40am</td>
               <td><a href="">Slot-me-in</a></td>
             </tr>
             <tr>
               <td>Dentist appointment</td>
+              <td>11th July 2021</td>
               <td>11:20am</td>
               <td>Kris</td>
             </tr>
 
             <tr>
               <td>Dentist appointment</td>
+              <td>14th July 2021</td>
               <td>12:00pm</td>
               <td>Yusuf</td>
             </tr>
 
             <tr>
               <td>Dentist appointment</td>
+              <td>14th July 2021</td>
               <td>10:40am</td>
               <td><a href="">Slot-me-in</a></td>
             </tr>
@@ -79,7 +86,7 @@ $kris = "here";
 </main>
 <footer>
       <ul>
-        <li><a href="">Home</a></li>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="mailto:slot-it@gmail.com">Contact</a></li>
         <li><i class="fas fa-phone-square-alt"></i> : +1(705)-123-1234</li>
         <li> <img src="../img/logo.png" alt="Slot-it logo"></li>

@@ -1,6 +1,16 @@
 @import url(./reset.css);
-body{
-    background: linear-gradient(white,#0974F1);
+@import url(//fonts.googleapis.com/css?family=Krona+One);
+body{    font-family: 'Krona One', sans-serif;
+  background: hsla(210, 90%, 80%, 1);
+
+  background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
+ 
 }
 header{
     margin: 2em 0em 5em 0em;
@@ -55,11 +65,11 @@ a{
   }
   
   header nav ul a:visited{
-    color: #4F97BA;
+    color: #FF007F;
   }
   header nav ul div:last-of-type li:hover{
     transform: scale(0.85); 
-    background-color: #8AD5E5; 
+    background-color: #FF007F; 
     color: white; 
   }
   header nav ul li i{
@@ -86,12 +96,12 @@ li input{
     width: 40em;
     height: 3em;
     border-radius: 0.4em;
-    border: 0.4em solid #7da9d181 ;
+    border: 0.2em solid #7da9d181 ;
     outline: none;
     text-indent: 1em;
 }
 li input:focus{
-    border: 0.4em solid black ;
+    border: 0.2em solid #FF007F ;
 
 }
 
@@ -101,12 +111,12 @@ li button{
     width: 5em; 
     height: 3.7em;
     border-radius: 1em;
-    border: 0.4em solid #7da9d181;
+    border: 0.2em solid #7da9d181;
     margin-left: 1em;
 }
 
 li button:hover{
-    background-color: rgb(230, 94, 116);
+    background-color: #FF007F;
 }
 
 h2{
@@ -117,7 +127,7 @@ text-decoration:underline;}
 table {
     margin-top: 2em;
     text-align: center;  /* Centre aligning the text */
-margin-left: 15em; 
+margin-left: 7em; 
 margin-bottom: 2em; }
 
 thead, th[scope="row"]{
@@ -128,7 +138,7 @@ thead, th[scope="row"]{
 th {
   border: 0.2em solid rgba(255, 255, 255, 0.63); /* white borders */
   padding: 0.5em;
-  width: 12em;
+  width: 15em;
   height: 1.5em;
 }
 thead tr th:first-of-type{
@@ -160,10 +170,10 @@ footer{
     color: white;
   }
   footer li a:visited{
-    color:#94BBDB;
+    color:#FF007F;
   }
   footer li a:hover{
-    color:#d38796;
+    color:#94BBDB;
   }
   
   header nav ul li i{

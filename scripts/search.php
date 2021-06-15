@@ -27,7 +27,7 @@ $kris = "here";
           </div>
           <div>
           <a href="../index.html"><li>Home</li></a>
-          <a href=""><li>Create</li></a>          
+          <a href="../create.html"><li>Create</li></a>          
           <a href="trentu.ca"><li>View</li></a>
           <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
@@ -81,7 +81,7 @@ $kris = "here";
   </main>
   <footer>
       <ul>
-        <li><a href="">Home</a></li>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="mailto:slot-it@gmail.com">Contact</a></li>
         <li><i class="fas fa-phone-square-alt"></i> : +1(705)-123-1234</li>
         <li><img src="../img/logo.png" alt="Slot-it logo"></li>
