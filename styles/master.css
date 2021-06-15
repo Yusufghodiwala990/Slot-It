@@ -215,7 +215,7 @@ header nav ul li i{
   }
 }
 
-main section:last-of-type div:first-of-type{
+main section:last-of-type {
   display: flex;
   flex-direction: row;
   padding: 2em;
@@ -227,7 +227,7 @@ main section:last-of-type div{
   
 }
 
-main section:last-of-type div:first-of-type div{
+main section:last-of-type div{
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -238,7 +238,8 @@ main section:last-of-type div:first-of-type div{
   text-align: center;
   height: 20em;
 }
-main section:last-of-type div:first-of-type div h1{
+
+main section:last-of-type  div h1{
   padding-bottom: 1em;
   font-size: 1.5em;
 }
@@ -247,4 +248,29 @@ ul div img {
     padding-left: 5em;
     height: 10em;
     width: 10em;
+}
+
+main section:last-of-type div:hover{
+  transform: scale(1.08);
+}
+
+
+main section:last-of-type  div button{
+  align-self: center;
+  background-color: white; /* 25D09D */
+  font-weight: bolder;
+  font-size: 1em;
+  margin-left: 1em;
+  cursor: pointer;
+  border: .2em solid lightgray;
+  border-radius: 2em;
+  padding: 1em 3em 1em 3em;
+  transition: .2s transform ease-in-out;
+  margin: 1em;
+}
+
+main section:last-of-type div button:hover{
+  transform: scale(1.08);
+  background-color: #FF007F;
+  color: white;
 }
