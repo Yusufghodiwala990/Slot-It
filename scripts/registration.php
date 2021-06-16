@@ -48,7 +48,7 @@
     </section>
   </main>
   <footer>
-    <img src="logo.png" alt='The website logo' />
+    
     <p>&copy; 2021 - Slot-It</p>
   </footer>
 
