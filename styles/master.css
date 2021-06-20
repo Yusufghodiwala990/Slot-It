@@ -109,7 +109,7 @@ main section:first-of-type{
   transition: .2s transform ease-in-out;
 }
 main section:first-of-type span{
-  color: #FF007F
+  color: aqua;
 }
 
 

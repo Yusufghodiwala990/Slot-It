@@ -26,15 +26,17 @@
     <input type="checkbox" id="rememberme">
     <label id="special" for="rememberme">Remember Me?</label>
      </div>
-    <div>
+    <div id="links-login">
     <a href="../index.html"><button type="button">Back</button></a>
     <a href=""><button>Login</button></a>
+    </div>
+    <div id="forgotpass">
+    <a href=""><button>Forgot Password</button></a>
     </div>
     </form>
   </section>
   </main>
   <footer>
-  <img src= "logo.png" alt='The website logo'/>
       <p>&copy; 2021 - Slot-It</p>
   </footer>
       

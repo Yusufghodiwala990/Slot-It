@@ -103,7 +103,7 @@ form input:focus + label,form input:not(:placeholder-shown)+label{
     transform: translateY(-3.3em);
 }
 
-form div:last-of-type{
+form #links-login, form #links-reg{
     display: flex;
     justify-content: flex-end;
 
@@ -123,6 +123,14 @@ form button{
     align-self: flex-end;
   }
 
+#forgotpass button{
+background-color: white;
+color:#FF007F;
+border: none;
+padding:0;
+
+    
+}
 
   form a:first-of-type button{
       background-color: #FF007F;
