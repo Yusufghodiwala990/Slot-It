@@ -1,0 +1,229 @@
+@import url(./reset.css);
+
+@import url(//fonts.googleapis.com/css?family=Krona+One);
+
+
+
+body{
+  font-family: 'Krona One', sans-serif;
+  
+
+}
+header{
+    margin: 2em 0em 2.5em 0em;
+    animation: navFade2 1.5s ease 0s forwards;
+  }
+  /* Copy this @keyframes block to your CSS*/
+  @keyframes navFade2{
+    0.0%{
+      transform:rotate(0) translate(0%,-100%);
+      opacity: 0;
+    }
+    100%{
+      transform:rotate(0);
+      opacity: 1;
+    }
+  }
+  @keyframes navFade{
+    0.0%{
+      transform: rotate(0) translate(0,30%);
+     
+      opacity: 0;
+    }
+    100%{
+      transform: rotate(0) translate(0,0);
+      opacity: 1;
+    }
+  }
+
+  header nav a{
+    font-size: 1.2em;
+    color:black;
+  }
+  header nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    flex-wrap: wrap;
+  }
+
+  header nav ul div:last-of-type{
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 1px 2px 10px 3px rgb(173, 173, 173); /* no border but box-shadow */
+    margin-right: 2em;
+    border-radius: 2em;
+    min-width: 50vw;  /* for larger screens, it can grow*/
+  }
+  
+  header nav ul li{
+    margin:0em 1.5em 0em .5em;
+    padding:1em;
+    transition: .2s transform ease-in-out; /*scaling transformation*/
+    border-radius: 2em;
+  }
+
+  header nav ul a:visited{
+    color: #FF007F;
+  }
+  header nav ul div:last-of-type li:hover{
+    transform: scale(0.85); 
+    background-color: #FF007F; 
+    color: white; 
+  }
+
+  a{
+      text-decoration: none;
+  }
+  main{
+    display: flex;
+    flex-direction: column;
+    
+}
+  section{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    width: 50vw;
+    padding: 1em;
+    border-radius: 2.5em;
+    margin:1em 1em 0em 1em;
+  
+    border-radius: 1.5em;
+    
+
+  
+}
+
+ h2{
+    align-self:center;
+    margin-bottom: 1em;
+    font-size: 2em;
+}
+
+
+
+form div{
+    transition: all .3s;
+    margin-bottom: 1em;
+}
+
+
+form label:not(label[id="special"]){
+    font-size: 1.3em;
+    display: block;
+    transform:translate(.5em,-1.5em);
+    cursor:text;
+    transform-origin: 0 0;
+    transition: all .3s;
+    color: black;
+}
+
+form label[id="special"]{
+    font-size: 1.3em;
+    
+}
+
+form textarea{
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+    background-color: #EFF2EF;
+    font-weight:bolder;
+    width: 100%;
+    
+}
+form input{
+    font-weight:bolder;
+    font-size: 1.1em;
+    border-radius: .5em;
+    border-bottom: .15em solid #002D8F;
+    border-style: none none solid none;
+    padding:1em 0em 0.3em 1.5em;
+    width:100%;
+    box-shadow: none;
+    background-color: #EFF2EF;
+    transition: all .2s;
+    box-sizing: border-box; /* for the browser to account for the border and calculate padding
+     based on that for (input) and not overflow the parent*/
+ 
+}
+form input:focus{
+    box-shadow: none;
+    outline: none;
+    border-color: #FF007F ;
+    
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+
+}
+
+form input::placeholder{
+    color: transparent;
+}
+/* focus within actually selects all elements that had focus*/
+form div:focus-within{
+    transform:scale(1.02)
+}
+/* only move the label when up (translateY) when the input is on focus and
+   keep the label up by checking if placeholder is not shown i.e there is some input
+   to avoid having the label back "on" the input even if there is data in it */
+
+   /* REF https://css-tricks.com/float-labels-css/ */
+form input:focus + label,form input:not(:placeholder-shown)+label{
+    transform: translateY(-3.4em);
+}
+
+form div:nth-of-type(4), form div:nth-of-type(3){
+    width: 30%;
+}
+
+
+form a:first-of-type button{
+    border:none;
+    background-color: white;
+    color: #FF007F;
+    font-size: 1.2em;
+    cursor: pointer;
+
+}
+form div:last-of-type button{
+    background-color: hsla(212, 65%, 49%, 1); /* 25D09D */
+    color: white;
+    font-weight: bolder;
+    font-size: 1em;
+    cursor: pointer;
+    border: .2em solid lightgray;
+    border-radius: 2em;
+    padding: 1em 3em 1em 3em;
+    transition: .2s transform ease-in-out;
+}
+
+.deletebutton{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+}
+
+.deletebutton a{
+    align-self: flex-end;
+}
+.deletebutton button{
+    margin: 0em 3em 0.5em 0em;
+    background-color:red;
+    color: white;
+    font-weight: bolder;
+    font-size: 1em;
+    cursor: pointer;
+    border:none;
+    border-radius: .5em;
+    padding: 1em;
+    transition: .2s transform ease-in-out;
+}
+
+.deletebutton button:hover{
+    background-color: rgb(233, 7, 7);
+}
