@@ -40,7 +40,7 @@
           <label for="conpass">Confirm Password</label>
         </div>
      
-        <div>
+        <div id="links-reg">
           <a href="../index.html"><button type="button">Back</button></a>
           <a href=""><button>Sign-up</button></a>
         </div>
