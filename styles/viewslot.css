@@ -187,7 +187,7 @@ main section div{
   padding-top: 2em;
 }
 
-button{
+main section div a{
   background-color: hsla(212, 65%, 49%, 1); /* 25D09D */
   color: white;
   font-weight: bolder;
@@ -200,7 +200,7 @@ button{
   margin-left: 1em;
 }
 
-button:hover{
+main section a:hover{
   transform: scale(1.08);
   border-color: #FF007F;
 }
@@ -246,7 +246,7 @@ tr{
   background-color: #90CAF9;
 }
 
-div button:last-of-type
+section div a:last-of-type
 {
   background-color: #D50000;
 }
