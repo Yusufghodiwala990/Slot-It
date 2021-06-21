@@ -22,7 +22,7 @@
           <div>
           <a href="../index.html"><li>Home</li></a>
           <a href="../create.html"><li>Create</li></a>          
-          <a href="trentu.ca"><li>View</li></a>
+          <a href="./mystuff.php"><li>View</li></a>
           <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
         </ul>

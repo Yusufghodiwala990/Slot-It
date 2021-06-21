@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account</title>
     <link rel="stylesheet" href="../styles/edit_account.css"/>
+    <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -16,11 +17,10 @@
           </div>
           <div>
           <a href="../index.html"><li>Home</li></a>
-          <a href="../create.html"><li>Create</li></a>
-          
-          <a href="trentu.ca"><li>View</li></a>
-          <a href="./login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-          <a href="./edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+          <a href="../create.html"><li>Create</li></a>  
+          <a href="../mystuff.php"><li>View</li></a>
+          <a href="./login.php"><li>Login <i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
+          <a href="./edit_account.php"><li>My Account <i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
         </ul>
       </nav>      
