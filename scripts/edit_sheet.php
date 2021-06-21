@@ -18,7 +18,7 @@
           <div>
           <a href="../index.html"><li>Home</li></a>
           <a href="../create.html"><li>Create</li></a>
-          <a href="../mystuff.php"><li>View</li></a>
+          <a href="./mystuff.php"><li>View</li></a>
           <a href="./login.php"><li>Login <i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
           <a href="./edit_account.php"><li>My Account <i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
