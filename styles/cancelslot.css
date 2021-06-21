@@ -1,0 +1,259 @@
+@import url(./reset.css);
+
+@import url(//fonts.googleapis.com/css?family=Krona+One);
+
+
+
+body{
+  font-family: 'Krona One', sans-serif;
+  
+  
+
+
+}
+
+/* yusuf */
+
+
+/* -- nav bar -- */
+header{
+  margin: 2em 0em 5em 0em;
+  animation: navFade2 1.5s ease 0s forwards;
+}
+/* Copy this @keyframes block to your CSS*/
+@keyframes navFade2{
+  0.0%{
+    transform:rotate(0) translate(0%,-100%);
+    opacity: 0;
+  }
+  100%{
+    transform:rotate(0);
+    opacity: 1;
+  }
+}
+@keyframes navFade{
+  0.0%{
+    transform: rotate(0) translate(0,30%);
+   
+    opacity: 0;
+  }
+  100%{
+    transform: rotate(0) translate(0,0);
+    opacity: 1;
+  }
+}
+
+body{
+  font-family: 'Krona One', sans-serif;
+  background: hsla(210, 90%, 80%, 1);
+
+  background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
+  
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
+ 
+}
+
+main section:first-of-type p{
+  font-size: 1.3em;
+}
+
+a{
+  text-decoration: none;
+}
+
+header nav{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+header nav a{
+  font-size: 1.2em;
+  color:black;
+}
+header nav ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+header nav ul div:last-of-type{
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: 1px 2px 10px 3px rgb(173, 173, 173); /* no border but box-shadow */
+  background-color: white;
+  margin-right: 2em;
+  border-radius: 2em;
+  min-width: 50vw;  /* for larger screens, it can grow*/
+  height: 3.5em;
+}
+
+header nav ul li{
+  margin:0em 1.5em 0em .5em;
+  padding:1em;
+  transition: .2s transform ease-in-out; /*scaling transformation*/
+  border-radius: 2em;
+}
+
+
+
+header nav ul a:visited{
+  color: #FF007F;
+}
+header nav ul div:last-of-type li:hover{
+  transform: scale(0.85); 
+  background-color: #FF007F; 
+  color: white; 
+}
+
+/* daud */
+
+footer{
+  background: black;
+  color:white;
+  padding: 1em;
+  font-size: 1.5em;
+  margin-top: 3em;
+}
+
+footer ul{
+  display: flex;
+  justify-content: space-evenly;
+}
+footer p{
+  padding-top: 1em;
+text-align: center;
+font-size: 0.8em;
+}
+footer .fas{
+  font-size: larger;
+}
+footer li a{
+  color: white;
+}
+footer li a:visited{
+  color:#FF007F;
+}
+footer li a:hover{
+  color:#94BBDB;
+}
+
+footer ul li img{
+  height:3em;
+  width: 3em;
+}
+
+
+/* Kris - Signup - CLEAN SHEET*/
+
+@keyframes cardFade{
+  0.0%{
+    transform: rotate(0) translateY(40%);
+    opacity: 0;
+  }
+  100%{
+    transform: rotate(0) translate(0,0);
+    opacity: 1;
+  }
+}
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main section{
+  padding: 2em;
+  border: 5px solid black;
+  margin: 1em;
+  border-radius: 1em;
+  width: 40em;
+  background-color: white;
+}
+
+main section h1{
+  font-weight: bold;
+  font-size: 1.5em;
+  padding-bottom: 1em;
+  text-align: center;
+}
+
+main section p{
+  text-align: center;
+  padding-top: 1em;
+}
+
+main section div{
+  display: flex;
+  flex-direction: row;
+  padding-top: 2em;
+  justify-content: center;
+}
+
+button{
+  background-color: hsla(212, 65%, 49%, 1); /* 25D09D */
+  color: white;
+  font-weight: bolder;
+  font-size: 1em;
+  border: .2em solid lightgray;
+  border-radius: 2em;
+  padding: 1em 3em 1em 3em;
+  transition: .2s transform ease-in-out;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+button:hover{
+  transform: scale(1.08);
+  border-color: #FF007F;
+}
+
+td,th{
+  border:0.1em solid white;
+  padding:0.5em;
+}
+
+tr th{
+  border-radius: 5px 5px 0px 0px;
+  background-color: #2196F3;
+  color: white;
+}
+
+table{
+  margin-top: 2em;
+  margin-left: 1em;
+  border-collapse: separate;
+  color: black;
+  text-align: center;
+}
+
+
+tr:nth-child(2) td:nth-child(1),tr:nth-child(3) td:nth-child(1),tr:nth-child(4) td:nth-child(1),tr:nth-child(5) td:nth-child(1),tr:nth-child(6) td:nth-child(1),tr:nth-child(7) td:nth-child(1)
+{
+  border-radius: 5px 0px 0px 5px;
+}
+
+tr:nth-child(8)
+{
+  background-color: #8c93a8;
+  color: white;
+
+}
+
+tr:nth-child(8) td:nth-child(1)
+{
+  border-radius: 5px 0px 0px 5px;
+}
+
+tr{
+  background-color: #90CAF9;
+}
+
+div button:first-of-type
+{
+  background-color: #D50000;
+  margin-left: 0;
+}
