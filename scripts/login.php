@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+// commenting this out so that we can test login.php
+// no need to login if session variables are set.
+/*
+if(isset($_SESSION['username'])){
+  header("Location:mystuff.php");
+  exit();
+}*/
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
 
@@ -28,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 
       if (password_verify($_POST['password'], $row['password']) == true) {
-        session_start();
+
         $_SESSION['user_id'] = $row['ID'];
         $_SESSION['username'] = $username;
 
