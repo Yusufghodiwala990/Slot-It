@@ -6,17 +6,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
-  <link rel="stylesheet" href="../styles/registration.css" />
+  <link rel="stylesheet" href="../styles/login.css" />
 </head>
 
 <body>
   <main>
-  <section id="createaccount">
+ 
     <h1>Login</h1>
     <form method="POST" novalidate autocomplete="false">
     <div>
     <input type="text" name="username" id="username" placeholder="derekpope666" autocomplete="off">
     <label for="username">Username</label>
+    
     </div>
     <div>
     <input type="password" name="password" id="password" placeholder="inbaepn" autocomplete="off">
@@ -34,7 +35,6 @@
     <a href=""><button>Forgot Password</button></a>
     </div>
     </form>
-  </section>
   </main>
   <footer>
       <p>&copy; 2021 - Slot-It</p>

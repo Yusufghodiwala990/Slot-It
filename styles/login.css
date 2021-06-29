@@ -7,7 +7,7 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 100%;
+    height: 100vh;
     font-family: 'Krona One', sans-serif;
     background: hsla(210, 90%, 80%, 1);
 
@@ -17,8 +17,6 @@ body{
     
     background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
     
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
-   
 }
 main{
     display: flex;
@@ -40,7 +38,7 @@ form{
     display: flex;
     flex-direction: column;
     width: 50vw;
-    padding: 1em 1em .3em 1em;
+    padding: 2em 1em .3em 1em;
     border:.5em solid white;
     border-radius: 2.5em;
     background-color: white;
@@ -50,7 +48,7 @@ section h1{
     align-self: center;
 }
 form >*{
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 form div{
@@ -156,14 +154,8 @@ form a{
 }
 
 
-input[id="profilepic"]{
-    background-color: white;
-    border-style: none;
-}
 
-.fa-user-circle{
-    font-size: 1em;
-}
+
 
 
 /*footer */
