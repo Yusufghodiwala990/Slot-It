@@ -1,7 +1,6 @@
 <?php
 
 include 'library.php';
-$pdo = connectDB();
 $errors = array();
 
 
@@ -18,7 +17,7 @@ $confirmpass = $_POST['conpass'] ?? null;
 
 
 if (isset($_POST['submit'])) {
-
+  $pdo = connectDB();
 
   if (!isset($name) || strlen($name) == 0 || is_numeric($name) == true) {
     $errors['name'] = true;
