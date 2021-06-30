@@ -1,4 +1,5 @@
 <?php
+
 // $errors = array();   //declare empty array to add errors too
 session_start();
 $user=$_SESSION['user_id'];   //need this from yusuf's page
@@ -16,6 +17,7 @@ $stmt1->execute([$user]);
 $lists2 = $stmt1->fetchAll();
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
