@@ -3,18 +3,18 @@
 // $errors = array();   //declare empty array to add errors too
 session_start();
 $user=$_SESSION['user_id'];   //need this from yusuf's page
-include '../Includes/library.php';
+include "library.php";
 // CONNECT TO DATABASE
 $pdo = connectDB();
-$query = "select * from Signup_sheets where user_ID=?"; 
+$query = "select * from Signup_sheets where Owner_ID=?"; 
 $stmt = $pdo->prepare($query);
 $stmt->execute([$user]);
 $list1 = $stmt->fetchAll();
 
-$query1 = "select Signup_sheets.Title, Slots.Scheduled_slots from Signup_sheets INNER JOIN slots where user_ID=?"; 
+$query1 = "select Signup_sheets.Title, Slots.Scheduled_slots from Signup_sheets INNER JOIN Slots ON Owner_ID=User_ID where User_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$user]);
-$lists2 = $stmt1->fetchAll();
+$list2 = $stmt1->fetchAll();
 
 ?>
 
@@ -65,18 +65,25 @@ $lists2 = $stmt1->fetchAll();
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($list1 as $row): ?>
+                <?php if($list1==null) : ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php endif; ?>
+                <?php if($list1!=null) : foreach ($list1 as $row): ?>
                     <tr>
                         <td><?=$row['Title']?></td>
                         <td><?=$row['No_of_slots']?></td>
-                        <td><?=$row['no_of_signups']?></td>
+                        <td><?=$row['No_of_signups']?></td>
                         <td> <a href="./viewing_owner.php" ><i class="fas fa-info-circle"> Details</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-edit"> Edit</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-trash"> Delete</i></a></td>
                         <td> <a href="./copy.php"><i class="fas fa-copy"> Copy</i></a></td>
                         <td> <a href="./copy.php"><i class="fa fa-link"> CopyURL</i></a></td>
                     </tr>
-                    <?php endforeach;?>
+                    <?php endforeach; endif; ?>
 
                 </tbody>
             </table>
@@ -92,17 +99,24 @@ $lists2 = $stmt1->fetchAll();
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($list2 as $row): ?>
+                <?php if($list2==null) : ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php endif; ?>
+                <?php if($list2 !=null): foreach ($list2 as $row): ?>
 
                     <tr>
                         <td><?=$row['Title']?></td>
-                        <td><?=$row['Scheduled_slot']?></td>
-                        <td><?=$row['Scheduled_slot']?></td>
+                        <td><?=$row['Scheduled_slots']?></td>
+                        <td><?=$row['Scheduled_slots']?></td>
 
                         <td> <a href="./viewing_user.php" ><i class="fas fa-info-circle"> Details</i></a></td>
                         <td> <a href=""><i class="fas fa-window-close"> Cancel</i></a></td>
                     </tr>
-                    <?php endforeach;?>
+                    <?php endforeach; endif;?>
 
                 </tbody>
             </table>
