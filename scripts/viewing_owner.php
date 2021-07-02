@@ -1,5 +1,23 @@
+<?php 
+include "library.php";
+session_start();
+$pdo = connectDB();
+$user=$_SESSION['user_id'];   //need this from yusuf's page
+$Title = $_GET['Title'];
 
+$query1 = "select ID,Description from Signup_sheets where Title=?&& Owner_ID=?"; 
+$stmt1 = $pdo->prepare($query1);
+$stmt1->execute([$Title,$user]);
+$result = $stmt1->fetch();
 
+$Sheet_id = $result['ID'];
+
+$query2 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
+$stmt2 = $pdo->prepare($query2);
+$stmt2->execute([$Sheet_id]);
+$list1 = $stmt2->fetchAll();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +49,7 @@
 </header>
 
 <main>
-<p> Title: Some specific sign-up sheet</p>
+<p> Title: <?=$Title?></p>
     <table>
           <thead>
             <tr>
@@ -42,38 +60,40 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>10th July 2021</td>
-              <td>10:00am</td>
-              <td>Daud</td>
-            </tr>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>11th July 2021</td>
-              <td>10:40am</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>11th July 2021</td>
-              <td>11:20am</td>
-              <td>Kris</td>
-            </tr>
+          <?php if($list1==null) : ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php endif; ?>
+                <?php if($list1!=null) : foreach ($list1 as $row):?>
+                    <tr>
+              <td><?=$result['Description']?></td>
+              <td><?=$row['Scheduled_slots']?></td>
+              <td><?=$row['Scheduled_slots']?></td>
 
-            <tr>
-              <td>Dentist appointment</td>
-              <td>14th July 2021</td>
-              <td>12:00pm</td>
-              <td>Yusuf</td>
-            </tr>
+              <?php  if($row['Guest_ID']==null): 
+                $query3 = "select fname from users where ID=?"; 
+                $stmt3 = $pdo->prepare($query3);
+                $stmt3->execute([$row['user_ID']]);
 
-            <tr>
-              <td>Dentist appointment</td>
-              <td>14th July 2021</td>
-              <td>10:40am</td>
-              <td></td>
+                $result1 = $stmt3->fetch(); 
+
+?>
+              <td><?=$result1['fname']?></td>
+              <?php endif ?>
+
+              <?php if($row['user_ID']==null): ?>
+               <?php $query4 = "select Name from Guest_users where ID=?"; 
+                $stmt4 = $pdo->prepare($query4);
+                $stmt4->execute([$row['Guest_ID']]);
+                $result2 = $stmt4->fetch();
+?>
+              <td><?=$result2['Name']?></td>
+              <?php endif ?>
             </tr>
+              <?php endforeach; endif?>
           </tbody>
         </table>
 </main>

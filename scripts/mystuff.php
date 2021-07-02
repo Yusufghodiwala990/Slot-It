@@ -77,7 +77,7 @@ $list2 = $stmt1->fetchAll();
                         <td><?=$row['Title']?></td>
                         <td><?=$row['No_of_slots']?></td>
                         <td><?=$row['No_of_signups']?></td>
-                        <td> <a href="./viewing_owner.php" ><i class="fas fa-info-circle"> Details</i></a></td>
+                        <td> <a href="./viewing_owner.php?Title=<?php echo $row['Title']?> " ><i class="fas fa-info-circle">Details</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-edit"> Edit</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-trash"> Delete</i></a></td>
                         <td> <a href="./copy.php"><i class="fas fa-copy"> Copy</i></a></td>
@@ -112,8 +112,6 @@ $list2 = $stmt1->fetchAll();
                         <td><?=$row['Title']?></td>
                         <td><?=$row['Scheduled_slots']?></td>
                         <td><?=$row['Scheduled_slots']?></td>
-
-                        <td> <a href="./viewing_user.php" ><i class="fas fa-info-circle"> Details</i></a></td>
                         <td> <a href=""><i class="fas fa-window-close"> Cancel</i></a></td>
                     </tr>
                     <?php endforeach; endif;?>
