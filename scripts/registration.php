@@ -7,7 +7,7 @@ $errors = array();
 //get values from post or set to NULL if doesn't exist
 $name = $_POST['name'] ?? null;
 $username = $_POST['username'] ?? null;
-$email = $_POST['email'] ?? null;
+$email = $_POST['email'] ?? null;                                              
 $password = $_POST['password'] ?? null;
 $confirmpass = $_POST['conpass'] ?? null;
 

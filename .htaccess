@@ -1,0 +1,6 @@
+AuthName "PWD Protected Assignment"
+AuthUserFile /home/kriskevindsouza/pwd/.htpasswd
+AuthType Basic
+<Limit GET POST>
+require valid-user
+</Limit>
