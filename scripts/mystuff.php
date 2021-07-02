@@ -77,7 +77,8 @@ $list2 = $stmt1->fetchAll();
                         <td><?=$row['Title']?></td>
                         <td><?=$row['No_of_slots']?></td>
                         <td><?=$row['No_of_signups']?></td>
-                        <td> <a href="./viewing_owner.php?Title=<?php echo $row['Title']?> " ><i class="fas fa-info-circle">Details</i></a></td>
+                       
+                        <td> <a href="./viewing_owner.php?SheetID=<?php echo $row['ID']?> " ><i class="fas fa-info-circle">Details</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-edit"> Edit</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-trash"> Delete</i></a></td>
                         <td> <a href="./copy.php"><i class="fas fa-copy"> Copy</i></a></td>

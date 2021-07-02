@@ -2,14 +2,23 @@
 include "library.php";
 session_start();
 $pdo = connectDB();
+if(!isset($_SESSION['user_id']))
+{
+  header("location:login.php");
+  exit;
+}
 $user=$_SESSION['user_id'];   //need this from yusuf's page
-$Title = $_GET['Title'];
+$Sheet_ID = $_GET['SheetID'];
 
-$query1 = "select ID,Description from Signup_sheets where Title=?&& Owner_ID=?"; 
+$query1 = "select ID,Description,Title from Signup_sheets where ID=?&& Owner_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
-$stmt1->execute([$Title,$user]);
+$stmt1->execute([$Sheet_ID,$user]);
 $result = $stmt1->fetch();
-
+if($result==false)
+{
+   echo "<h2>Bad Request </h2>";
+   die;
+}
 $Sheet_id = $result['ID'];
 
 $query2 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
@@ -49,7 +58,7 @@ $list1 = $stmt2->fetchAll();
 </header>
 
 <main>
-<p> Title: <?=$Title?></p>
+<p> Title: <?=$result['Title']?></p>
     <table>
           <thead>
             <tr>
