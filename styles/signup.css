@@ -199,3 +199,10 @@ button:hover{
 }
 
 
+.hidden {
+  display: none;
+}
+
+.error{
+  color: red;
+}
