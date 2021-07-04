@@ -2,6 +2,11 @@
 
 // $errors = array();   //declare empty array to add errors too
 session_start();
+if(!isset($_SESSION['user_id']))
+{
+  header("location:login.php");
+  exit;
+}
 $user=$_SESSION['user_id'];   //need this from yusuf's page
 include "library.php";
 // CONNECT TO DATABASE

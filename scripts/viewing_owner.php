@@ -82,7 +82,9 @@ $list1 = $stmt2->fetchAll();
               <td><?=$row['Scheduled_slots']?></td>
               <td><?=$row['Scheduled_slots']?></td>
 
-              <?php  if($row['Guest_ID']==null): 
+              <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
+                <td></td>
+              <?php  elseif(!isset($row['Guest_ID'])): 
                 $query3 = "select fname from users where ID=?"; 
                 $stmt3 = $pdo->prepare($query3);
                 $stmt3->execute([$row['user_ID']]);
@@ -91,9 +93,8 @@ $list1 = $stmt2->fetchAll();
 
 ?>
               <td><?=$result1['fname']?></td>
-              <?php endif ?>
 
-              <?php if($row['user_ID']==null): ?>
+              <?php else: ?>
                <?php $query4 = "select Name from Guest_users where ID=?"; 
                 $stmt4 = $pdo->prepare($query4);
                 $stmt4->execute([$row['Guest_ID']]);
