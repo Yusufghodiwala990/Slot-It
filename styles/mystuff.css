@@ -80,6 +80,11 @@ a{
       text-align: center;
       font-size: 2em;
   }
+  h3{
+    text-align: center;
+    padding: 1em;
+    font-size: 1em;
+  }
   main table{
     margin: 2em;
     text-align: center;  /* Centre aligning the text */

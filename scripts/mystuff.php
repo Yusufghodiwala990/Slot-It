@@ -98,6 +98,10 @@ $list2 = $stmt1->fetchAll();
             <h2>Slots I have signed-up for</h2>
 
             <table>
+                <?php if($list2==null)
+                echo "<h3> You don't have any slots signed up. </h3>"
+                ?>
+                <?php if($list2 !=null):?>
                 <thead>
                     <tr>
                         <th scope="col">Title</th>
@@ -105,15 +109,8 @@ $list2 = $stmt1->fetchAll();
                         <th>Time</th>
                     </tr>
                 </thead>
-                <tbody>
-                <?php if($list2==null) : ?>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <?php endif; ?>
-                <?php if($list2 !=null): foreach ($list2 as $row): ?>
+                <tbody>    
+                <?php foreach ($list2 as $row): ?>
 
                     <tr>
                         <td><?=$row['Title']?></td>
