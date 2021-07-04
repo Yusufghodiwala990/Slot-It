@@ -1,4 +1,38 @@
+<?php
 
+// $errors = array();   //declare empty array to add errors too
+
+include "library.php";
+
+$empty = true;
+$stmt = array();
+$keyword = $_POST['keyword'] ?? null;
+if(isset($_POST['submit'])){
+
+ $keyword .="%";
+  echo $keyword;
+
+$pdo = connectDB();
+$query = "SELECT * FROM `Signup_sheets` WHERE TITLE LIKE ?";
+$stmt = $pdo->prepare($query);
+$stmt->execute([$keyword]);
+
+if($stmt->rowCount()==0){
+  $empty = true;
+}
+else{
+  $numresults = $stmt->rowCount();
+  $empty = false;
+}
+
+
+
+
+
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,12 +63,30 @@
     </header>
   <main>
       <h1> Search for Sign-ups </h1>
-          <ul>
-              <li><input type="text" autocomplete="on" placeholder="Title..."/></li>
-              <li><button><i class="fa fa-search" aria-hidden="true"></i></button></li>
-          </ul>
-<h2>result for keyword "appointment"</h2>
-          <table>
+          <form  <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+              <input type="text" autocomplete="on" placeholder="Title..." name="keyword"/>
+              <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></>
+          </form>
+          
+
+         
+<?php if(!$empty):?> 
+  <h2>Found <?=$numresults?> result/results for keyword </h2>
+  <div>
+<?php foreach($stmt as $row):?>
+          
+          <a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a>
+          <?php endforeach; ?>
+          </div>
+<?php endif?>
+
+
+
+ 
+     
+          
+          
+          <!-- <table>
           <thead>
             <tr>
               <th></th>
@@ -70,7 +122,7 @@
               <td>2:00pm</td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
   </main>
   <footer>
       <ul>
@@ -83,3 +135,4 @@
       
     </footer>
 </body>
+</html>

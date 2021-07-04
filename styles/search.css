@@ -27,7 +27,11 @@ header{
       opacity: 1;
     }
   }
-a{
+  a{
+    text-decoration: none;
+  }
+main div{
+  margin:1em 0em 2em 1em;
     text-decoration: none;
   }
   
@@ -86,13 +90,16 @@ main h1{
     font-style: italic;
 }
 
-main ul{
+main{
+  margin-bottom: 4em;
+}
+main form{
     display: flex;
     justify-content: center;
     margin-top: 6em;
 }
 
-li input{
+form input{
     width: 40em;
     height: 3em;
     border-radius: 0.4em;
@@ -100,14 +107,14 @@ li input{
     outline: none;
     text-indent: 1em;
 }
-li input:focus{
+form input:focus{
     border: 0.2em solid #FF007F ;
 
 }
 
 
 
-li button{
+form button{
     width: 5em; 
     height: 3.7em;
     border-radius: 1em;
@@ -115,7 +122,7 @@ li button{
     margin-left: 1em;
 }
 
-li button:hover{
+form button:hover{
     background-color: #FF007F;
 }
 
