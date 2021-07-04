@@ -101,8 +101,8 @@ $list2 = $stmt1->fetchAll();
                 <thead>
                     <tr>
                         <th scope="col">Title</th>
-                        <td>Date</td>
-                        <td>Time</td>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,6 +125,7 @@ $list2 = $stmt1->fetchAll();
 
                 </tbody>
             </table>
+    </section>
     </main>
     <footer>
         <ul>

@@ -86,23 +86,14 @@ a{
     font-size: 1.5em;
 }
 
-thead tr{
-    color: #0974F1;
-    font-weight: bold;
-    background-color: rgb(247, 231, 199);
-    font-style: normal;
-}
 
 td,
 th {
-  border: 0.4em solid #FF007F; /* white borders */
   padding: 0.5em;
   width: 17em;
   height: 1.5em;
   font-size: 0.6em;
   padding-top:1em;
-  background-color: rgb(245, 212, 156);
-  font-style: italic;
 }
 
 td a:hover{
@@ -112,7 +103,7 @@ footer{
     background: black;
     color:white;
     padding: 1em;
-  font-size: 1.5em;
+    font-size: 1.5em;
   }
   
   footer ul{
@@ -141,3 +132,49 @@ footer{
     height:3em;
     width: 3em;
   }
+
+  td,th{
+    border:0.1em solid white;
+    padding:0.5em;
+  }
+  
+  tr th{
+    border-radius: 5px 5px 0px 0px;
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  table{
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    color:black;
+    text-align: center;
+  }
+  
+  
+  th
+  {
+    border-radius: 5px 0px 0px 5px;
+  }
+  
+  
+  tr:nth-child(8) td:nth-child(1)
+  {
+    border-radius: 5px 0px 0px 5px;
+  }
+  
+  tr{
+    background-color: #90CAF9;
+  }
+  
+
+main section{
+  padding: 2em;
+  border: 5px solid black;
+  margin: 3em;
+  border-radius: 1em;
+  width: fit-content;
+  background-color: white;
+}
