@@ -1,5 +1,28 @@
+<?php 
+include "library.php";
+session_start();
+$pdo = connectDB();
+
+//$Sheet_ID = $_GET['SheetID'];
+$Sheet_ID=13;
+
+$query1 = "select ID,Description,Title,Owner_ID from Signup_sheets where ID=?"; 
+$stmt1 = $pdo->prepare($query1);
+$stmt1->execute([$Sheet_ID]);
+$result = $stmt1->fetch();
 
 
+$query2 = "select fname from users where ID=?"; 
+$stmt2 = $pdo->prepare($query2);
+$stmt2->execute([$result['Owner_ID']]);
+$result2 = $stmt2->fetch();
+
+$query3 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
+$stmt3 = $pdo->prepare($query3);
+$stmt3->execute([$Sheet_ID]);
+$list1 = $stmt3->fetchAll();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,8 +53,8 @@
 </header>
 
 <main>
-<p> Title: Some specific sign-up sheet</p>
-<p> Owner: Someone</p>   
+<p> Title: <?=$result['Title']?></p>
+<p> Owner: <?=$result2['fname']?></p>   
     <table>
           <thead>
             <tr>
@@ -42,38 +65,38 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>10th July 2021</td>
-              <td>10:00am</td>
-              <td>Daud</td>
-            </tr>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>11th July 2021</td>
-              <td>10:40am</td>
+          <?php if($list1==null) : ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php endif; ?>
+                    <?php if($list1!=null) : foreach ($list1 as $row):?>
+                    <tr>
+              <td><?=$result['Description']?></td>
+              <td><?=$row['Scheduled_slots']?></td>
+              <td><?=$row['Scheduled_slots']?></td>
+              <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
               <td><a href="">Slot-me-in</a></td>
-            </tr>
-            <tr>
-              <td>Dentist appointment</td>
-              <td>11th July 2021</td>
-              <td>11:20am</td>
-              <td>Kris</td>
-            </tr>
+              <?php  elseif(!isset($row['Guest_ID'])): 
+                $query4 = "select fname from users where ID=?"; 
+                $stmt4 = $pdo->prepare($query4);
+                $stmt4->execute([$row['user_ID']]);
+                $result1 = $stmt4->fetch(); 
+                ?>
+                <td><?=$result1['fname']?></td>
+              <?php else: ?>
+               <?php $query4 = "select Name from Guest_users where ID=?"; 
+                $stmt4 = $pdo->prepare($query4);
+                $stmt4->execute([$row['Guest_ID']]);
+                $result2 = $stmt4->fetch();
+?>
+              <td><?=$result2['Name']?></td>
+              <?php endif ?>
+              
+                <?php endforeach; endif?>
 
-            <tr>
-              <td>Dentist appointment</td>
-              <td>14th July 2021</td>
-              <td>12:00pm</td>
-              <td>Yusuf</td>
-            </tr>
-
-            <tr>
-              <td>Dentist appointment</td>
-              <td>14th July 2021</td>
-              <td>10:40am</td>
-              <td><a href="">Slot-me-in</a></td>
-            </tr>
           </tbody>
         </table>
 </main>
