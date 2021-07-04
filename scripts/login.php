@@ -30,13 +30,13 @@ if (isset($_POST['submit'])) {
     $query = "select * from `users` where username=?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$username]);
-
+    
     if (($row = $stmt->fetch()) === false) {
       $errors['login'] = true;
     } else {
 
 
-      if (password_verify($_POST['password'], $row['password']) == true) {
+      if (password_verify($_POST['password'], $row['password'])) {
 
         $_SESSION['user_id'] = $row['ID'];
         $_SESSION['username'] = $username;
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
   <main>
 
     <h1>Login</h1>
-    <form method="POST" novalidate autocomplete="false">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
       <div>
         <input type="text" name="username" id="username" placeholder="derekpope666" value="<?= isset($_COOKIE['slot-it']) ? $_COOKIE['slot-it'] : "" ?>" autocomplete="off">
         <label for="username">Username</label>

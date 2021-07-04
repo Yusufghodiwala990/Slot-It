@@ -7,7 +7,7 @@ $errors = array();
 //get values from post or set to NULL if doesn't exist
 $name = $_POST['name'] ?? null;
 $username = $_POST['username'] ?? null;
-$email = $_POST['email'] ?? null;
+$email = $_POST['email'] ?? null;                                              
 $password = $_POST['password'] ?? null;
 $confirmpass = $_POST['conpass'] ?? null;
 
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
   <main>
 
     <h1>Create Account</h1>
-    <form method="POST" novalidate autocomplete="false" enctype="multipart/form-data">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
       <aside>
         <input class="profpic" type="file" id="profilepic" name="profilepic">
         <label class="profpic" id="profilepic" for="profilepic">Choose Profile Picture(optional)<i class="far fa-user-circle"></i></label>

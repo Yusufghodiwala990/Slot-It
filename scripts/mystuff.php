@@ -46,7 +46,7 @@ $list2 = $stmt1->fetchAll();
                     <a href="./search.php">
                         <li>Search</li>
                     </a>
-                    <a href="../create.html">
+                    <a href="../create.php">
                         <li>Create</li>
                     </a>
 

@@ -1,3 +1,50 @@
+<?php 
+  session_start();
+  include "scripts/library.php";
+  if(!isset($_SESSION['user_id']))
+  {
+    header("Location: scripts/login.php");
+  }
+
+  $errors=array();
+
+  $userid=$_SESSION['user_id'];
+  if(isset($_POST['submit']))
+  {
+    $title=$_POST['name'];
+    $description=$_POST['description'];
+    $noOfSlots=$_POST['noOfSlots'];
+    $startTime=$_POST['start-time'];
+    $endTime=$_POST['end-time'];
+    
+    if($_POST['name']==null)
+    {
+      $errors['titleError']=true;
+    }
+    
+    if($_POST['description']==null)
+    {
+      $errors['descriptionError']=true;
+    }
+
+    if($_POST['noOfSlots']==null)
+    {
+      $errors['slotError']=true;
+    }
+   //implement date time error later
+    if($_POST['name']!=null && $_POST['description']!=null && $_POST['noOfSlots']!=null){
+    $pdo = connectDB();
+   
+    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_slots,No_of_signups,Start,End) values (?,?,?,NOW(),?,0,?,?)"; 
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$title,$description,$userid,$noOfSlots,$startTime,$endTime]);
+
+    header("refresh:0; url=scripts/mystuff.php");
+    }
+  }
+
+?>
+
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,16 +76,18 @@
       <main>
         <section>
         <h1>Create a sign-up sheet</h1>
-        <form id="createSheet" action="create.html" method="post">
+        <form id="createSheet" action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate>
           
           <div>
             <label for="name">Sheet Name:</label>
             <input id="name" name="name" type="text" placeholder="Enter your sheet name here">
+            <span class="<?=!isset($errors['titleError']) ? 'hidden' : "error";?>">Please Enter a title.</span>
           </div>
 
           <div>
             <label for="description">Description</label>
             <textarea name="description"  id="description" cols="30" rows="10"></textarea>
+            <span class="<?=!isset($errors['descriptionError']) ? 'hidden' : "error";?>">Please set a description.</span>
           </div>
 
           <fieldset>
@@ -90,8 +139,13 @@
           </div>
 
           <div>
-          <label for="sheet-time">Pick a time:</label>
-          <input type="datetime-local" id="sheet-time" name="sheet-time" value="2021-06-14T20:50">
+          <label for="start-time">Pick a start time:</label>
+          <input type="datetime-local" id="start-time" name="start-time" value="2021-06-14T20:50">
+          </div>
+
+          <div>
+          <label for="end-time">Pick an end time:</label>
+          <input type="datetime-local" id="end-time" name="end-time" value="2021-06-14T20:50">
           </div>
 
           <div>
@@ -107,7 +161,15 @@
           </div>
 
           <div>
-            <button id="submit">Next</button>
+            <label for="noOfSlots">Number of slots</label>
+            <input id="noOfSlots" name="noOfSlots" type="number">
+            <br>
+            <span class="<?=!isset($errors['slotError']) ? 'hidden' : "error";?>">Please set the number of slots.</span>
+
+          </div>
+
+          <div>
+            <button id="submit" name="submit">Next</button>
           </div>
 
         </form>
