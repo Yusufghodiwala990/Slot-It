@@ -39,6 +39,15 @@
     $stmt = $pdo->prepare($query);
     $stmt->execute([$title,$description,$userid,$noOfSlots,$startTime,$endTime]);
 
+    $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
+
+    for($i=0;$i<$noOfSlots;$i++)
+    {
+      $query = "INSERT INTO Slots(Scheduled_slots,Sheet_ID) values (NOW(),?)"; 
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$Sheet_ID]);
+    }
+
     header("refresh:0; url=scripts/mystuff.php");
     }
   }
