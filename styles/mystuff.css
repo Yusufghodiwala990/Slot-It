@@ -180,9 +180,7 @@ footer{
 
 main section{
   padding: 2em;
-  border: 5px solid black;
   margin: 3em;
   border-radius: 1em;
   width: fit-content;
-  background-color: white;
 }
