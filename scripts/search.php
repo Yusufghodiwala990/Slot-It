@@ -53,7 +53,6 @@ else{
           </div>
           <div>
           <a href="../index.html"><li>Home</li></a>
-          <a href="../create.html"><li>Create</li></a>          
           <a href="./mystuff.php"><li>View</li></a>
           <a href="./edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
@@ -83,7 +82,7 @@ if(isset($_SESSION['user_id'])):
   <?php else:?>
          <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
   <?php endif; ?>
-  <?php else:     var_dump($row['Owner_ID']);
+  <?php else: ;
 ?>
     <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
   <?php endif; endforeach; ?>
