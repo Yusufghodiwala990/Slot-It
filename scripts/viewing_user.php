@@ -90,7 +90,7 @@ $list1 = $stmt3->fetchAll();
                 $stmt4 = $pdo->prepare($query4);
                 $stmt4->execute([$row['Guest_ID']]);
                 $result2 = $stmt4->fetch();
-?>
+              ?>
               <td><?=$result2['Name']?></td>
               <?php endif ?>
               

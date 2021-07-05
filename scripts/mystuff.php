@@ -16,7 +16,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute([$user]);
 $list1 = $stmt->fetchAll();
 
-$query1 = "select Signup_sheets.Title, Slots.Scheduled_slots from Signup_sheets INNER JOIN Slots ON Owner_ID=User_ID where User_ID=?"; 
+$query1 = "select Slots.Slot_ID,Signup_sheets.Title, Slots.Scheduled_slots from Signup_sheets INNER JOIN Slots ON Slots.Sheet_ID=Signup_sheets.ID where User_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$user]);
 $list2 = $stmt1->fetchAll();
@@ -59,6 +59,7 @@ $list2 = $stmt1->fetchAll();
     </header>
     <main>
         <section>
+            <!-- add dialog box when slot deleted -->
             <h2>My Sign-up sheets</h2>
 
             <table>
@@ -97,33 +98,31 @@ $list2 = $stmt1->fetchAll();
             <h2>Slots I have signed-up for</h2>
 
             <table>
+                <?php if($list2==null)
+                echo "<h3> You don't have any slots signed up. </h3>"
+                ?>
+                <?php if($list2 !=null):?>
                 <thead>
                     <tr>
                         <th scope="col">Title</th>
-                        <td>Date</td>
-                        <td>Time</td>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
-                <tbody>
-                <?php if($list2==null) : ?>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <?php endif; ?>
-                <?php if($list2 !=null): foreach ($list2 as $row): ?>
+                <tbody>    
+                <?php foreach ($list2 as $row): ?>
 
                     <tr>
                         <td><?=$row['Title']?></td>
                         <td><?=$row['Scheduled_slots']?></td>
                         <td><?=$row['Scheduled_slots']?></td>
-                        <td> <a href=""><i class="fas fa-window-close"> Cancel</i></a></td>
+                        <td> <a href="./cancelSlot.php?SlotID=<?php echo $row['Slot_ID']?>"><i class="fas fa-window-close"> Cancel</i></a></td>
                     </tr>
                     <?php endforeach; endif;?>
 
                 </tbody>
             </table>
+    </section>
     </main>
     <footer>
         <ul>
