@@ -88,7 +88,6 @@ header nav ul div:last-of-type{
   background-color: white;
   margin-right: 2em;
   border-radius: 2em;
-  min-width: 50vw;  /* for larger screens, it can grow*/
   height: 3.5em;
 }
 
