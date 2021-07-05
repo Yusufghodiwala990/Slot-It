@@ -118,18 +118,25 @@ form button{
     width: 5em; 
     height: 3.7em;
     border-radius: 1em;
-    border: 0.2em solid #7da9d181;
+    border: 0.2em solid #5b7c9b81;
     margin-left: 1em;
 }
 
 form button:hover{
-    background-color: #FF007F;
+    background-color: rgb(109, 109, 109);
 }
 
 h2{
+  font-size: 1.3em;
     margin-left: 6em;
     margin-top: 1.5em;
 text-decoration:underline;}
+
+main div:last-of-type{
+  margin-left: 6em;
+  font-size: 1.3em;
+}
+ol{list-style-type: upper-roman;}
 
 table {
     margin-top: 2em;

@@ -1,7 +1,7 @@
 <?php
 
 // $errors = array();   //declare empty array to add errors too
-
+session_start();
 include "library.php";
 
 $empty = true;
@@ -10,7 +10,6 @@ $keyword = $_POST['keyword'] ?? null;
 if(isset($_POST['submit'])){
 
  $keyword .="%";
-  echo $keyword;
 
 $pdo = connectDB();
 $query = "SELECT * FROM `Signup_sheets` WHERE TITLE LIKE ?";
@@ -55,7 +54,7 @@ else{
           <div>
           <a href="../index.html"><li>Home</li></a>
           <a href="../create.html"><li>Create</li></a>          
-          <a href="./viewing.php"><li>View</li></a>
+          <a href="./mystuff.php"><li>View</li></a>
           <a href="./edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
         </ul>
@@ -63,7 +62,7 @@ else{
     </header>
   <main>
       <h1> Search for Sign-ups </h1>
-          <form  <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+          <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
               <input type="text" autocomplete="on" placeholder="Title..." name="keyword"/>
               <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></>
           </form>
@@ -73,56 +72,25 @@ else{
 <?php if(!$empty):?> 
   <h2>Found <?=$numresults?> result/results for keyword </h2>
   <div>
+    <ol>
 <?php foreach($stmt as $row):?>
-          
-          <a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a>
-          <?php endforeach; ?>
+  <?php 
+if(isset($_SESSION['user_id'])):
+  if($_SESSION['user_id']==$row['Owner_ID']):
+    ?>
+    <li><a href="./viewing_owner.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
+
+  <?php else:?>
+         <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
+  <?php endif; ?>
+  <?php else:     var_dump($row['Owner_ID']);
+?>
+    <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
+  <?php endif; endforeach; ?>
+          </ol>
           </div>
 <?php endif?>
 
-
-
- 
-     
-          
-          
-          <!-- <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th scope="col">Title</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Patient1 appointment</td>
-              <td>7th July 2021</td>
-              <td>12:30pm</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Patient2 appointment</td>
-              <td>8th august 2021</td>
-              <td>8:00am</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Patient3 appointment</td>
-              <td>2nd December 2021</td>
-              <td>10:00am</td>
-            </tr>
-
-            <tr>
-              <th scope="row">4</th>
-              <td>Patient4 appointment</td>
-              <td>20th December 2021</td>
-              <td>2:00pm</td>
-            </tr>
-          </tbody>
-        </table> -->
   </main>
   <footer>
       <ul>

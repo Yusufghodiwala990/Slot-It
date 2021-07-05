@@ -1,10 +1,8 @@
 <?php 
 include "library.php";
-session_start();
 $pdo = connectDB();
 
-//$Sheet_ID = $_GET['SheetID'];
-$Sheet_ID=13;
+$Sheet_ID = $_GET['SheetID'];
 
 $query1 = "select ID,Description,Title,Owner_ID from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
@@ -67,6 +65,7 @@ $list1 = $stmt3->fetchAll();
           <tbody>
           <?php if($list1==null) : ?>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

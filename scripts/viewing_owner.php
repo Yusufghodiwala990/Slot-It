@@ -7,13 +7,14 @@ if(!isset($_SESSION['user_id']))
   header("location:login.php");
   exit;
 }
-$user=$_SESSION['user_id'];   //need this from yusuf's page
+$user=$_SESSION['user_id']; 
 $Sheet_ID = $_GET['SheetID'];
 
-$query1 = "select ID,Description,Title from Signup_sheets where ID=?&& Owner_ID=?"; 
+$query1 = "select ID,Description,Title from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
-$stmt1->execute([$Sheet_ID,$user]);
+$stmt1->execute([$Sheet_ID]);
 $result = $stmt1->fetch();
+
 if($result==false)
 {
    echo "<h2>Bad Request </h2>";
@@ -74,6 +75,7 @@ $list1 = $stmt2->fetchAll();
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                     </tr>
                     <?php endif; ?>
                 <?php if($list1!=null) : foreach ($list1 as $row):?>
@@ -88,7 +90,6 @@ $list1 = $stmt2->fetchAll();
                 $query3 = "select fname from users where ID=?"; 
                 $stmt3 = $pdo->prepare($query3);
                 $stmt3->execute([$row['user_ID']]);
-
                 $result1 = $stmt3->fetch(); 
 
 ?>
