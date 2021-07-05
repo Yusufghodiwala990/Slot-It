@@ -76,6 +76,10 @@ a{
     margin-left: .5em;
   }
 
+  header nav ul div:last-of-type{
+    background-color: white;
+  }
+
   h2{
       text-align: center;
       font-size: 2em;
