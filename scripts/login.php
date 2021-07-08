@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+include 'library.php';
 // commenting this out so that we can test login.php
 // no need to login if session variables are set.
 /*
@@ -15,7 +16,7 @@ $password = $_POST['password'] ?? null;
 $errors = array();
 
 if (isset($_POST['submit'])) {
-  include "library.php";
+
   $pdo = connectDB();
 
 
@@ -62,9 +63,13 @@ if (isset($_POST['submit'])) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-signin-client_id" content="661589590202-us1vtruq46mvta14t83d4fekdmtrp4mf.apps.googleusercontent.com">
   <title>Login</title>
   <link rel="stylesheet" href="../styles/login.css" />
   <link rel="stylesheet" href="../styles/errors.css" />
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
+  <script src="./googleSignIn.js" async defer></script>
 </head>
 
 <body>
@@ -95,8 +100,14 @@ if (isset($_POST['submit'])) {
         <a href=""><button type="submit" name="submit">Login</button></a>
       </div>
       <div id="forgotpass">
-        <a href=""><button>Forgot Password</button></a>
+        <a href="./resetpw.php"><button>Forgot Password?</button></a>
       </div>
+
+      <div id="forgotpass">
+        <a href=""><button>Continue as Guest <i class="fa fa-sign-in" aria-hidden="true"></i></button></a>
+      </div>
+      
+      
     </form>
   </main>
   <footer>
