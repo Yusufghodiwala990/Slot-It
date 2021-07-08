@@ -73,7 +73,7 @@ if($password != $confirmpass){
 
   $currentDate = date("U");
 
-  if(count($errors) ==- 0){
+  if(count($errors) === 0){
     $query = "SELECT * FROM `reset_password` WHERE resetSelector=? AND expiryDate >=? ";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$formSelector,$currentDate]);
