@@ -27,6 +27,18 @@ if (isset($_POST['submit'])) {
     $errors['username'] = true;
   }
 
+
+  //. unique username
+  $query = "SELECT COUNT(*) as numusers from `users` where username=?";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([$username]);
+  $row = $stmt->fetch();
+  
+  if($row['numusers']!==0){
+    $errors['unique'] = true;
+  }
+
+
   if (!isset($email) || strlen($email) == 0 || filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
     $errors['email'] = true;
   }
@@ -139,7 +151,9 @@ if (isset($_POST['submit'])) {
       <div>
         <input type="text" name="username" id="username" placeholder="derekpope666" autocomplete="off" value="<?=$username?>">
         <label for="username">Username</label>
+        <span class="error <?=!isset($errors['unique']) ? 'hidden' : ""; ?>">*Username already taken</span>
         <span class="error <?=!isset($errors['username']) ? 'hidden' : ""; ?>">*Username was empty</span>
+        
       </div>
 
       <div>
