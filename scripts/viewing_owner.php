@@ -10,23 +10,23 @@ if(!isset($_SESSION['user_id']))
 $user=$_SESSION['user_id']; 
 $Sheet_ID = $_GET['SheetID'];
 
-$query1 = "select ID,Description,Title from Signup_sheets where ID=?"; 
+$query1 = "select ID,Description,Title from Signup_sheets where ID=? && Owner_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
-$stmt1->execute([$Sheet_ID]);
+$stmt1->execute([$Sheet_ID,$user]);
 $result = $stmt1->fetch();
 
 if($result==false)
 {
-   echo "<h2>Bad Request </h2>";
-   die;
+   echo "<h2>'Sorry! You are not the owner of the sign-up sheet.'</h2>";
 }
+else{
 $Sheet_id = $result['ID'];
 
 $query2 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
 $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$Sheet_id]);
 $list1 = $stmt2->fetchAll();
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +59,7 @@ $list1 = $stmt2->fetchAll();
 </header>
 
 <main>
-<p> Title: <?=$result['Title']?></p>
+<p> Title: <?=$result['Title']?? '*****' ?></p>
     <table>
           <thead>
             <tr>
@@ -70,6 +70,20 @@ $list1 = $stmt2->fetchAll();
             </tr>
           </thead>
           <tbody>
+          <?php if($result==false) : ?>
+            <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+          <?php else: ?>
           <?php if($list1==null) : ?>
                     <tr>
                         <td></td>
@@ -104,7 +118,7 @@ $list1 = $stmt2->fetchAll();
               <td><?=$result2['Name']?></td>
               <?php endif ?>
             </tr>
-              <?php endforeach; endif?>
+              <?php endforeach; endif; endif;?>
           </tbody>
         </table>
 </main>

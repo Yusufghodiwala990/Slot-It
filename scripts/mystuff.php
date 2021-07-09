@@ -7,7 +7,7 @@ if(!isset($_SESSION['user_id']))
   header("location:login.php");
   exit;
 }
-$user=$_SESSION['user_id'];   //need this from yusuf's page
+$user=$_SESSION['user_id'];   
 include "library.php";
 // CONNECT TO DATABASE
 $pdo = connectDB();
@@ -85,9 +85,9 @@ $list2 = $stmt1->fetchAll();
                         <td><?=$row['No_of_signups']?></td>
                        
                         <td> <a href="./viewing_owner.php?SheetID=<?php echo $row['ID']?> " ><i class="fas fa-info-circle">Details</i></a></td>
-                        <td> <a href="./edit_sheet.php"><i class="fas fa-edit"> Edit</i></a></td>
+                        <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-edit"> Edit</i></a></td>
                         <td> <a href="./edit_sheet.php"><i class="fas fa-trash"> Delete</i></a></td>
-                        <td> <a href="./copy.php"><i class="fas fa-copy"> Copy</i></a></td>
+                        <td> <a href="./copying.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-copy"> Copy</i></a></td>
                         <td> <a href="./copy.php"><i class="fa fa-link"> CopyURL</i></a></td>
                     </tr>
                     <?php endforeach; endif; ?>

@@ -74,7 +74,12 @@ a{
   header nav ul li i{
     margin-left: .5em;
   }
-
+h2{
+  font-size: 1.4em;
+  padding-left: 4em;
+  padding-top: 2em;
+  font-weight: bold;
+}
 header img{
     height: 10em;
     width: 10em;
