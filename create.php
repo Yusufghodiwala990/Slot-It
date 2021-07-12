@@ -16,6 +16,15 @@
     $noOfSlots=$_POST['noOfSlots'];
     $startTime=$_POST['start-time'];
     $endTime=$_POST['end-time'];
+    $searchable = $_POST['searchability'] ?? false;
+
+    if($searchable==true){
+      $searchable=1;
+    }
+
+    else{
+      $searchable=0;
+    }
     
     if($_POST['name']==null)
     {
@@ -35,9 +44,9 @@
     if($_POST['name']!=null && $_POST['description']!=null && $_POST['noOfSlots']!=null){
     $pdo = connectDB();
    
-    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_slots,No_of_signups,Start,End) values (?,?,?,NOW(),?,0,?,?)"; 
+    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_slots,No_of_signups,Start,End,searchable) values (?,?,?,NOW(),?,0,?,?,?)"; 
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$title,$description,$userid,$noOfSlots,$startTime,$endTime]);
+    $stmt->execute([$title,$description,$userid,$noOfSlots,$startTime,$endTime,$searchable]);
 
     $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
 
@@ -61,7 +70,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slot-It</title>
-    <link rel="stylesheet" href="styles/signup.css"/>
+    <link rel="stylesheet" href="styles/create.css"/>
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   </head>
 
@@ -178,6 +187,11 @@
           </div>
 
           <div>
+              <input id="searchable" name="searchability" type="checkbox" value="true" />
+              <label for="searchable">Make my sheet searchable</label>
+          </div>
+
+          <div>
             <button id="submit" name="submit">Next</button>
           </div>
 
@@ -185,4 +199,16 @@
 
         </section>
       </main>
+
+      <footer>
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="mailto:slot-it@gmail.com">Contact</a></li>
+        <li><i class="fas fa-phone-square-alt"></i> : +1(705)-123-1234</li>
+        <li> <img src="img/logo.png" alt="Slot-it logo"></li>
+      </ul>
+      <p>&copy; 2021 - Slot-It - All rights reserved</p>
+      
+    </footer>
+    
 </body>

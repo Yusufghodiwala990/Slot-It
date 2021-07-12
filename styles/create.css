@@ -110,6 +110,40 @@ header nav ul div:last-of-type li:hover{
 }
 
 
+/* daud */
+footer{
+  background: black;
+  color:white;
+  padding: 1em;
+font-size: 1.5em;
+}
+
+footer ul{
+  display: flex;
+  justify-content: space-evenly;
+}
+footer p{
+  padding-top: 1em;
+text-align: center;
+font-size: 0.8em;
+}
+footer .fas{
+  font-size: larger;
+}
+footer li a{
+  color: white;
+}
+footer li a:visited{
+  color:#FF007F;
+}
+footer li a:hover{
+  color:#94BBDB;
+}
+
+footer ul li img{
+  height:3em;
+  width: 3em;
+}
 
 /* Kris - Signup - CLEAN SHEET*/
 
@@ -172,8 +206,9 @@ legend{
   padding-top: 1em;
 }
 
-form div:nth-child(5),form div:nth-child(6),form div:nth-child(7),form div:nth-child(8){
-  padding-bottom: 0.5em;
+/* https://gist.github.com/rondevera/167627 */
+form div:nth-child(n+5):nth-child(-n+11){
+  padding-bottom: 0.7em;
 }
 
 fieldset:last-of-type + div{

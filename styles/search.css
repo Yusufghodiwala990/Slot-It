@@ -79,9 +79,6 @@ main div{
   header nav ul li i{
     margin-left: .5em;
   }
-  main h1::first-letter{
-      font-size: 2em;
-  }
 main h1{
     text-align: center;
     margin-top: 2em;
@@ -97,9 +94,20 @@ main form{
     display: flex;
     justify-content: center;
     margin-top: 6em;
+    flex-direction: column;
 }
 
-form input{
+main div{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main div div{
+  display: flex;
+  flex-direction: row;
+}
+
+form input[type="text"]{
     width: 40em;
     height: 3em;
     border-radius: 0.4em;
@@ -128,14 +136,12 @@ form button:hover{
 
 h2{
   font-size: 1.3em;
-    margin-left: 6em;
-    margin-top: 1.5em;
-text-decoration:underline;}
+  text-decoration:underline;
+  padding-bottom: 1em;
+  text-align: center;}
 
-main div:last-of-type{
-  margin-left: 6em;
-  font-size: 1.3em;
-}
+
+
 ol{list-style-type: upper-roman;}
 
 table {
@@ -196,4 +202,10 @@ footer{
   footer ul li img{
     height:3em;
     width: 3em;
+  }
+
+  section{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }

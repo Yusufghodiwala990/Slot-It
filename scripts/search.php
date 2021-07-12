@@ -4,15 +4,18 @@
 session_start();
 include "library.php";
 
-$empty = true;
 $stmt = array();
 $keyword = $_POST['keyword'] ?? null;
+$searchPref = $_POST['searchPreference'] ?? null;
+
 if(isset($_POST['submit'])){
 
- $keyword .="%";
 
 $pdo = connectDB();
-$query = "SELECT * FROM `Signup_sheets` WHERE TITLE LIKE ?";
+
+if($searchPref=="selectTitle"){
+$keyword .="%";
+$query = "SELECT * FROM `Signup_sheets` WHERE TITLE LIKE ? AND SEARCHABLE=true";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$keyword]);
 
@@ -23,9 +26,36 @@ else{
   $numresults = $stmt->rowCount();
   $empty = false;
 }
+}
 
+if($searchPref=="selectDesc"){
+  $keyword .="%";
+  $query = "SELECT * FROM `Signup_sheets` WHERE Description LIKE ? AND SEARCHABLE=true";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([$keyword]);
+  
+  if($stmt->rowCount()==0){
+    $empty = true;
+  }
+  else{
+    $numresults = $stmt->rowCount();
+    $empty = false;
+  }
+}
 
-
+if($searchPref=="selectOwner"){
+  $query = "SELECT * FROM `Signup_sheets` INNER JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username=? AND SEARCHABLE=true";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([$keyword]);
+  
+  if($stmt->rowCount()==0){
+    $empty = true;
+  }
+  else{
+    $numresults = $stmt->rowCount();
+    $empty = false;
+  }
+}
 
 
 }
@@ -60,17 +90,40 @@ else{
       </nav>      
     </header>
   <main>
+    <section>
       <h1> Search for Sign-ups </h1>
           <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
-              <input type="text" autocomplete="on" placeholder="Title..." name="keyword"/>
-              <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></>
+              
+              <div>
+              <input type="text" autocomplete="on" placeholder="Enter a keyword.." name="keyword"/>
+              <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+              
+              <div>
+              <p>Search by:</p>
+              <input type="radio" id="selectTitle" name="searchPreference" value="selectTitle" checked>
+              <label for="selectTitle">Title</label>
+
+              <input type="radio" id="selectDesc" name="searchPreference" value="selectDesc">
+              <label for="selectDesc">Description</label>
+
+              <input type="radio" id="selectOwner" name="searchPreference" value="selectOwner">
+              <label for="selectDesc">Owner</label>
+
+              </div>
+              
+              </div>
+              
           </form>
           
-
-         
-<?php if(!$empty):?> 
-  <h2>Found <?=$numresults?> result/results for keyword </h2>
+<?php if(isset($empty) && $empty==true):?>
   <div>
+    <h2>No results found.</h2>
+  </div>
+<?php endif?>
+
+<?php if(isset($empty) && $empty==false):?>
+  <div>
+  <h2>Found <?=$numresults?> result/results for keyword</h2>
     <ol>
 <?php foreach($stmt as $row):?>
   <?php 
@@ -90,6 +143,7 @@ if(isset($_SESSION['user_id'])):
           </div>
 <?php endif?>
 
+  </section>
   </main>
   <footer>
       <ul>
