@@ -100,7 +100,7 @@ if(isset($_POST['deleteSlot']))
           <p>Are you sure you want to continue?</p>
           <div>
             <a href="slotCancelled.php?SlotID=<?php echo $SlotID?>">Yes</button>
-            <a name="mystuff.php">No</button>
+            <a href="mystuff.php">No</button>
           </div>
         </section>
       </main>
