@@ -24,6 +24,14 @@ $end = $_POST['end'] ?? null;
 $slots = $_POST['slots'] ?? null;
 $added_slots = $slots + $result1['No_of_slots'];
 
+if (isset($_POST['delete'])) {
+  $query3 = "DELETE from Signup_sheets where ID = ?";  
+  $stmt3 = $pdo->prepare($query3);
+  $stmt3->execute([$Sheet_ID]);
+  echo "Successfully Deleted the sheet.";
+  header("Location:mystuff.php");
+exit;
+}
 if (isset($_POST['submit'])) {
 
   if (!isset($Title) || strlen($Title) == 0 ) {
@@ -46,6 +54,7 @@ if (isset($_POST['submit'])) {
       $stmt2->execute([$Title,$description,$result1['Start'],$result1['End'],$added_slots,$Sheet_ID]);
       echo "bye!";
       header("Location:mystuff.php");
+      exit;
      }
 }
 ?>
@@ -119,16 +128,14 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div>
-          <!-- <a href=""><button>Back</button></a> -->
           <a href=""><button type="submit" name="submit">Submit</button></a>
         </div>
 
+        <div class="deletebutton">
+      <button type="submit" name="delete">Delete Sheet</button>
+      </div>
       </form>
     </section>
-
-    <div class="deletebutton">
-      <a href=""><button>Delete Sheet</button></a>
-      </div>
     
     </main>
 </body>

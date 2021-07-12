@@ -174,7 +174,7 @@ form a:first-of-type button {
   font-size: 1.2em;
   cursor: pointer;
 }
-form div:last-of-type button {
+form div:nth-of-type(7) button {
   background-color: #ff007f; /* 25D09D */
   color: white;
   font-weight: bolder;
@@ -185,19 +185,17 @@ form div:last-of-type button {
   padding: 1em 3em 1em 3em;
   transition: 0.2s transform ease-in-out;
 }
-form div:last-of-type button:last-of-type{
+form div:nth-of-type(7) button:last-of-type{
   background-color:hsla(212, 65%, 49%, 1);;
 }
-.deletebutton {
+form div:last-of-type {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.deletebutton a {
-  align-self: flex-end;
-}
-.deletebutton button {
+
+form div:last-of-type button {
   margin: 0em 3em 0.5em 0em;
   background-color: red;
   color: white;
@@ -208,8 +206,10 @@ form div:last-of-type button:last-of-type{
   border-radius: 0.5em;
   padding: 1em;
   transition: 0.2s transform ease-in-out;
+  align-self: flex-end;
+
 }
 
-.deletebutton button:hover {
+form div:last-of-type button:hover {
   background-color: rgb(233, 7, 7);
 }
