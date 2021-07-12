@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
         <a href=""><button type="submit" name="submit">Login</button></a>
       </div>
       <div id="forgotpass">
-        <a href="./resetpw.php"><button>Forgot Password?</button></a>
+        <a href="resetpw.php"><button type="button">Forgot Password?</button></a>
       </div>
 
       <div id="forgotpass">
