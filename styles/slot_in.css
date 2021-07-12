@@ -1,0 +1,95 @@
+@import url(./reset.css);
+
+@import url(//fonts.googleapis.com/css?family=Krona+One);
+@keyframes navFade2 {
+    0.0% {
+      transform: rotate(0) translate(0%, -100%);
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(0);
+      opacity: 1;
+    }
+  }
+  @keyframes navFade {
+    0.0% {
+      transform: rotate(0) translate(0, 30%);
+  
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(0) translate(0, 0);
+      opacity: 1;
+    }
+  }
+body {
+  font-family: "Krona One", sans-serif;
+  
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20em;
+  }
+
+  h2 {
+    text-indent: 10em;
+    font-size: 2em;
+  }
+  
+  form div {
+    transition: all 0.3s;
+    margin-bottom: 1em;
+    width: 30%;
+    margin-top: 2em;
+    
+  }
+
+  form label {
+    font-size: 1.3em;
+    display: block;
+    transform: translate(0.5em, -1.5em);
+    cursor: text;
+    transform-origin: 0 0;
+    transition: all 0.3s;
+    color: black;
+  }
+  form input::placeholder {
+    color: transparent;
+  }
+  /* focus within actually selects all elements that had focus*/
+  form div:focus-within {
+    transform: scale(1.02);
+  }
+
+  /* REF https://css-tricks.com/float-labels-css/ */
+form input:focus + label,
+form input:not(:placeholder-shown) + label {
+  transform: translateY(-3.4em);
+}
+
+form input {
+    font-weight: bolder;
+    font-size: 1.1em;
+    border-radius: 0.5em;
+    border-bottom: 0.15em solid #002d8f;
+    border-style: none none solid none;
+    padding: 1em 0em 0.3em 1.5em;
+    width: 100%;
+    box-shadow: none;
+    background-color: #eff2ef;
+    transition: all 0.2s;
+    box-sizing: border-box; /* for the browser to account for the border and calculate padding
+       based on that for (input) and not overflow the parent*/
+  }
+
+  form input:focus {
+    box-shadow: none;
+    outline: none;
+    border-color: #ff007f;
+  }
+
+  form div:focus-within {
+    transform: scale(1.02);
+  }

@@ -111,7 +111,9 @@ th {
   font-size: 0.61em;
 }
 
-
+td>button{
+  
+}
 footer{
     background: black;
     color:white;

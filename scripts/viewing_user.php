@@ -1,8 +1,9 @@
 <?php 
 include "library.php";
 $pdo = connectDB();
+session_start();
 
-$Sheet_ID = $_GET['SheetID'];
+$Sheet_ID = $_GET['SheetID']??null;
 
 $query1 = "select ID,Description,Title,Owner_ID from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
@@ -15,10 +16,21 @@ $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$result['Owner_ID']]);
 $result2 = $stmt2->fetch();
 
-$query3 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
+$query3 = "select Scheduled_slots,Guest_ID,user_ID,Slot_ID from Slots where Sheet_ID=?"; 
 $stmt3 = $pdo->prepare($query3);
 $stmt3->execute([$Sheet_ID]);
 $list1 = $stmt3->fetchAll();
+
+?>
+
+
+<?php
+
+if(isset($_POST['submit'])){
+  $info = $_POST['submit'] ?? null;
+  var_dump($info);
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -53,6 +65,7 @@ $list1 = $stmt3->fetchAll();
 <main>
 <p> Title: <?=$result['Title']?></p>
 <p> Owner: <?=$result2['fname']?></p>   
+<form action="./slot_in.php" method="post" novalidate autocomplete="false">
     <table>
           <thead>
             <tr>
@@ -77,7 +90,11 @@ $list1 = $stmt3->fetchAll();
               <td><?=$row['Scheduled_slots']?></td>
               <td><?=$row['Scheduled_slots']?></td>
               <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
-              <td><a href="">Slot-me-in</a></td>
+                <?php if(isset($_SESSION['user_id'])):?>
+             <td><button name="submit" type="submit" value="<?=$result['ID'] . "-" . $row['Slot_ID']?>">SLOT ME IN</button></td>
+              <?php else: ?>   
+                <td><a href="guestlogin.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></td>
+              <?php endif; ?>
               <?php  elseif(!isset($row['Guest_ID'])): 
                 $query4 = "select fname from users where ID=?"; 
                 $stmt4 = $pdo->prepare($query4);
@@ -98,6 +115,7 @@ $list1 = $stmt3->fetchAll();
 
           </tbody>
         </table>
+</form>
 </main>
 <footer>
       <ul>
