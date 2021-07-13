@@ -13,26 +13,10 @@ if(isset($_POST['submit'])){
 
 $pdo = connectDB();
 
-if($searchPref=="selectTitle"){
-$keyword .="%";
-$query = "SELECT * FROM `Signup_sheets` WHERE TITLE LIKE ? AND SEARCHABLE=true";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$keyword]);
 
-if($stmt->rowCount()==0){
-  $empty = true;
-}
-else{
-  $numresults = $stmt->rowCount();
-  $empty = false;
-}
-}
-
-if($searchPref=="selectDesc"){
-  $keyword .="%";
-  $query = "SELECT * FROM `Signup_sheets` WHERE Description LIKE ? AND SEARCHABLE=true";
+  $query = "SELECT * FROM `Signup_sheets` INNER JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
   $stmt = $pdo->prepare($query);
-  $stmt->execute([$keyword]);
+  $stmt->execute([$keyword,$keyword,$keyword]);
   
   if($stmt->rowCount()==0){
     $empty = true;
@@ -41,21 +25,7 @@ if($searchPref=="selectDesc"){
     $numresults = $stmt->rowCount();
     $empty = false;
   }
-}
 
-if($searchPref=="selectOwner"){
-  $query = "SELECT * FROM `Signup_sheets` INNER JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username=? AND SEARCHABLE=true";
-  $stmt = $pdo->prepare($query);
-  $stmt->execute([$keyword]);
-  
-  if($stmt->rowCount()==0){
-    $empty = true;
-  }
-  else{
-    $numresults = $stmt->rowCount();
-    $empty = false;
-  }
-}
 
 
 }
@@ -97,19 +67,6 @@ if($searchPref=="selectOwner"){
               <div>
               <input type="text" autocomplete="on" placeholder="Enter a keyword.." name="keyword"/>
               <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-              
-              <div>
-              <p>Search by:</p>
-              <input type="radio" id="selectTitle" name="searchPreference" value="selectTitle" checked>
-              <label for="selectTitle">Title</label>
-
-              <input type="radio" id="selectDesc" name="searchPreference" value="selectDesc">
-              <label for="selectDesc">Description</label>
-
-              <input type="radio" id="selectOwner" name="searchPreference" value="selectOwner">
-              <label for="selectDesc">Owner</label>
-
-              </div>
               
               </div>
               
