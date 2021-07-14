@@ -107,44 +107,6 @@
             <textarea name="description"  id="description" cols="30" rows="10"></textarea>
             <span class="<?=!isset($errors['descriptionError']) ? 'hidden' : "error";?>">Please set a description.</span>
           </div>
-
-          <fieldset>
-            <legend>Sheet Tracking</legend>
-
-            <div>
-              <input id="dAndT" name="tracking" type="radio" value="A" />
-              <label for="dAndT">Track date and time</label>
-            </div>
-
-            <div>
-              <input id="dOnly" name="tracking" type="radio" value="B" />
-              <label for="dOnly">Track date</label>
-            </div>
-            
-            <div>
-              <input id="tOnly" name="tracking" type="radio" value="C" />
-              <label for="tOnly">Track time</label>
-            </div>
-
-            <div>
-              <input id="nOnly" name="tracking" type="radio" value="B" />
-              <label for="nOnly">Track by name only; do not track date and time</label>
-            </div>
-
-          </fieldset>
-
-          <fieldset>
-            <legend>Fields</legend>
-            <div>
-              
-              <input id="colEmail" name="collect" type="checkbox"/>
-              <label for="colEmail">Collect email when the sheet is filled out</label>
-              <br>
-              <input id="colPhone" name="collect" type="checkbox"/>
-              <label for="colPhone">Collect phone when the sheet is filled out</label>
-            
-            </div>
-          </fieldset>
           
           <div>
             <label for="usrName">Your Name:</label>

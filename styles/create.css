@@ -178,7 +178,7 @@ main section h1{
   text-align: center;
 }
 
-main section div:nth-child(1),main section div:nth-child(2){
+main section div{
   display: flex;
   flex-direction: column;
 }
@@ -208,7 +208,7 @@ legend{
 
 /* https://gist.github.com/rondevera/167627 */
 form div:nth-child(n+5):nth-child(-n+11){
-  padding-bottom: 0.7em;
+  padding-bottom: 1em;
 }
 
 fieldset:last-of-type + div{
@@ -239,4 +239,17 @@ button:hover{
 
 .error{
   color: red;
+}
+
+form input, select, textarea{
+  background: rgba(9, 56, 36, 0.1);
+  border-radius: 0.5em;
+  font-size: 0.9em;
+  padding: 0.7em;
+  font-family: 'Krona One', sans-serif;
+  
+}
+
+main section div:nth-child(9), main section div:last-child{
+  display: block;
 }

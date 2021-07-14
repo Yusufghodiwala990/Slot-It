@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,10 +18,21 @@
             <img src="./img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
+          
           <a href=""><li>Home</li></a>
           <a href="./scripts/search.php"><li>Search</li></a>
-          <a href="./scripts/registration.php"><li>Sign-up<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-          <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
+          
+          <?php if(isset($_SESSION['user_id'])):?>
+            <a href="create.php"><li>Create</li></a>
+            <a href="./scripts/mystuff.php"><li>View</li></a>
+            <a href="./scripts/edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+          <?php endif ?>
+
+          <?php if(!isset($_SESSION['user_id'])): ?>
+            <a href="./scripts/registration.php"><li>Sign-up<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
+            <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
+          <?php endif ?>
+
         </div>
         </ul>
       </nav>      
