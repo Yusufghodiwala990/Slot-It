@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
   header("Location:login.php");
   exit();
 }
@@ -17,11 +17,12 @@ $stmt->execute([$userID]);
 $userInfo = $stmt->fetch();
 
 if (isset($_POST['submit'])) {
-$name = $_POST['name'] ?? null;
-$username = $_POST['username'] ?? null;
-$email = $_POST['email'] ?? null;                                              
-$password = $_POST['password'] ?? null;
-$confirmpass = $_POST['conpass'] ?? null;
+  $name = $_POST['name'] ?? null;
+  $username = $_POST['username'] ?? null;
+  $email = $_POST['email'] ?? null;
+  $password = $_POST['password'] ?? null;
+  $confirmpass = $_POST['conpass'] ?? null;
+
 
   if (!isset($name) || strlen($name) == 0 || is_numeric($name) == true) {
     $errors['name'] = true;
@@ -35,85 +36,168 @@ $confirmpass = $_POST['conpass'] ?? null;
     $errors['email'] = true;
   }
 
-  if($password != $confirmpass){
+  if ($password != $confirmpass) {
     $errors['match'] = true;
   }
 
-  
+
   // void functions in 7.1
   //https://www.php.net/manual/en/migration71.new-features.php
-   function checkPassword($password){
-     $flag = false;
-    if(strlen($password) == 0 || strlen($password) < 8){
-    $flag = true;
+  function checkPassword($password)
+  {
+    $flag = false;
+    if (strlen($password) == 0 || strlen($password) < 8) {
+      $flag = true;
     }
     // no digits
-    if(!preg_match('/[0-9]+/',$password)){
-      
+    if (!preg_match('/[0-9]+/', $password)) {
+
       $flag = true;
-      
     }
     // at least one letter
-    if(!preg_match('/[a-zA-Z]+/',$password)){
-      
+    if (!preg_match('/[a-zA-Z]+/', $password)) {
+
       $flag = true;
-     
     }
     // uppercse
-    if(!preg_match('/[A-Z]+/',$password)){
-     
-     $flag  = true;
+    if (!preg_match('/[A-Z]+/', $password)) {
 
+      $flag  = true;
     }
     // at least one special character
-    if(!preg_match('/[-@_#$%^&+=]/',$password)){
-      
+    if (!preg_match('/[-@_#$%^&+=]/', $password)) {
+
       $flag  = true;
-      
     }
     return $flag;
   }
 
 
 
-  function hashPass($password){
-    $hashedpass = password_hash($password,PASSWORD_DEFAULT);
+  function hashPass($password)
+  {
+    $hashedpass = password_hash($password, PASSWORD_DEFAULT);
     return $hashedpass;
-
-
-
   }
+
   
+
+
+
 
   // NOTE : Not displaying the password in the field for edit account. Security issue.
   // only check if requirements are met if a password was submitted
   //  otherwise allow the user to leave it blank
 
-  if(strlen($_POST['password']) !== 0){
-  if(checkPassword($password)){
-    $errors['password'] = true;
+  if (strlen($_POST['password']) !== 0) {
+    if (checkPassword($password)) {
+      $errors['password'] = true;
+    }
+  }
+
+
+  if(count($errors) == 0) {
+      if (strlen($_POST['password']) !== 0) {
+        $hashedpass = hashPass($password);
+        $query = "UPDATE `users` SET username=?, fname=?, email=?, password=? WHERE ID=?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$username, $name, $email, $hashedpass, $userID]);
+        $update = true;
+        echo "UPDATE WITH PASS DONE";
+      } else {
+        $query = "UPDATE `users` SET username=?, fname=?, email=? WHERE ID=?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$username, $name, $email, $userID]);
+        $update = true;
+      }
+
+      header("Refresh:0 url=edit_account.php");
+    
   }
 }
- 
 
-  if(count($errors) ==- 0){
-    if(strlen($_POST['password'])!==0){
-    $hashedpass = hashPass($password);
-    $query = "UPDATE `users` SET username=?, fname=?, email=?, password=? WHERE ID=?";
+
+// for the profile change form
+
+if(isset($_POST['submit2'])){
+  // from notes
+  function checkAndMoveFile($filekey, $sizelimit, $newname, $fileError)
+  {
+    //modified from http://www.php.net/manual/en/features.file-upload.php
+
+    // Undefined | Multiple Files | $_FILES Corruption Attack
+    // If this request falls under any of them, treat it invalid.
+    if (!isset($_FILES[$filekey]['error']) || is_array($_FILES[$filekey]['error'])) {
+    }
+
+    // Check Error value.
+    switch ($_FILES[$filekey]['error']) {
+      case UPLOAD_ERR_OK:
+        break;
+      case UPLOAD_ERR_NO_FILE:
+        $fileError = true;
+
+
+
+      case UPLOAD_ERR_INI_SIZE:
+      case UPLOAD_ERR_FORM_SIZE:
+
+        $fileError = true;
+      default:
+        $fileError = true;
+    }
+
+    // You should also check filesize here.
+    if ($_FILES[$filekey]['size'] > $sizelimit) {
+      $fileError = true;
+      throw new RuntimeException('Exceeded filesize limit.');
+    }
+
+    // Check the File type  Note: this example assumes image upload
+    if (
+      exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_GIF
+      and exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_JPEG
+      and exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_PNG
+    ) {
+      $fileError = true;
+    }
+
+   
+    if ($fileError == false) {
+      if (!move_uploaded_file($_FILES[$filekey]['tmp_name'], $newname)) {
+        throw new RuntimeException('Failed to move uploaded file.');
+      }
+    }
+    return $fileError;
+  }
+
+  if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
+    $query = "SELECT ID AS user_ID FROM `users` where ID=?";
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$username,$name,$email,$hashedpass,$userID]);
-    $update = true;
-    echo "UPDATE WITH PASS DONE";
+    $stmt->execute([$userID]);
+    $row = $stmt->fetch();
+   
+
+    $uniqueid = $row['user_ID'];
+    $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+    $fileroot = "profile-pic";
+
+    $filename = $_FILES['profilepic']['name'];
+    $exts = explode(".", $filename);
+    $ext = $exts[count($exts) - 1];
+    $filename = $fileroot . $uniqueid . "." . $ext;
+    $newname = $path . $filename;
+    $fileError = false;
+
+
+    if (checkAndMoveFile('profilepic', 1972864, $newname, $fileError)) {
+      $errors['file'] = true;
     }
     else{
-    $query = "UPDATE `users` SET username=?, fname=?, email=? WHERE ID=?";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$username,$name,$email,$userID]);
-    $update = true;    
+      echo "Profile was updated.";
     }
-    
-    header("Refresh:0 url=edit_account.php");
   }
+
 }
 ?>
 <!DOCTYPE html>
@@ -160,35 +244,35 @@ $confirmpass = $_POST['conpass'] ?? null;
   <main>
     <section>
       <h2>Account Information</h2>
-      <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
+      <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false">
 
         <div>
-          <input type="text" name="name" placeholder="John Smith" id="name" value="<?=$userInfo['fname']?>">
+          <input type="text" name="name" placeholder="John Smith" id="name" value="<?= $userInfo['fname'] ?>">
           <label for="name">Full Name</label>
-          <span class="error <?=!isset($errors['name']) ? 'hidden' : ""; ?>">*Name was empty</span>
+          <span class="error <?= !isset($errors['name']) ? 'hidden' : ""; ?>">*Name was empty</span>
         </div>
 
         <div>
-          <input type="text" name="username" id="username" placeholder="derekpope666" autocomplete="off" value="<?=$userInfo['username']?>">
+          <input type="text" name="username" id="username" placeholder="derekpope666" autocomplete="off" value="<?= $userInfo['username'] ?>">
           <label for="username">Username</label>
-          <span class="error <?=!isset($errors['username']) ? 'hidden' : ""; ?>">*Username was empty</span>
+          <span class="error <?= !isset($errors['username']) ? 'hidden' : ""; ?>">*Username was empty</span>
         </div>
 
         <div>
-          <input type="text" name="email" id="email" placeholder="derekpope666" autocomplete="off" value="<?=$userInfo['email']?>">
+          <input type="text" name="email" id="email" placeholder="derekpope666" autocomplete="off" value="<?= $userInfo['email'] ?>">
           <label for="email">Email</label>
-          <span class="error <?=!isset($errors['email']) ? 'hidden' : ""; ?>">*Email Invalid</span>
+          <span class="error <?= !isset($errors['email']) ? 'hidden' : ""; ?>">*Email Invalid</span>
         </div>
         <div>
           <input type="password" name="password" id="password" placeholder="inbaepn" autocomplete="off" value="">
           <label for="password">Password</label>
-          <span class="error <?=!isset($errors['password']) ? 'hidden' : ""; ?>">
-        *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
+          <span class="error <?= !isset($errors['password']) ? 'hidden' : ""; ?>">
+            *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
         </div>
         <div>
           <input type="password" name="conpass" id="conpass" placeholder="inbaepn" autocomplete="off" value="">
           <label for="conpass">Confirm Password</label>
-          <span class="error <?=!isset($errors['match']) ? 'hidden' : ""; ?>">*Passwords do not match</span>
+          <span class="error <?= !isset($errors['match']) ? 'hidden' : ""; ?>">*Passwords do not match</span>
         </div>
 
         <div>
@@ -197,21 +281,24 @@ $confirmpass = $_POST['conpass'] ?? null;
         </div>
       </form>
 
-     
+
     </section>
 
 
-    <form id="profpic" action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
+    <form id="profpic" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
       <aside>
-      <label id="special" class="profpic" id="profilepic" for="profilepic">Change Profile Picture<i class="far fa-user-circle"></i></label>
-          <input class="profpic" type="file" id="profilepic" name="profilepic">
-         
-        </aside>
-        </form>
+        <label id="special" class="profpic" id="profilepic" for="profilepic">Change Profile Picture<i class="far fa-user-circle"></i></label>
+        <input class="profpic" type="file" id="profilepic" name="profilepic">
+        <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size</span>
+        <div>
+          <a href=""><button type="submit" name="submit2">Change</button></a>
+        </div>
+      </aside>
+    </form>
+    
   </main>
-  
   <div class="deletebutton">
-      <a href=""><button>Delete Account</button></a>
-    </div>
+    <a href=""><button>Delete Account</button></a>
+  </div>
 </body>
 </html>

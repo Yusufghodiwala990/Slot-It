@@ -105,7 +105,13 @@ header{
   font-size: .9em;
   width:20%;
   border-radius: 5em;
+  display: flex;
+}
 
+#profpic button{
+  background-color: hsla(212, 65%, 49%, 1);
+  margin-top: 1em;
+  
 }
 
 form div{
@@ -197,6 +203,8 @@ form button{
 form button:hover{
     transform: scale(1.08);
 }
+
+
 
 .deletebutton{
     display: flex;

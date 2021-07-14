@@ -88,8 +88,7 @@ if (isset($_POST['submit'])) {
   }
   // from php notes on blackboard
 
-  function checkAndMoveFile($filekey, $sizelimit, $newname, $fileError)
-  {
+  function checkAndMoveFile($filekey, $sizelimit, $newname, $fileError){
     //modified from http://www.php.net/manual/en/features.file-upload.php
 
     // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -136,7 +135,7 @@ if (isset($_POST['submit'])) {
     }
   }
     return $fileError;
-  }
+ }
 
 
   if (checkPassword($password)) {
@@ -149,40 +148,42 @@ if (isset($_POST['submit'])) {
 
 
 if (count($errors) == 0) {
-  // from notes
+    // from notes
+  
+    if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
+      $query = "SELECT MAX(ID) AS latest FROM `users`";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $row = $stmt->fetch();
 
-  if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
-    $query = "SELECT MAX(ID) AS latest FROM `users`";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $row = $stmt->fetch();
+      $uniqueid = $row['latest'] + 1;
+      $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+      $fileroot = "profile-pic";
 
-    $uniqueid = $row['latest'] + 1;
-    $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
-    $fileroot = "profile-pic";
-
-    $filename = $_FILES['profilepic']['name'];
-    $exts = explode(".", $filename);
-    $ext = $exts[count($exts) - 1];
-    $filename = $fileroot . $uniqueid . "." . $ext;
-    $newname = $path . $filename;
-    $fileError = false;
+      $filename = $_FILES['profilepic']['name'];
+      $exts = explode(".", $filename);
+      $ext = $exts[count($exts) - 1];
+      $filename = $fileroot . $uniqueid . "." . $ext;
+      $newname = $path . $filename;
+      $fileError = false;
 
 
-    if (checkAndMoveFile('profilepic', 1972864, $newname, $fileError)) {
-      $errors['file'] = true;
-    } 
-    else{
+      if (checkAndMoveFile('profilepic', 1972864, $newname, $fileError)) {
+        $errors['file'] = true;
+      }
+    }
+
+    if (!isset($errors['file'])) {
       $hashedpass = hashPass($password);
       $query = "INSERT INTO `users` (username, fname, email, password) values(?,?,?,?)";
       $stmt = $pdo->prepare($query);
       $stmt->execute([$username, $name, $email, $hashedpass]);
     }
-    //header("Location:login.php");
+    
+    //header("Location:login.php"); 
+}
+}
 
-  }
-}
-}
 
 
 //At some point in an application sessions should be destroyed (i.e. when a user logs out). To destroy a session call session_destroy(), which cleans up the session variables and removes the session file.
