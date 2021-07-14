@@ -14,7 +14,7 @@ if(isset($_POST['submit'])){
 $pdo = connectDB();
 
 
-  $query = "SELECT * FROM `Signup_sheets` INNER JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
+  $query = "SELECT Signup_sheets.ID, Signup_sheets.Title FROM `Signup_sheets` LEFT JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$keyword,$keyword,$keyword]);
   
