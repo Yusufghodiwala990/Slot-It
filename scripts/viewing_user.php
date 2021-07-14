@@ -4,7 +4,6 @@ $pdo = connectDB();
 session_start();
 
 $Sheet_ID = $_GET['SheetID']??null;
-
 $query1 = "select ID,Description,Title,Owner_ID from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
