@@ -199,6 +199,7 @@ if (count($errors) == 0) {
   <title>Registration</title>
   <link rel="stylesheet" href="../styles/registration.css" />
   <link rel="stylesheet" href="../styles/errors.css" />
+  <script src="./registration.js" defer></script>
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
 </head>
 
@@ -207,7 +208,8 @@ if (count($errors) == 0) {
 
     <h1>Create Account</h1>
     <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
-      <aside>
+
+    <aside>
         <!-- soft limit -->
         <input type="hidden" name="MAX_FILE_SIZE" value="1972864" />
 
