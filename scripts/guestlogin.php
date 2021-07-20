@@ -1,13 +1,38 @@
 <?php
 $name = $_POST['name'] ?? null;
 $email = $_POST['email'] ?? null;
-$sheet_id = $_GET['SheetID'] ;
-$Slot_ID = $_GET['Slot_ID'] ;
+$sheet_id = $_GET['SheetID'] ?? null ;
+$Slot_ID = $_GET['Slot_ID'] ?? null ;
 $errors = array();
 include "library.php";
+$pdo = connectDB();
 
+
+// two options to store the details of guest, use form or google sign in.
+// $_POST['submit-from-js] is a check to verify that details were sent through google sign in
+// $_POST['submit] is a check to verify that details were sent through the Form on the page
+
+
+session_start();
+if(isset($_POST['submit-from-js'])){
+
+  // use this details for google sign in on other pages (if applicable)
+  $_SESSION['googleName'] = $_POST['name'];
+  $_SESSION['googleEmail'] = $_POST['email'];
+}
+
+// inserting the details of the guest onto the guest table in the database
+if(isset($_SESSION['googleName'])){
+  $query = "INSERT INTO `Guest_users` (Name, email) values(?,?)";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
+
+  // **TO DAUD** - REDIRECT WHERE NECESSARY after the google sign in.
+  header("Location:search.php");
+
+}
 if (isset($_POST['submit'])) {
-    $pdo = connectDB();
+
 
   if (!isset($name) || strlen($name) === 0) {
     $errors['name'] = true;
@@ -42,7 +67,8 @@ if(count($errors) == 0){
     $stmt4 = $pdo->prepare($query4);
     $stmt4->execute([$No_of_slots,$sheet_id]);
     echo "You have been slotted-in successfully!";
-  header("Refresh:3 url=search.php");}
+  //header("Refresh:3 url=search.php");
+}
     }
 
 ?>

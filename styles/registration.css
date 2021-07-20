@@ -40,12 +40,13 @@ form{
     display: flex;
     flex-direction: column;
     width: 50vw;
-    padding: 1em 1em .3em 1em;
+    padding: 2em 1em .3em 1em;
     border:.5em solid white;
     border-radius: 2.5em;
     background-color: white;
     margin: .5em;
 }
+
 section h1{
     align-self: center;
 }
@@ -110,7 +111,7 @@ form div:focus-within{
 
    /* REF https://css-tricks.com/float-labels-css/ */
 form input:focus + label,form input:not(:placeholder-shown)+label{
-    transform: translateY(-3.35em);
+    transform: translateY(-3.45em);
 }
 
 
