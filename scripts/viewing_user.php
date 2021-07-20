@@ -24,15 +24,7 @@ $list1 = $stmt3->fetchAll();
 ?>
 
 
-<?php
 
-if(isset($_POST['submit'])){
-  $info = $_POST['submit'] ?? null;
-  var_dump($info);
-}
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,8 +84,10 @@ if(isset($_POST['submit'])){
               <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
                 <?php if(isset($_SESSION['user_id'])):?>
              <td><button name="submit" type="submit" value="<?=$result['ID'] . "-" . $row['Slot_ID']?>">SLOT ME IN</button></td>
+             <?php elseif(isset($_SESSION['Guest_ID'])): ?>   
+              <td><button><a href="./slot_in.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></button></td>
               <?php else: ?>   
-                <td><a href="guestlogin.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></td>
+                <td><button><a href="./login.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></button></td>
               <?php endif; ?>
               <?php  elseif(!isset($row['Guest_ID'])): 
                 $query4 = "select fname from users where ID=?"; 

@@ -12,13 +12,21 @@ if(isset($_SESSION['username'])){
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
 
+if(isset($_GET['Slot_ID'])){
+$_SESSION['SheetID'] = $_GET['SheetID'] ??null;
+$_SESSION['SlotID'] = $_GET['Slot_ID'] ??null;
+}
+
+// if(isset($_SESSION['Guest_ID' && 'SlotID'])){   //try this again
+//   header("Location:slot_in.php");
+//   exit();
+//}
 
 $errors = array();
 
 if (isset($_POST['submit'])) {
 
   $pdo = connectDB();
-
 
   if (!isset($username) || strlen($username) === 0) {
     $errors['username'] = true;
@@ -46,6 +54,10 @@ if (isset($_POST['submit'])) {
           setcookie("slot-it", $username, time() + 60 * 60 * 24);
         }
 
+        if(isset($_SESSION['SlotID'])){
+          header("Location:slot_in.php");
+          exit();
+        }
         header("Location:mystuff.php");
         exit();
       } else {
@@ -104,7 +116,7 @@ if (isset($_POST['submit'])) {
       </div>
 
       <div id="forgotpass">
-        <a href=""><button>Continue as Guest <i class="fa fa-sign-in" aria-hidden="true"></i></button></a>
+        <button><a href="guestlogin.php">Continue as Guest <i class="fa fa-sign-in" aria-hidden="true"></i></a></button>
       </div>
       
       
