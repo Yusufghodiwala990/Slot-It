@@ -132,7 +132,7 @@ form button{
     align-self: flex-end;
   }
 
-#forgotpass button{
+#forgotpass button {
 background-color: white;
 color:#FF007F;
 border: none;
@@ -141,7 +141,14 @@ padding:0;
     
 }
 
-
+#forgotpass button a {
+    background-color: white;
+    color:#FF007F;
+    border: none;
+    padding:0;
+    
+        
+    }
 
   form a:first-of-type button{
       background-color: #FF007F;
