@@ -180,7 +180,7 @@ if (count($errors) == 0) {
       $stmt->execute([$username, $name, $email, $hashedpass]);
     }
     
-    //header("Location:login.php"); 
+    header("Location:login.php"); 
 }
 }
 
@@ -242,6 +242,7 @@ if (count($errors) == 0) {
         <label for="password">Password</label>
         <span class="error <?= !isset($errors['password']) ? 'hidden' : ""; ?>">
           *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
+          <span class="rating"></span>
       </div>
 
       <div>

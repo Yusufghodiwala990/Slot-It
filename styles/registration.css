@@ -166,6 +166,31 @@ input[id="profilepic"]{
     font-size: 1em;
 }
 
+/* password strength meter */
+
+.rating {
+	font-weight: bold;
+	border-radius: 3px;
+	color: white;
+	display: inline-block;
+	padding: 5px;
+	text-transform: uppercase;
+}
+
+.weakPassword {
+	background-color: #EF1111;
+    margin-bottom:1em;
+}
+
+.moderatePassword {
+	background-color: #FFC700;
+    margin-bottom: 1em;
+}
+
+.strongPassword {
+	background-color: #22BA3E;
+    margin-bottom:1em;
+}
 
 
 
