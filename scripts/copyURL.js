@@ -7,16 +7,19 @@ window.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < copyText.length; i++) {
     copyText[i].addEventListener("click",function(){
         var text = "https://loki.trentu.ca/~daudjusab/3420/project/3420-Project/scripts" + copyText[i].value;
-        var dummy = document.createElement("input");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
+        var copy = document.createElement("input");
+        document.body.appendChild(copy);
+        copy.value = text;
+        copy.select();
         document.execCommand("copy");
-        document.body.removeChild(dummy);
+        document.body.removeChild(copy);
 
   
     /* Alert the copied text */
-    alert("Copied the link to the Signupsheet");
+    var alert = document.createElement("p");
+    alert.appendChild(document.createTextNode("Copied"));
+    copyText[i].insertBefore(alert,copyText[i].nextElementSibling);
+    setTimeout(function(){ alert.remove() }, 5000);
     })
 }
   })

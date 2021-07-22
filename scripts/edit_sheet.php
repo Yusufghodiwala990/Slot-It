@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
      if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, start=?, End=?, No_of_slots=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
-      $stmt2->execute([$Title,$description,$result1['Start'],$result1['End'],$added_slots,$Sheet_ID]);
+      $stmt2->execute([$Title,$description,$result1['StartDate'],$added_slots,$Sheet_ID]);
       echo "bye!";
       header("Location:mystuff.php");
       exit;
@@ -67,6 +67,8 @@ if (isset($_POST['submit'])) {
     <title>Edit Sheet</title>
     <link rel="stylesheet" href="../styles/edit_sheet.css"/>
     <link rel="stylesheet" href="../styles/errors.css" />
+      <script defer src="deleteModal.js"></script>
+
 
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
 
@@ -108,7 +110,7 @@ if (isset($_POST['submit'])) {
 
 
           <div>
-          <input type="date" name="start" id="start" value="<?=$result1['Start']?>" autocomplete="off" readonly='readonly'>
+          <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off" readonly='readonly'>
           <label for="start">Start Date</label>
         </div>
 
@@ -131,12 +133,27 @@ if (isset($_POST['submit'])) {
           <a href=""><button type="submit" name="submit">Submit</button></a>
         </div>
 
-        <div class="deletebutton">
-      <button type="submit" name="delete">Delete Sheet</button>
-      </div>
+
       </form>
     </section>
     
     </main>
+    <!-- <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data"> -->
+    <div class="deletebutton">
+    <button id="delete">Delete Account</button>
+  </div>
+  <div id="ModalWindow" class="modal">
+
+  <div class="content">
+  <p>Are you sure you want to continue?</p>
+          <div>
+            <button id="no">No</button>
+            <button id="yes">Yes</button>
+          </div>  
+  </div>
+
+</div>
+<!-- </form> -->
+
 </body>
 </html>

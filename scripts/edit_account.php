@@ -211,6 +211,8 @@ if(isset($_POST['submit2'])){
   <link rel="stylesheet" href="../styles/edit_account.css" />
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../styles/errors.css" />
+  <script defer src="deleteModal.js"></script>
+
 </head>
 
 <body>
@@ -293,12 +295,27 @@ if(isset($_POST['submit2'])){
         <div>
           <a href=""><button type="submit" name="submit2">Change</button></a>
         </div>
+
+
       </aside>
     </form>
     
   </main>
+  <!-- <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data"> -->
   <div class="deletebutton">
-    <a href=""><button>Delete Account</button></a>
+    <button id="delete">Delete Account</button>
   </div>
+  <div id="ModalWindow" class="modal">
+
+  <div class="content">
+  <p>Are you sure you want to continue?</p>
+          <div>
+            <button id="no">No</button>
+            <button id="yes">Yes</button>
+          </div>  
+  </div>
+
+</div>
+  <!-- </form> -->
 </body>
 </html>
