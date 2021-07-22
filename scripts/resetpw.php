@@ -13,7 +13,7 @@ if(isset($_POST['submit'])){
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
 
-    $link = "https://loki.trentu.ca/~daudjusab/3420/project/3420-Project/scripts/createNewPw.php?selector=" . $selector . "&validator=" . bin2hex($token);
+    $link = "https://loki.trentu.ca/~yusufghodiwala/3420/project/3420-Project/scripts/createNewPw.php?selector=" . $selector . "&validator=" . bin2hex($token);
     
 
     // 30 mins

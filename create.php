@@ -13,10 +13,11 @@
   {
     $title=$_POST['name'];
     $description=$_POST['description'];
-    $noOfSlots=$_POST['noOfSlots'];
-    $startTime=$_POST['start-time'];
-    $endTime=$_POST['end-time'];
+    $startDate=$_POST['start-date'];
     $searchable = $_POST['searchability'] ?? false;
+    $startTime = $_POST['start-time'];
+    $endTime = $_POST['end-time'];   
+    $duration = $_POST['duration'];
 
     if($searchable==true){
       $searchable=1;
@@ -36,27 +37,47 @@
       $errors['descriptionError']=true;
     }
 
-    if($_POST['noOfSlots']==null)
-    {
-      $errors['slotError']=true;
-    }
+    $date  = date('Y-m-d', strtotime($startDate)); // convert date to sql supported format
+ 
    //implement date time error later
-    if($_POST['name']!=null && $_POST['description']!=null && $_POST['noOfSlots']!=null){
+    if($_POST['name']!=null && $_POST['description']!=null){
     $pdo = connectDB();
    
-    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_slots,No_of_signups,Start,End,searchable) values (?,?,?,NOW(),?,0,?,?,?)"; 
+    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_signups,StartDate,StartTime,EndTime,SlotDuration,searchable) values (?,?,?,NOW(),0,?,?,?,?,?)"; 
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$title,$description,$userid,$noOfSlots,$startTime,$endTime,$searchable]);
+    $stmt->execute([$title,$description,$userid,$date,$startTime,$endTime,$duration,$searchable]);
 
     $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
 
+    /*
     for($i=0;$i<$noOfSlots;$i++)
     {
       $query = "INSERT INTO Slots(Scheduled_slots,Sheet_ID) values (NOW(),?)"; 
       $stmt = $pdo->prepare($query);
       $stmt->execute([$Sheet_ID]);
     }
+    */
 
+    $intervals = array(); // an array to store all the time values
+    //convert start and times to seconds for unix conversion..
+    $startTime = strtotime($startTime);
+    $endTime = strtotime($endTime); 
+
+    $intervals = array(); // an array to store all the time values
+
+    // loop to start from the startTime and run until the endTime (end time is > in seconds)
+    // then time forwards by the duration specified and inserted into the array in the format mySQL likes
+    for($time = $startTime; $time<=$endTime; $time+=$duration){
+        $intervals[] = date('H:i:s',$time);
+    }
+
+    foreach($intervals as $sTime)
+    {
+      $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$sTime,$Sheet_ID]);
+    }
+    
     header("refresh:0; url=scripts/mystuff.php");
     }
   }
@@ -113,39 +134,32 @@
             <input id="usrName" name="usrName" type="text" placeholder="Enter your name here">
           </div>
 
+
           <div>
-            <label for="usrEmail">Your Email:</label>
-            <input id="usrEmail" name="usrEmail" type="text" placeholder="Enter your email here">
+            <label for="start-date">Pick a date:</label>
+            <input type="date" id="start-date" name="start-date">
           </div>
 
           <div>
-          <label for="start-time">Pick a start time:</label>
-          <input type="datetime-local" id="start-time" name="start-time" value="2021-06-14T20:50">
+            <label for="start-time">Pick a start time:</label>
+            <input type="time" name="start-time" value="13:00">
           </div>
 
           <div>
-          <label for="end-time">Pick an end time:</label>
-          <input type="datetime-local" id="end-time" name="end-time" value="2021-06-14T20:50">
+            <label for="end-time">Pick a end time:</label>
+            <input type="time" name="end-time" value="16:00">
           </div>
 
           <div>
-            <label for="usrTimezone">Your Timezone</label>
-            <select name="userTimezone" id="usrTimezone">
-              <option value="">Choose One</option>
-              <option value="1">Central Time [US & Canada]</option>
-              <option value="2">Eastern Time</option>
-              <option value="3">Western Time?</option>
-              <option value="4">placeholder</option>
-              <option value="5">pull timezones from an sql db, christ</option>
+          <label for="duration">Select slot duration length:</label>
+          <select name="duration" id="slotDuration">
+              <option value="<?="300"?>">5 mins</option>
+              <option value="<?="600"?>">10 mins</option>
+              <option value="<?="900"?>">15 mins</option>
+              <option value="<?="1800"?>">30 mins</option>
+              <option value="<?="3600"?>">1 hour</option>
+              <option value="<?="7200"?>">2 hours</option>
             </select>
-          </div>
-
-          <div>
-            <label for="noOfSlots">Number of slots</label>
-            <input id="noOfSlots" name="noOfSlots" type="number">
-            <br>
-            <span class="<?=!isset($errors['slotError']) ? 'hidden' : "error";?>">Please set the number of slots.</span>
-
           </div>
 
           <div>

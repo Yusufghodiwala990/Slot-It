@@ -79,9 +79,9 @@ if (isset($_POST['submit'])) {
   <title>Login</title>
   <link rel="stylesheet" href="../styles/login.css" />
   <link rel="stylesheet" href="../styles/errors.css" />
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
-  <script src="./googleSignIn.js" async defer></script>
+  <script src="./login.js" defer></script>
+
 </head>
 
 <body>
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
       </div>
       <div id="links-login">
         <a href="../index.html"><button type="button">Back</button></a>
-        <a href=""><button type="submit" name="submit">Login</button></a>
+        <a href=""><button type="submit" id="submit" name="submit">Login</button></a>
       </div>
       <div id="forgotpass">
         <a href="resetpw.php"><button type="button">Forgot Password?</button></a>

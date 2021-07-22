@@ -16,7 +16,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute([$user]);
 $list1 = $stmt->fetchAll();
 
-$query1 = "select Slots.Slot_ID,Signup_sheets.Title, Slots.Scheduled_slots from Signup_sheets INNER JOIN Slots ON Slots.Sheet_ID=Signup_sheets.ID where User_ID=?"; 
+$query1 = "select Slots.Slot_ID,Signup_sheets.Title, Slots.StartTime, `Signup_sheets`.`StartDate` from Signup_sheets INNER JOIN Slots ON Slots.Sheet_ID=Signup_sheets.ID where User_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$user]);
 $list2 = $stmt1->fetchAll();
@@ -117,8 +117,8 @@ $list2 = $stmt1->fetchAll();
 
                     <tr>
                         <td><?=$row['Title']?></td>
-                        <td><?=$row['Scheduled_slots']?></td>
-                        <td><?=$row['Scheduled_slots']?></td>
+                        <td><?=$row['StartDate']?></td>
+                        <td><?=$row['StartTime']?></td>
                         <td> <a href="./cancelSlot.php?SlotID=<?php echo $row['Slot_ID']?>"><i class="fas fa-window-close"> Cancel</i></a></td>
                     </tr>
                     <?php endforeach; endif;?>
