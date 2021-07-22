@@ -112,10 +112,11 @@ th {
 }
 
 td>button {
-  color: blue
+  color: blue;
+  padding: 1em;
 }
 td>button:hover {
-  color: #FF007F
+  color: #FF007F;
 }
 footer{
     background: black;

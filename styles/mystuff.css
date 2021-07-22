@@ -169,7 +169,10 @@ footer{
     border-radius: 5px 0px 0px 5px;
   }
   
-  
+  td button{
+    background: none;
+    border: none;
+  }
   tr:nth-child(8) td:nth-child(1)
   {
     border-radius: 5px 0px 0px 5px;

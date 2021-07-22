@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
      if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, start=?, End=?, No_of_slots=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
-      $stmt2->execute([$Title,$description,$result1['Start'],$result1['End'],$added_slots,$Sheet_ID]);
+      $stmt2->execute([$Title,$description,$result1['StartDate'],$added_slots,$Sheet_ID]);
       echo "bye!";
       header("Location:mystuff.php");
       exit;
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 
 
           <div>
-          <input type="date" name="start" id="start" value="<?=$result1['Start']?>" autocomplete="off" readonly='readonly'>
+          <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off" readonly='readonly'>
           <label for="start">Start Date</label>
         </div>
 

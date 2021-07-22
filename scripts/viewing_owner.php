@@ -10,7 +10,7 @@ if(!isset($_SESSION['user_id']))
 $user=$_SESSION['user_id']; 
 $Sheet_ID = $_GET['SheetID'];
 
-$query1 = "select ID,Description,Title from Signup_sheets where ID=? && Owner_ID=?"; 
+$query1 = "select ID,Description,Title,StartDate from Signup_sheets where ID=? && Owner_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID,$user]);
 $result = $stmt1->fetch();
@@ -22,7 +22,7 @@ if($result==false)
 else{
 $Sheet_id = $result['ID'];
 
-$query2 = "select Scheduled_slots,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
+$query2 = "select StartTime,Guest_ID,user_ID from Slots where Sheet_ID=?"; 
 $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$Sheet_id]);
 $list1 = $stmt2->fetchAll();
@@ -95,8 +95,8 @@ $list1 = $stmt2->fetchAll();
                 <?php if($list1!=null) : foreach ($list1 as $row):?>
                     <tr>
               <td><?=$result['Description']?></td>
-              <td><?=$row['Scheduled_slots']?></td>
-              <td><?=$row['Scheduled_slots']?></td>
+              <td><?=$result['StartDate']?></td>
+              <td><?=$row['StartTime']?></td>
 
               <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
                 <td></td>
