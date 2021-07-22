@@ -111,8 +111,11 @@ th {
   font-size: 0.61em;
 }
 
-td>button{
-  
+td>button {
+  color: blue
+}
+td>button:hover {
+  color: #FF007F
 }
 footer{
     background: black;
