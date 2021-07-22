@@ -33,6 +33,9 @@ $list2 = $stmt1->fetchAll();
     <title>My-View</title>
     <link rel="stylesheet" href="../styles/mystuff.css" />
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
+    <script defer src="copyURL.js"></script>
+
+
 </head>
 
 <body>
@@ -88,7 +91,7 @@ $list2 = $stmt1->fetchAll();
                         <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-edit"> Edit</i></a></td>
                         <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-trash"> Delete</i></a></td>
                         <td> <a href="./copying.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-copy"> Copy</i></a></td>
-                        <td> <a href="./copy.php"><i class="fa fa-link"> CopyURL</i></a></td>
+                        <td> <button class="button" value="/viewing_user.php?SheetID=<?php echo $row['ID']?> "><i class="fa fa-link" >CopyURL</i></button></td>
                     </tr>
                     <?php endforeach; endif; ?>
 

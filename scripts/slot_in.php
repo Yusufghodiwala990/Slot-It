@@ -16,15 +16,14 @@ $_SESSION['Guest_ID']=$GuestID['ID'];
 if(isset($_SESSION['user_id']))
 {
     $user = $_SESSION['user_id'];
-
-    if(isset($_SESSION['SlotID'])){
-        $sheet_id= $_SESSION['SheetID'];
-        $Slot_ID = $_SESSION['SlotID'];
+    if(isset($_POST['submit'])){
+        $ID = explode("-", $_POST['submit']);
+        $sheet_id = $ID[0];
+        $Slot_ID = $ID[1];
             }
             else{
-            $ID = explode("-", $_POST['submit']);
-            $sheet_id = $ID[0];
-            $Slot_ID = $ID[1];
+                $sheet_id= $_SESSION['SheetID'];
+                $Slot_ID = $_SESSION['SlotID'];
             }
 
         $check= "select Owner_ID from `Signup_sheets` where ID=?";
@@ -77,6 +76,6 @@ else{
             $stmt2 = $pdo->prepare($query2);
             $stmt2->execute([$No_of_slots,$sheet_id]);
         
-            header("Refresh:0 url=viewing_user.php?SheetID=$sheet_id");
+            header("Location:viewing_user.php?SheetID=$sheet_id");
 
         ?>

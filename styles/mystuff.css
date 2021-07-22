@@ -103,8 +103,10 @@ th {
   font-size: 0.6em;
   padding-top:1em;
 }
-
-td a:hover{
+td i{
+  color: blue;
+}
+td a:hover, td i:hover{
     color:#FF007F ;
 }
 footer{

@@ -1,19 +1,13 @@
+Guestlogin
+
 <?php
 $name = $_POST['name'] ?? null;
 $email = $_POST['email'] ?? null;
-$sheet_id = $_GET['SheetID'] ?? null ;
-$Slot_ID = $_GET['Slot_ID'] ?? null ;
 $errors = array();
 include "library.php";
+session_start();
 $pdo = connectDB();
 
-
-// two options to store the details of guest, use form or google sign in.
-// $_POST['submit-from-js] is a check to verify that details were sent through google sign in
-// $_POST['submit] is a check to verify that details were sent through the Form on the page
-
-
-session_start();
 if(isset($_POST['submit-from-js'])){
 
   // use this details for google sign in on other pages (if applicable)
@@ -23,16 +17,24 @@ if(isset($_POST['submit-from-js'])){
 
 // inserting the details of the guest onto the guest table in the database
 if(isset($_SESSION['googleName'])){
-  $query = "INSERT INTO `Guest_users` (Name, email) values(?,?)";
+  $query = "INSERT INTO `Guest_users` (Name, Email) values(?,?)";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
 
-  // **TO DAUD** - REDIRECT WHERE NECESSARY after the google sign in.
+  if(isset($_SESSION['SlotID'])){ 
+    header("Location:slot_in.php");
+    }
+    else{
+  $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
+  $stmt1 = $pdo->prepare($query1);
+  $stmt1->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
+  $GuestID = $stmt1->fetch();
+  $_SESSION['Guest_ID']=$GuestID['ID'];
   header("Location:search.php");
+  }}
 
-}
+
 if (isset($_POST['submit'])) {
-
 
   if (!isset($name) || strlen($name) === 0) {
     $errors['name'] = true;
@@ -44,32 +46,29 @@ if (isset($_POST['submit'])) {
 
 if(count($errors) == 0){
 
-    $query = "INSERT INTO `Guest_users` (Name, email) values(?,?)";
+    $query = "INSERT INTO `Guest_users` (Name, Email) values(?,?)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$name,$email]);
 
-    $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && email=?";
+    if(isset($_SESSION['SlotID'])){
+    $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->execute([$name,$email]);
     $GuestID = $stmt1->fetch();
+    $_SESSION['Guest_ID']=$GuestID['ID'];
 
-    $query2 = "UPDATE `Slots` SET Guest_ID=? WHERE Sheet_ID=? && Slot_ID=? ";
-    $stmt2 = $pdo->prepare($query2);
-    $stmt2->execute([$GuestID['ID'],$sheet_id,$Slot_ID]);
-
-    $query3 = "SELECT No_of_signups from `Signup_sheets` where ID=? ";
-    $stmt3 = $pdo->prepare($query3);
-    $stmt3->execute([$sheet_id]);
-    $result = $stmt3->fetch();
-    $No_of_slots = $result['No_of_signups'] + 1;
-
-    $query4 = "UPDATE `Signup_sheets` SET No_of_signups=? WHERE ID=?";
-    $stmt4 = $pdo->prepare($query4);
-    $stmt4->execute([$No_of_slots,$sheet_id]);
-    echo "You have been slotted-in successfully!";
-  //header("Refresh:3 url=search.php");
-}
+    header("Location:slot_in.php");
+    exit();
     }
+
+    $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
+    $stmt1 = $pdo->prepare($query1);
+    $stmt1->execute([$name,$email]);
+    $GuestID = $stmt1->fetch();
+    $_SESSION['Guest_ID']=$GuestID['ID'];
+    header("Location:search.php");
+    }
+  }
 
 ?>
 
