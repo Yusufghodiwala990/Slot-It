@@ -212,7 +212,7 @@ form button:hover{
     width:100%;
 }
 
-.deletebutton a{
+ #delete {
     align-self: flex-end;
 }
 .deletebutton button{
@@ -230,4 +230,49 @@ form button:hover{
 
 .deletebutton button:hover{
     background-color: rgb(233, 7, 7);
+}
+
+.modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.content {
+background-color:#EFF2EF ;
+  margin: 20%; /* 15% from the top and centered */
+  padding: 4em;
+  border: .2em solid lightgray ;
+  border-radius: 2em;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+ #no,#yes {
+margin: 1em;
+padding: 1em 3em 1em 3em;
+border: .2em solid lightgray;
+font-weight: bolder;
+margin-left: 1em;
+transition: .2s transform ease-in-out;
+    color: white;
+    font-weight: bolder;
+    font-size: 1em;
+    border-radius: 2em;
+    cursor: pointer;
+} 
+#no:hover,#yes:hover{
+  transform: scale(1.08);
+}
+#no{
+  background-color: #FF007F; 
+}
+#yes{
+  background-color: hsla(212, 65%, 49%, 1) ; 
+
 }
