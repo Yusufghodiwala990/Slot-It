@@ -79,10 +79,10 @@ form input:not(input[type="checkbox"]){
      based on that for (input) and not overflow the parent*/
  
 }
-form input:focus{
+form input:not(input[type="checkbox"]):focus{
     box-shadow: none;
     outline: none;
-    border-color: #FF007F ;
+    border-color: #FF007F;
     
 }
 
@@ -146,6 +146,7 @@ padding:0;
     color:#FF007F;
     border: none;
     padding:0;
+    text-decoration: none;
     
         
     }
@@ -156,6 +157,7 @@ padding:0;
 
 form button:hover{
     transform: scale(1.08);
+    
 }
 
 form a{

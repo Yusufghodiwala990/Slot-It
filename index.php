@@ -1,5 +1,11 @@
 <?php
 session_start();
+if(isset($_SESSION['user_id'])){
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +32,10 @@ session_start();
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <!-- <?php if(file_exists($profpicpath)): echo "yes"; echo $profpic_url;;?>
+              <img src="<?=$profpic_url?>">
+            <?php endif?> -->
+            
           <?php endif ?>
 
           <?php if(!isset($_SESSION['user_id'])): ?>

@@ -13,7 +13,7 @@ if(isset($_POST['submit'])){
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
 
-    $link = "https://loki.trentu.ca/~yusufghodiwala/3420/project/3420-Project/scripts/createNewPw.php?selector=" . $selector . "&validator=" . bin2hex($token);
+    $link = "https://loki.trentu.ca/~yusufghodiwala/3420/project/scripts/createNewPw.php?selector=" . $selector . "&validator=" . bin2hex($token);
     
 
     // 30 mins
@@ -31,7 +31,7 @@ if(isset($_POST['submit'])){
     
     
       require_once "Mail.php";  //this includes the pear SMTP mail library
-      $from = "Slot-It <daudjusab@trentu.ca>"; // change this.
+      $from = "Slot-It <yusufghodiwala@trentu.ca>"; // change this.
       $to = $email;  //put user's email here
       $subject = "Reset your password for Slot-it";
       $message = '<p>Request for Passord Reset was received. Click on the link below
@@ -53,31 +53,10 @@ if(isset($_POST['submit'])){
       $mail = $smtp->send($to, $headers, $message);
       if (PEAR::isError($mail)) {
         echo ("<p>" . $mail->getMessage() . "</p>");
-      } else {
-        echo ("<p>Message successfully sent!</p>");
       }
 
-            
-    // $emailTo = $email;
-
-    // $subject = "Reset your password for Slot-it";
-    // $message = '<p>Request for Passord Reset was received. Click on the link below
-    // to Reset your password. If you did not request for one, ignore this email.</p>';
-    // $message .= '<p>Password Link: <br>';
-    // $message .= '<a href="' . $link . '">' . $link . '</a></p>';
-
-    // $headers = "From Slot-it <yusufghodiwala@trentu.ca>\r\n"; 
-    // $headers .= "Content-type: text/html";
-
-    // mail($emailTo, $subject, $message, $headers);
     $sent = true;
     //header("Refresh: 3; url=https://loki.trentu.ca/~yusufghodiwala/3420/project/scripts/resetpw.php?reset=success");
-
-
-    
-
-
-
    
 }
 
@@ -105,7 +84,7 @@ if(isset($_POST['submit'])){
   <main>
 
     <h1>Reset</h1>
-    <p>You'll be sent a link to your registered email, follow instructions in the mail to reset your password</p>
+    <p style="margin-bottom: 1.5em;">You'll be sent a link to your registered email, follow instructions in the mail to reset your password</p>
     <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
       <div>
         <input type="text" name="email" id="email" placeholder="derekpope666"  autocomplete="off">
@@ -116,17 +95,20 @@ if(isset($_POST['submit'])){
       <div id="links-login">
         <a href="../index.html"><button type="button">Back</button></a>
         <a href=""><button type="submit" name="submit">Reset</button></a>
+      </div>
       
+      <?php
+    
+    if($sent):?>
+    <span style="color:#FF007F">* Please check your email</span>
       
+     
+    <?php endif?>
+    
+
     </form>
 
-    <?php
-    
-   if($sent){
-       echo '<h2>Please check your email</h2>';
-   }
-    
-    ?>
+   
   </main>
   <footer>
     <p>&copy; 2021 - Slot-It</p>
