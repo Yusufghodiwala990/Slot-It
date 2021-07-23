@@ -103,11 +103,14 @@ th {
   font-size: 0.6em;
   padding-top:1em;
 }
-td i{
+td a, td button{
+  font-family: 'Krona One', sans-serif;
+  font-weight: 500;
   color: blue;
 }
-td a:hover, td i:hover{
+td a:hover, td button:hover{
     color:#FF007F ;
+    cursor: hand;
 }
 footer{
     background: black;

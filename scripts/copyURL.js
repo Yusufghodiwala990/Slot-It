@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
     var alert = document.createElement("p");
     alert.appendChild(document.createTextNode("Copied"));
     copyText[i].insertBefore(alert,copyText[i].nextElementSibling);
-    setTimeout(function(){ alert.remove() }, 5000);
+    setTimeout(function(){ alert.remove() }, 1500);
     })
 }
   })

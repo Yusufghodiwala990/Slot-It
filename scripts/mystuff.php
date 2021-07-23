@@ -87,11 +87,11 @@ $list2 = $stmt1->fetchAll();
                         <td><?=$row['No_of_slots']?></td>
                         <td><?=$row['No_of_signups']?></td>
                        
-                        <td> <a href="./viewing_owner.php?SheetID=<?php echo $row['ID']?> " ><i class="fas fa-info-circle">Details</i></a></td>
-                        <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-edit"> Edit</i></a></td>
-                        <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-trash"> Delete</i></a></td>
-                        <td> <a href="./copying.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-copy"> Copy</i></a></td>
-                        <td> <button class="button" value="/viewing_user.php?SheetID=<?php echo $row['ID']?> "><i class="fa fa-link" >CopyURL</i></button></td>
+                        <td> <a href="./viewing_owner.php?SheetID=<?php echo $row['ID']?> "><i class="fas fa-info-circle"></i>Details</a></td>
+                        <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-edit"></i>Edit</a></td>
+                        <td> <a href="./edit_sheet.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-trash"></i>Delete</a></td>
+                        <td> <a href="./copying.php?SheetID=<?php echo $row['ID']?>"><i class="fas fa-copy"> </i>Copy</a></td>
+                        <td> <button class="button" value="/viewing_user.php?SheetID=<?php echo $row['ID']?> "><i class="fa fa-link" ></i>CopyURL</button></td>
                     </tr>
                     <?php endforeach; endif; ?>
 

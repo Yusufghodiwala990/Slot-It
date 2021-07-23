@@ -5,28 +5,20 @@ include "library.php";
 $pdo = connectDB();
 $errors = array();
 
+$Sheet_ID = $_GET['SheetID']??null;
+if(isset($_POST['no'])){
+  $Sheet_ID =$_POST['no'];
+}
+
 if(!isset($_SESSION['user_id']))
 {
   header("location:login.php");
   exit;
 }
-$Sheet_ID = $_GET['SheetID'];
-
 $query1 = "select * from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
-
-
-
-if (isset($_POST['delete'])) {
-  $query3 = "DELETE from Signup_sheets where ID = ?";  
-  $stmt3 = $pdo->prepare($query3);
-  $stmt3->execute([$Sheet_ID]);
-  echo "Successfully Deleted the sheet.";
-  header("Location:mystuff.php");
-exit;
-}
 if (isset($_POST['submit'])) {
 
   $Title = $_POST['name'] ?? null;
@@ -66,6 +58,21 @@ if (isset($_POST['submit'])) {
       exit;
      }
 }
+
+// for deleting an account
+if(isset($_POST['yes'])){
+$Sheet_ID = $_POST['yes'];
+  $query2 = "DELETE from Slots where Sheet_ID = ?"; 
+  $stmt2 = $pdo->prepare($query2);
+  $stmt2->execute([$Sheet_ID]);
+
+  $query3 = "DELETE from Signup_sheets where ID = ?";  
+  $stmt3 = $pdo->prepare($query3);
+  $stmt3->execute([$Sheet_ID]);
+
+  header("location:mystuff.php");
+exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,8 +84,6 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../styles/edit_sheet.css"/>
     <link rel="stylesheet" href="../styles/errors.css" />
     <script defer src="deleteModal.js"></script>
-
-
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
 
 </head>
@@ -159,22 +164,23 @@ if (isset($_POST['submit'])) {
     </section>
     
     </main>
-    <!-- <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data"> -->
     <div class="deletebutton">
-    <button id="delete">Delete Account</button>
+    <button id="delete">Delete Sheet</button>
   </div>
+  <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
+
   <div id="ModalWindow" class="modal">
 
   <div class="content">
   <p>Are you sure you want to continue?</p>
           <div>
-            <button id="no">No</button>
-            <button id="yes">Yes</button>
+            <button type="submit" name="no" value=<?=$Sheet_ID?> id="no">No</button>
+            <button type="submit" name="yes" value=<?=$Sheet_ID?> id="yes">Yes</button>
           </div>  
   </div>
 
 </div>
-<!-- </form> -->
+</form>
 
 </body>
 </html>
