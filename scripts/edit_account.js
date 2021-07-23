@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const fnameError = fname.nextElementSibling.nextElementSibling;
         const emailInput = email.value;
         const emailError = email.nextElementSibling.nextElementSibling;
-        
+        const usernameError = username.nextElementSibling.nextElementSibling;
         const conpassInput = conpass.value;
         const conpassError = conpass.nextElementSibling.nextElementSibling;
 
@@ -76,7 +76,14 @@ window.addEventListener("DOMContentLoaded", () => {
             else
                 conpassError.classList.add("hidden");
             
-       
+       console.log(error);
+        
+        if(username.value == ""){
+            usernameError.classList.remove("hidden");
+        }
+        else
+            usernameError.classList.add("hidden");
+        
         // check username is available if a new username was entered
         if (username.value !== currUsername) {
             if (username.value.length === 0 || !unameAvailable)
@@ -84,6 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         
+       
         
             
     
@@ -219,6 +227,8 @@ window.addEventListener("DOMContentLoaded", () => {
     
     username.addEventListener("blur",(ev)=>{
        
+        console.log("hello");
+        if(username.value !== "" ){
         // check username is available if a new username was entered
         if(username.value !== currUsername){
         if(username.value.length === 0)
@@ -231,11 +241,18 @@ window.addEventListener("DOMContentLoaded", () => {
                 .catch((err) => console.log(err.message));
         }
     }
+}
     else{
         
-        if(username.nextElementSibling.nextElementSibling.nextElementSibling != null)
-        username.nextElementSibling.nextElementSibling.nextElementSibling.remove();
-        username.nextElementSibling.nextElementSibling.nextElementSibling.remove();
+        const message = document.getElementById("unameCheck");
+        console.log(message);
+        if(message == null){}
+    
+        else{
+            message.nextElementSibling.remove();
+            message.remove();
+    
+        }
     }
         
 })
@@ -254,9 +271,13 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     
     function availableMessage (data){
+        
         const label = document.getElementsByTagName("label")[2];
         const msg = document.createElement("span");
+        msg.classList.add("unameCheck");
+        msg.id = "unameCheck";
         username.parentNode.insertBefore(msg,username.nextElementSibling.nextElementSibling.nextElementSibling);
+    
         if(msg.nextElementSibling !== null){
             msg.nextElementSibling.remove();
             msg.nextElementSibling.remove();
