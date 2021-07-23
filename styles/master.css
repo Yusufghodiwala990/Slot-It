@@ -59,7 +59,6 @@ header nav ul{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: white;
   flex-wrap: wrap;
 }
 
@@ -243,10 +242,18 @@ main section:last-of-type  div h1{
   font-size: 1.5em;
 }
 
-ul div img {
+ul div:first-of-type img {
     padding-left: 5em;
     height: 10em;
     width: 10em;
+}
+
+ul div:last-of-type img{
+  height: 2em;
+  object-fit: contain;
+  margin-right: 1em;
+  align-self: center;
+  border-radius: 50%;
 }
 
 main section:last-of-type div:hover{
@@ -273,3 +280,6 @@ main section:last-of-type div button:hover{
   background-color: #FF007F;
   color: white;
 }
+
+
+

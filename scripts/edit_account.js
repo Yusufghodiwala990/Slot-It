@@ -34,8 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const conpassInput = conpass.value;
         const conpassError = conpass.nextElementSibling.nextElementSibling;
 
-        console.log(conpassError);
-        console.log(passwordError);
+       
     
     
         if(fnameInput == ""){
@@ -59,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
         
         if (password.value != "") {
-            console.log("not empty");
+           
 
             if (total !== 5) {
                 error = true;
@@ -91,7 +90,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     
         
-    console.log(error);
+    
     if(error){
         ev.preventDefault();
     }
@@ -111,7 +110,7 @@ window.addEventListener("DOMContentLoaded", () => {
         else
             passwordError.classList.add("hidden");
             
-            console.log(error);
+           
     }
 })
     
@@ -184,7 +183,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     function assessTotalScore(rating){
 
-        console.log(password.value);
+        
         var ratingElement = document.querySelector(".rating");
         total = rating.number + rating.lowercase + rating.uppercase + rating.specialChar + 
         rating.length;
@@ -233,7 +232,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
     else{
-        console.log(currUsername + " " + username);
+        
         if(username.nextElementSibling.nextElementSibling.nextElementSibling != null)
         username.nextElementSibling.nextElementSibling.nextElementSibling.remove();
         username.nextElementSibling.nextElementSibling.nextElementSibling.remove();

@@ -15,8 +15,10 @@ $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_imag
     <title>Slot-It</title>
     <link rel="stylesheet" href="styles/master.css"/>
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
+   
   </head>
   <body>
+
     <header>
       <nav>
         <ul>
@@ -31,10 +33,14 @@ $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_imag
           <?php if(isset($_SESSION['user_id'])):?>
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
-            <a href="./scripts/edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
-            <!-- <?php if(file_exists($profpicpath)): echo "yes"; echo $profpic_url;;?>
+            <a href="./scripts/edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
               <img src="<?=$profpic_url?>">
-            <?php endif?> -->
+            
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
             
           <?php endif ?>
 

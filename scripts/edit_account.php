@@ -212,6 +212,7 @@ if(isset($_POST['submit2'])){
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../styles/errors.css" />
   <script defer src="deleteModal.js"></script>
+  <script defer src="./edit_account.js"></script>
 
 </head>
 
@@ -270,6 +271,7 @@ if(isset($_POST['submit2'])){
           <label for="password">Password</label>
           <span class="error <?= !isset($errors['password']) ? 'hidden' : ""; ?>">
             *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
+            <span class="rating"></span>
         </div>
         <div>
           <input type="password" name="conpass" id="conpass" placeholder="inbaepn" autocomplete="off" value="">
@@ -279,7 +281,7 @@ if(isset($_POST['submit2'])){
 
         <div>
           <a href="../index.html"><button type="button">Back</button></a>
-          <a href=""><button type="submit" name="submit">Update</button></a>
+          <a href=""><button type="submit" id="submit1" name="submit">Update</button></a>
         </div>
       </form>
 
