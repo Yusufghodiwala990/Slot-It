@@ -24,7 +24,7 @@ function validateFile()
 {   
     
     if(profpic.value!=""){
-        console.log(profpic.value);
+        
     var allowedExtension = ['jpeg', 'jpg','png'];
     var fileExtension = profpic.value.split('.').pop().toLowerCase();
     var isValidFile = false;
@@ -66,7 +66,7 @@ onSubmit.addEventListener("click",(ev)=>{
     else
         fnameError.classList.add("hidden");
     
-    console.log(error);
+   
 
     if(!emailValid(emailInput)){
         error = true;
@@ -75,7 +75,7 @@ onSubmit.addEventListener("click",(ev)=>{
     else
         emailError.classList.add("hidden");
 
-    console.log(error);
+  
     
     if(total!==5){
         error = true;
@@ -94,7 +94,7 @@ onSubmit.addEventListener("click",(ev)=>{
             conpassError.classList.add("hidden");
 
 
-        console.log(error);
+      
     if(username.value == ""){
         error = true;
         usernameError.classList.remove("hidden");
@@ -102,16 +102,16 @@ onSubmit.addEventListener("click",(ev)=>{
         usernameError.classList.add("hidden");
     }
 
-    console.log(error);
+    
     if(username.value!=="" &&!unameAvailable){
         error = true;
         username.nextElementSibling.nextElementSibling.classList.remove("hidden");
     } else{
-        console.log(username.nextElementSibling.nextElementSibling);
-        username.nextElementSibling.nextElementSibling.classList.add("hidden")
+        
+        username.nextElementSibling.nextElementSibling.classList.add("hidden");
     }
 
-    console.log(profpicError);
+   
     if(!validateFile()){
         error = true;
         profpicError.classList.remove("hidden");  
@@ -125,7 +125,7 @@ onSubmit.addEventListener("click",(ev)=>{
 
 
     
-console.log(error);
+
 if(error){
     ev.preventDefault();
 }
@@ -145,7 +145,7 @@ password.addEventListener("blur",(ev)=>{
     else
         passwordError.classList.add("hidden");
         
-        console.log(error);
+       
 })
 
 
@@ -250,7 +250,7 @@ username.addEventListener("focus",(ev)=>{
 
 username.addEventListener("blur",(ev)=>{
     if(username.value != ""){
-        unameAvailable = true;
+      
         
     if(username.value.length !== 0)
         
@@ -318,7 +318,7 @@ function availableMessage (data){
         const icon = document.createElement("i");
         icon.className = "fas fa-times";
         msg.parentNode.insertBefore(icon,msg.nextElementSibling);
-      
+        unameAvailable = false;
         
         
 
@@ -330,6 +330,7 @@ function availableMessage (data){
         icon.className = "fas fa-check";
         msg.parentNode.insertBefore(icon,msg.nextElementSibling);
         unameAvailable = true;
+        error = false;
     }
 }
 })
