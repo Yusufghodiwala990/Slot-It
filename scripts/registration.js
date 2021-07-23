@@ -4,7 +4,7 @@
 /* ADD VALIDATION FOR THE FETCH REQUEST TO NOT CHECK FOR EMPTY USERNAMES */
 window.addEventListener("DOMContentLoaded", () => {
 
-
+const profpic = document.getElementsByTagName("input")[1];
 const fname = document.getElementsByTagName("input")[2];
 const username = document.getElementsByTagName("input")[3];
 const email = document.getElementsByTagName("input")[4];
@@ -20,15 +20,43 @@ function emailValid(email){
     return 	/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(email);
 }
 
+function validateFile() 
+{   
+    
+    if(profpic.value!=""){
+        console.log(profpic.value);
+    var allowedExtension = ['jpeg', 'jpg','png'];
+    var fileExtension = profpic.value.split('.').pop().toLowerCase();
+    var isValidFile = false;
+
+        for(var index in allowedExtension) {
+
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true; 
+                break;
+            }
+        }
+
+        
+
+        return isValidFile;
+    }
+    else
+        return true;
+}
 // even on submission of form, adding validation
 onSubmit.addEventListener("click",(ev)=>{
 
+    const profpicError = profpic.nextElementSibling.nextElementSibling;
     const fnameInput = fname.value;
     const fnameError = fname.nextElementSibling.nextElementSibling;
     const emailInput = email.value;
     const emailError = email.nextElementSibling.nextElementSibling;
     const conpassInput = conpass.value;
     const conpassError = conpass.nextElementSibling.nextElementSibling;
+    const usernameInput = username.value;
+    const usernameError = username.nextElementSibling.nextElementSibling.nextElementSibling;
+
 
 
     if(fnameInput == ""){
@@ -38,7 +66,8 @@ onSubmit.addEventListener("click",(ev)=>{
     else
         fnameError.classList.add("hidden");
     
-    
+    console.log(error);
+
     if(!emailValid(emailInput)){
         error = true;
         emailError.classList.remove("hidden");
@@ -46,7 +75,7 @@ onSubmit.addEventListener("click",(ev)=>{
     else
         emailError.classList.add("hidden");
 
-    
+    console.log(error);
     
     if(total!==5){
         error = true;
@@ -65,11 +94,31 @@ onSubmit.addEventListener("click",(ev)=>{
             conpassError.classList.add("hidden");
 
 
-
-    if(username.value.length === 0 || !unameAvailable)
+        console.log(error);
+    if(username.value == ""){
         error = true;
+        usernameError.classList.remove("hidden");
+    } else{
+        usernameError.classList.add("hidden");
+    }
 
-    
+    console.log(error);
+    if(username.value!=="" &&!unameAvailable){
+        error = true;
+        username.nextElementSibling.nextElementSibling.classList.remove("hidden");
+    } else{
+        console.log(username.nextElementSibling.nextElementSibling);
+        username.nextElementSibling.nextElementSibling.classList.add("hidden")
+    }
+
+    console.log(profpicError);
+    if(!validateFile()){
+        error = true;
+        profpicError.classList.remove("hidden");  
+    }
+    else
+        profpicError.classList.add("hidden");
+      
     
         
 
@@ -81,6 +130,7 @@ if(error){
     ev.preventDefault();
 }
 })
+
 
 
 password.addEventListener("focus", ()=>{
@@ -199,15 +249,35 @@ username.addEventListener("focus",(ev)=>{
 })
 
 username.addEventListener("blur",(ev)=>{
-    if(username.value.length === 0)
-        error = true;
-    else{
+    if(username.value != ""){
+        unameAvailable = true;
+        
+    if(username.value.length !== 0)
+        
+    {
         const formData = new FormData();
         formData.append('username', username.value);
         check(formData)
             .then(availableMessage)
             .catch((err) => console.log(err.message));
     }
+}
+else{
+    
+    const message = document.getElementById("unameCheck");
+    if(message == null){}
+
+    else{
+        message.nextElementSibling.remove();
+        message.remove();
+
+    }
+
+    // if(username.nextElementSibling.nextElementSibling.nextElementSibling!=null){
+    //     username.nextElementSibling.nextElementSibling.nextElementSibling.remove();
+    //     username.nextElementSibling.nextElementSibling.nextElementSibling.remove();
+    // }
+}
 
     
 })
@@ -228,14 +298,18 @@ function handleErrors(response) {
 function availableMessage (data){
     const label = document.getElementsByTagName("label")[2];
     const msg = document.createElement("span");
-    username.parentNode.insertBefore(msg,username.nextElementSibling.nextElementSibling.nextElementSibling);
-   
-    if(msg.nextElementSibling.className !=="error hidden"){
-        msg.nextElementSibling.nextElementSibling.remove();
-        msg.nextElementSibling.remove();
-       
-    }
+    msg.classList.add("unameCheck");
+    msg.id = "unameCheck";
+    username.parentNode.insertBefore(msg,username.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling);
     
+
+
+
+    if(msg.nextElementSibling != null){
+        msg.nextElementSibling.remove();
+        msg.nextElementSibling.remove();
+         
+    }
    
     if(data === "false"){
         error = true;
@@ -244,6 +318,7 @@ function availableMessage (data){
         const icon = document.createElement("i");
         icon.className = "fas fa-times";
         msg.parentNode.insertBefore(icon,msg.nextElementSibling);
+      
         
         
 
