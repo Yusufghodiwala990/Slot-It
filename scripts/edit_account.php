@@ -199,6 +199,36 @@ if(isset($_POST['submit2'])){
   }
 
 }
+
+// for deleting an account
+if(isset($_POST['yes'])){
+  $query1 = "UPDATE Slots set User_ID=null where User_ID=?"; 
+  $stmt1 = $pdo->prepare($query1);
+  $stmt1->execute([$userID]);
+
+  $query4 = "select ID from Signup_sheets where Owner_ID=?"; 
+$stmt4 = $pdo->prepare($query4);
+$stmt4->execute([$userID]);
+$table_IDs = $stmt4->fetchAll();
+
+foreach($table_IDs as $row):
+  $query2 = "DELETE from Slots where Sheet_ID = ?"; 
+  $stmt2 = $pdo->prepare($query2);
+  $stmt2->execute(array($row['ID']));
+endforeach;
+
+$query5 = "DELETE from Signup_sheets where Owner_ID = ?"; 
+$stmt5 = $pdo->prepare($query5);
+$stmt5->execute(array($userID));
+
+  $query3 = "DELETE from users where ID = ?"; 
+  $stmt3 = $pdo->prepare($query3);
+  $stmt3->execute([$userID]);
+
+  header("refresh:0.5; url=login.php");
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -297,27 +327,27 @@ if(isset($_POST['submit2'])){
         <div>
           <a href=""><button type="submit" name="submit2">Change</button></a>
         </div>
-
-
       </aside>
     </form>
     
   </main>
-  <!-- <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data"> -->
   <div class="deletebutton">
     <button id="delete">Delete Account</button>
   </div>
+  <form id="delete" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
+
   <div id="ModalWindow" class="modal">
 
   <div class="content">
   <p>Are you sure you want to continue?</p>
           <div>
-            <button id="no">No</button>
-            <button id="yes">Yes</button>
+            <button type="submit" name="no"id="no">No</button>
+            <button type="submit" name="yes" id="yes">Yes</button>
           </div>  
   </div>
 
 </div>
-  <!-- </form> -->
+</form>
+
 </body>
 </html>
