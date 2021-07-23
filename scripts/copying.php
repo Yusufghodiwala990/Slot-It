@@ -16,9 +16,9 @@ $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
 
-$query2 = "insert into Signup_sheets (Title,Description,Owner_ID,No_of_slots,No_of_signups,Start,End) values (?,?,?,?,'0',?,?)"; 
+$query2 = "insert into Signup_sheets (Title,Description,Owner_ID,No_of_slots,No_of_signups,StartDate,StartTime,EndTime,SlotDuration,searchable) values (?,?,?,?,'0',?,?,?,?,?)"; 
 $stmt2 = $pdo->prepare($query2);
-$stmt2->execute([$result1['Title'],$result1['Description'],$result1['Owner_ID'],$result1['No_of_slots'],$result1['Start'],$result1['End']]);
+$stmt2->execute([$result1['Title'],$result1['Description'],$result1['Owner_ID'],$result1['No_of_slots'],$result1['StartDate'],$result1['StartTime'],$result1['EndTime'],$result1['SlotDuration'],$result1['searchable']]);
 $Sheet_ID = $pdo->lastInsertId();
 header("location:edit_sheet.php?SheetID=$Sheet_ID");
 ?>

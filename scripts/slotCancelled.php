@@ -20,7 +20,7 @@ $Sheet_ID=$result['Sheet_ID'];
   $stmt4 = $pdo->prepare($query4);
   $stmt4->execute([$Sheet_ID]);
 
-  $query5 = "DELETE from Slots where Slot_ID = ?";  //issue
+  $query5 = "UPDATE Slots SET User_ID=NULL where Slot_ID = ?";  
   $stmt5 = $pdo->prepare($query5);
   $stmt5->execute([$SlotID]);
 

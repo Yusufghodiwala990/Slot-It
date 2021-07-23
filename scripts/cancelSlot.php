@@ -16,7 +16,7 @@ $result = $stmt->fetch();
 
 $Sheet_ID=$result['Sheet_ID'];
 
-$query2 = "select Title from Signup_sheets where ID = ?"; 
+$query2 = "select Title,StartDate from Signup_sheets where ID = ?"; 
 $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$Sheet_ID]);
 $Title = $stmt2->fetch();
@@ -85,14 +85,16 @@ if(isset($_POST['deleteSlot']))
             <thead>
               <tr>
                 <th scope="col">Title</th>
-                <th scope="col">Date/Time</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
                 <th scope="col">Name</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><?php echo $Title['Title']?></td>
-                <td><?php echo $result['Scheduled_slots']?></td>
+                <td><?php echo $Title['StartDate']?></td>
+                <td><?php echo $result['StartTime']?></td>
                 <td><?php echo $slotUsr['username']?></td>
               </tr>
             </tbody>
