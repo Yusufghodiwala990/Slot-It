@@ -101,7 +101,6 @@ form div {
 form label:not(label[id="special"]) {
   font-size: 1.3em;
   display: block;
-  transform: translate(0.5em, -1.5em);
   cursor: text;
   transform-origin: 0 0;
   transition: all 0.3s;
@@ -119,7 +118,7 @@ form textarea {
   font-weight: bolder;
   width: 100%;
 }
-form input {
+form input:not([type="checkbox"]), form select{
   font-weight: bolder;
   font-size: 1.1em;
   border-radius: 0.5em;
@@ -157,13 +156,13 @@ form div:focus-within {
 
 /* REF https://css-tricks.com/float-labels-css/ */
 form input:focus + label,
-form input:not(:placeholder-shown) + label {
+form input:not(:placeholder-shown) + label{
   transform: translateY(-3.4em);
 }
 
 form div:nth-of-type(5),form div:nth-of-type(4),
 form div:nth-of-type(3) {
-  width: 30%;
+  width: 40%;
   margin-top: 2em;
 }
 
@@ -174,8 +173,8 @@ form a:first-of-type button {
   font-size: 1.2em;
   cursor: pointer;
 }
-form div:nth-of-type(7) button {
-  background-color: #ff007f; /* 25D09D */
+form div button:last-of-type {
+  background-color: hsla(212, 65%, 49%, 1);; /* 25D09D */
   color: white;
   font-weight: bolder;
   font-size: 1em;
@@ -185,9 +184,7 @@ form div:nth-of-type(7) button {
   padding: 1em 3em 1em 3em;
   transition: 0.2s transform ease-in-out;
 }
-form div:nth-of-type(7) button:last-of-type{
-  background-color:hsla(212, 65%, 49%, 1);;
-}
+
 
 .deletebutton{
   display: flex;
@@ -259,4 +256,22 @@ transition: .2s transform ease-in-out;
 #yes{
   background-color: hsla(212, 65%, 49%, 1) ; 
 
+}
+
+form div:nth-last-child(2){
+  display: flex;
+  flex-direction: row;
+}
+
+form input[type="checkbox"]{
+  margin-right: 1em;
+}
+
+form input[type="checkbox"]+label{
+  transform: none;
+}
+
+form select{
+  margin-top: 0.2em;
+  width: auto;
 }
