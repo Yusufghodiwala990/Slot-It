@@ -47,12 +47,93 @@ if (isset($_POST['submit'])) {
     $errors['description'] = true;
   }
 
+  if (!isset($Title) || strlen($Title) == 0 ) {
+    $errors['name'] = true;
+  }
+
+  if (!isset($description) || strlen($description) == 0 ) {
+    $errors['description'] = true;
+  }
+
+  if($startTime>$result1['StartTime'] && $startTime<$result1['EndTime'])
+  {
+    $errors['startTime'] = true;
+  }
+
+  if($endTime>$result1['StartTime'] && $endTime<$result1['EndTime'])
+  {
+    $errors['endTime'] = true;
+  }
+
+  if($startTime>$endTime)
+  {
+    $errors['time']=true;
+  }
+
      //implement date time error later
 
      if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
       $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
+
+      if($startTime<$result1['StartTime'])
+      {
+        $intervals = array(); // an array to store all the time values
+        //convert start and times to seconds for unix conversion..
+        $startTimeSeconds = strtotime($startTime);
+        $endTimeSeconds = strtotime($result1['StartTime']);
+
+        for($time = $startTimeSeconds; $time<$endTimeSeconds; $time+=$duration){
+          $intervals[] = date('H:i:s',$time);
+        }
+
+        foreach($intervals as $sTime)
+        {
+          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
+          $stmt = $pdo->prepare($query);
+          $stmt->execute([$sTime,$Sheet_ID]);
+        }
+
+      }
+
+      if($endTime>$result1['EndTime'])
+      {
+        $intervals = array(); // an array to store all the time values
+        //convert start and times to seconds for unix conversion..
+        $startTimeSeconds = strtotime($endTime);
+        $endTimeSeconds = strtotime($result1['EndTime']);
+
+        for($time = $startTimeSeconds; $time>$endTimeSeconds; $time-=$duration){
+          $intervals[] = date('H:i:s',$time);
+        }
+
+        foreach($intervals as $sTime)
+        {
+          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
+          $stmt = $pdo->prepare($query);
+          $stmt->execute([$sTime,$Sheet_ID]);
+        }
+      }
+
+      if(($startTime>$result1['EndTime'] && $endTime>$result1['EndTime'] && $endTime>$startTime) || ($startTime<$result1[StartTime] && $endTime<$result1['StartTime'] && $endTime>$startTime))
+      {
+        $intervals = array(); // an array to store all the time values
+        //convert start and times to seconds for unix conversion..
+        $startTimeSeconds = strtotime($startTime);
+        $endTimeSeconds = strtotime($endTime);
+
+        for($time = $startTimeSeconds; $time>$endTimeSeconds; $time-=$duration){
+          $intervals[] = date('H:i:s',$time);
+        }
+
+        foreach($intervals as $sTime)
+        {
+          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
+          $stmt = $pdo->prepare($query);
+          $stmt->execute([$sTime,$Sheet_ID]);
+        }
+      }
       echo "bye!";
       header("Location:mystuff.php");
       exit;
