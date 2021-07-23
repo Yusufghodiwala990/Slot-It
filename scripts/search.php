@@ -14,10 +14,11 @@ if(isset($_POST['submit'])){
 $pdo = connectDB();
 
 
-  $query = "SELECT Signup_sheets.ID, Signup_sheets.Title,Signup_sheets.Owner_ID FROM `Signup_sheets` LEFT JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
+  $query = "SELECT Signup_sheets.ID, Signup_sheets.Owner_ID, Signup_sheets.Title, Signup_sheets.Description FROM `Signup_sheets` LEFT JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$keyword,$keyword,$keyword]);
-  
+  $list1 = $stmt->fetchAll();
+
   if($stmt->rowCount()==0){
     $empty = true;
   }
@@ -81,27 +82,45 @@ $pdo = connectDB();
 <?php if(isset($empty) && $empty==false):?>
   <div>
   <h2>Found <?=$numresults?> result/results for keyword</h2>
-    <ol>
-<?php foreach($stmt as $row):?>
-  <?php 
-if(isset($_SESSION['user_id'])):
-  if($_SESSION['user_id']==$row['Owner_ID']):
-    ?>
-    <li><a href="./viewing_owner.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
+  <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if($list1==null) : ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php endif; ?>
+                <?php if($list1!=null) : foreach ($list1 as $row): ?>
+                    <tr>
+                      <?php 
+                      if(isset($_SESSION['user_id'])):
+                      if($_SESSION['user_id']==$row['Owner_ID']):?>
+                        <td><a href="./viewing_owner.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></td>
+                        <td><?=$row['Description']?></td>
+                      <?php else:?>
+                        <td><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></td>
+                        <td><?=$row['Description']?></td>
+                      <?php endif;?>
+                      <?php else:?>
+                        <td><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></td>
+                        <td><?=$row['Description']?></td>
+                      <?php endif;?>
+                    </tr>
+                    <?php endforeach; endif;endif?>
 
-  <?php else:?>
-         <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
-  <?php endif; ?>
-  <?php else: ;
-?>
-    <li><a href="./viewing_user.php?SheetID=<?=$row['ID']?>"><?=$row['Title']?><i class="fas fa-link"></i></a></li>
-  <?php endif; endforeach; ?>
-          </ol>
-          </div>
-<?php endif?>
+                </tbody>
+            </table>
+  </div>
 
-  </section>
-  </main>
+</section>
+</main>
   <footer>
       <ul>
         <li><a href="../index.html">Home</a></li>

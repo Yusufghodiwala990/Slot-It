@@ -17,12 +17,7 @@ $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
 
-$Title = $_POST['name'] ?? null;
-$description = $_POST['description'] ?? null;
-$start = $_POST['start'] ?? null;
-$end = $_POST['end'] ?? null;
-$slots = $_POST['slots'] ?? null;
-$added_slots = $slots + $result1['No_of_slots'];
+
 
 if (isset($_POST['delete'])) {
   $query3 = "DELETE from Signup_sheets where ID = ?";  
@@ -34,6 +29,24 @@ exit;
 }
 if (isset($_POST['submit'])) {
 
+  $Title = $_POST['name'] ?? null;
+  $description = $_POST['description'] ?? null;
+  $start = $_POST['start'] ?? null;
+  $end = $_POST['end'] ?? null;
+  $startTime = $_POST['start-time'];
+  $endTime = $_POST['end-time'];   
+  $duration = $_POST['duration'];
+  $searchable = $_POST['searchability'] ?? false;
+
+  if($searchable==true){
+    $searchable=1;
+  }
+
+  else{
+    $searchable=0;
+  }
+  
+
   if (!isset($Title) || strlen($Title) == 0 ) {
     $errors['name'] = true;
   }
@@ -42,16 +55,12 @@ if (isset($_POST['submit'])) {
     $errors['description'] = true;
   }
 
-  if(!is_numeric($added_slots))
-  {
-    $errors['slots']=true;
-  }
      //implement date time error later
 
      if(count($errors) == 0){
-      $query2 = "update Signup_sheets set Title= ?, Description=?, start=?, End=?, No_of_slots=? where ID=?"; 
+      $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
-      $stmt2->execute([$Title,$description,$result1['StartDate'],$added_slots,$Sheet_ID]);
+      $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
       echo "bye!";
       header("Location:mystuff.php");
       exit;
@@ -67,7 +76,7 @@ if (isset($_POST['submit'])) {
     <title>Edit Sheet</title>
     <link rel="stylesheet" href="../styles/edit_sheet.css"/>
     <link rel="stylesheet" href="../styles/errors.css" />
-      <script defer src="deleteModal.js"></script>
+    <script defer src="deleteModal.js"></script>
 
 
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
@@ -106,27 +115,39 @@ if (isset($_POST['submit'])) {
             <label for="description" id="special">Description</label>
             <textarea name="description"  id="description" cols="84" rows="5" autocomplete="off"><?=$result1['Description']?></textarea>
             <span class="<?=!isset($errors['description']) ? 'hidden' : "error";?>">Please set a description.</span>
-          </div>
+        </div>
 
 
-          <div>
-          <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off" readonly='readonly'>
+        <div>
+          <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off">
           <label for="start">Start Date</label>
         </div>
 
         <div>
-          <input type="date" name="end" id="end" autocomplete="off" value="<?=$result1['End']?>" >
-          <label for="end">End Date</label>
+            <input type="time" name="start-time" value="<?=$result1['StartTime']?>">
+            <label for="start-time">Pick a start time:</label>
         </div>
 
         <div>
-          <input type="number" name="slots" id="slots" value="<?=$result1['No_of_slots']?>" autocomplete="off">
-          <label for="slots">Add Slots</label>
-          <span class="<?=!isset($errors['slots']) ? 'hidden' : "error";?>">Please enter a numeric number of slots</span>
+            <input type="time" name="end-time" value="<?=$result1['EndTime']?>">
+            <label for="end-time">Pick a end time:</label>
         </div>
 
         <div>
-          <a href=""><button type="button">Remove Slots</button></a>    
+          <label for="duration">Select slot duration length:</label>
+          <select name="duration" id="slotDuration">
+              <option value="<?="300"?>" <?php if($result1['SlotDuration']==300) echo 'selected'?> >5 mins</option>
+              <option value="<?="600"?>" <?php if($result1['SlotDuration']==600) echo 'selected'?>>10 mins</option>
+              <option value="<?="900"?>" <?php if($result1['SlotDuration']==900) echo 'selected'?>>15 mins</option>
+              <option value="<?="1800"?>" <?php if($result1['SlotDuration']==1800) echo 'selected'?>>30 mins</option>
+              <option value="<?="3600"?>" <?php if($result1['SlotDuration']==3600) echo 'selected'?>>1 hour</option>
+              <option value="<?="7200"?>" <?php if($result1['SlotDuration']==7200) echo 'selected'?>>2 hours</option>
+            </select>
+          </div>
+
+        <div>
+            <input id="searchable" name="searchability" type="checkbox" <?php if($result1['searchable']==1) echo 'checked';?> />
+            <label for="searchable">Make my sheet searchable</label> 
         </div>
 
         <div>

@@ -204,6 +204,54 @@ form button:hover{
     transform: scale(1.08);
 }
 
+/* password strength meter */
+
+.rating {
+	font-weight: bold;
+	border-radius: 3px;
+	color: white;
+	display: inline-block;
+	padding: 5px;
+	text-transform: uppercase;
+}
+
+.weakPassword {
+	background-color: #EF1111;
+    margin-bottom:1em;
+}
+
+.moderatePassword {
+	background-color: #FFC700;
+    margin-bottom: 1em;
+}
+
+.strongPassword {
+	background-color: #22BA3E;
+    margin-bottom:1em;
+}
+
+
+/* styling for dynamic elements */
+.available{
+  color: #32babd;
+  margin-bottom: 1em;
+}
+.fa-check{
+  margin-left:.5em;
+  color: #32babd;
+  margin-bottom: 1.3em;
+}
+
+.notAvailable{
+  color:#C95D63;
+  margin: 0.5em;
+}
+.fa-times{
+  margin-left: .5em;
+  color:#C95D63;
+  margin-bottom: 1.3em;
+}
+
 
 
 .deletebutton{

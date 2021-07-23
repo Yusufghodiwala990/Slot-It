@@ -66,7 +66,7 @@ form label:not(label[id="special"]){
     transition: all .3s;
     color: black;
 }
-form input:not(input[type="checkbox"]){
+form input{
     font-weight:bolder;
     width: 50%;
     font-size: 1em;

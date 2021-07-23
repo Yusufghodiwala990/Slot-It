@@ -1,5 +1,11 @@
 <?php
 session_start();
+if(isset($_SESSION['user_id'])){
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,8 +15,10 @@ session_start();
     <title>Slot-It</title>
     <link rel="stylesheet" href="styles/master.css"/>
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
+   
   </head>
   <body>
+
     <header>
       <nav>
         <ul>
@@ -25,7 +33,15 @@ session_start();
           <?php if(isset($_SESSION['user_id'])):?>
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
-            <a href="./scripts/edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <a href="./scripts/edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
+            
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
+            
           <?php endif ?>
 
           <?php if(!isset($_SESSION['user_id'])): ?>

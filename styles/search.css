@@ -88,7 +88,7 @@ main h1{
 }
 
 main{
-  margin-bottom: 4em;
+  margin-bottom: 8em;
 }
 main form{
     display: flex;
@@ -144,27 +144,6 @@ h2{
 
 ol{list-style-type: upper-roman;}
 
-table {
-    margin-top: 2em;
-    text-align: center;  /* Centre aligning the text */
-margin-left: 7em; 
-margin-bottom: 2em; }
-
-thead, th[scope="row"]{
-    color: white;
-}
-
-  td,
-th {
-  border: 0.2em solid rgba(255, 255, 255, 0.63); /* white borders */
-  padding: 0.5em;
-  width: 15em;
-  height: 1.5em;
-}
-thead tr th:first-of-type{
-    border:none;
-}
-
 /* daud */
 footer{
     display: block;
@@ -208,4 +187,43 @@ footer{
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  td,th{
+    border:0.1em solid white;
+    padding:0.5em;
+  }
+  
+  tr, th{
+    border-radius: 5px 5px 0px 0px;
+    background-color: #2196F3;
+    width: 20em;
+  }
+  
+  table{
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    color:black;
+    text-align: center;
+  }
+  
+  
+  th
+  {
+    border-radius: 5px 0px 0px 5px;
+  }
+  
+  td button{
+    background: none;
+    border: none;
+  }
+  tr:nth-child(8) td:nth-child(1)
+  {
+    border-radius: 5px 0px 0px 5px;
+  }
+  
+  tr{
+    background-color: #90CAF9;
   }

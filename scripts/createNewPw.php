@@ -89,7 +89,7 @@ if($password != $confirmpass){
       $tokenCheck = password_verify($binToken, $result['resetToken']);
 
       if($tokenCheck === false){
-        echo "Could not reset, submit another submit request";
+        echo "Could not reset, submit another request";
         exit();
         
       }
@@ -152,7 +152,6 @@ if($password != $confirmpass){
   <main>
 
     <?php
-    var_dump($_GET);
     $selector = $_GET['selector'];
     $validator = $_GET['validator'];
     if(empty($selector) || empty($validator)){

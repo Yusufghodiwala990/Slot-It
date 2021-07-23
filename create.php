@@ -49,15 +49,6 @@
 
     $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
 
-    /*
-    for($i=0;$i<$noOfSlots;$i++)
-    {
-      $query = "INSERT INTO Slots(Scheduled_slots,Sheet_ID) values (NOW(),?)"; 
-      $stmt = $pdo->prepare($query);
-      $stmt->execute([$Sheet_ID]);
-    }
-    */
-
     $intervals = array(); // an array to store all the time values
     //convert start and times to seconds for unix conversion..
     $startTime = strtotime($startTime);
@@ -163,7 +154,7 @@
           </div>
 
           <div>
-              <input id="searchable" name="searchability" type="checkbox" value="true" />
+              <input id="searchable" name="searchability" type="checkbox"/>
               <label for="searchable">Make my sheet searchable</label>
           </div>
 
