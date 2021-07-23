@@ -19,6 +19,7 @@ $query1 = "select * from Signup_sheets where ID=?";
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
+
 if (isset($_POST['submit'])) {
 
   $Title = $_POST['name'] ?? null;
@@ -29,7 +30,8 @@ if (isset($_POST['submit'])) {
   $endTime = $_POST['end-time'];   
   $duration = $_POST['duration'];
   $searchable = $_POST['searchability'] ?? false;
-
+ 
+  
   if($searchable==true){
     $searchable=1;
   }
@@ -37,7 +39,7 @@ if (isset($_POST['submit'])) {
   else{
     $searchable=0;
   }
-  
+
 
   if (!isset($Title) || strlen($Title) == 0 ) {
     $errors['name'] = true;
@@ -49,42 +51,63 @@ if (isset($_POST['submit'])) {
 
   if (!isset($Title) || strlen($Title) == 0 ) {
     $errors['name'] = true;
-  }
-
-  if (!isset($description) || strlen($description) == 0 ) {
-    $errors['description'] = true;
-  }
-
-  if($startTime>$result1['StartTime'] && $startTime<$result1['EndTime'])
-  {
-    $errors['startTime'] = true;
-  }
-
-  if($endTime>$result1['StartTime'] && $endTime<$result1['EndTime'])
-  {
-    $errors['endTime'] = true;
   }
 
   if($startTime>$endTime)
   {
-    $errors['time']=true;
+    $errors['time']= true;
   }
 
-     //implement date time error later
+
+  
+  
+function checkRange ($min, $max, $value){
+  if(filter_var(
+    $value, 
+    FILTER_VALIDATE_INT, 
+    array(
+        'options' => array(
+            'min_range' => $min, 
+            'max_range' => $max
+        )
+    )
+)){
+  return true;
+} else{
+  return false;
+ 
+}
+
+}
+
+  $startInSeconds = strtotime($startTime);
+  $endInSeconds = strtotime($endTime);
+
+  
+
+  if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$startInSeconds))
+    $errors['overlap'] = true;
+
+  if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$endInSeconds))
+    $errors['overlap'] = true;
+
+  
+  if(checkRange($startInSeconds,$endInSeconds,strtotime($result1['EndTime'])))
+    $errors['overlap'] = true;
+
+     //implement date time error later <== now*
 
      if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
       $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
 
-      if($startTime<$result1['StartTime'])
-      {
+      
         $intervals = array(); // an array to store all the time values
         //convert start and times to seconds for unix conversion..
-        $startTimeSeconds = strtotime($startTime);
-        $endTimeSeconds = strtotime($result1['StartTime']);
+       
 
-        for($time = $startTimeSeconds; $time<$endTimeSeconds; $time+=$duration){
+        for($time = $startInSeconds; $time<=$endInSeconds; $time+=$duration){
           $intervals[] = date('H:i:s',$time);
         }
 
@@ -95,46 +118,6 @@ if (isset($_POST['submit'])) {
           $stmt->execute([$sTime,$Sheet_ID]);
         }
 
-      }
-
-      if($endTime>$result1['EndTime'])
-      {
-        $intervals = array(); // an array to store all the time values
-        //convert start and times to seconds for unix conversion..
-        $startTimeSeconds = strtotime($endTime);
-        $endTimeSeconds = strtotime($result1['EndTime']);
-
-        for($time = $startTimeSeconds; $time>$endTimeSeconds; $time-=$duration){
-          $intervals[] = date('H:i:s',$time);
-        }
-
-        foreach($intervals as $sTime)
-        {
-          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
-          $stmt = $pdo->prepare($query);
-          $stmt->execute([$sTime,$Sheet_ID]);
-        }
-      }
-
-      if(($startTime>$result1['EndTime'] && $endTime>$result1['EndTime'] && $endTime>$startTime) || ($startTime<$result1[StartTime] && $endTime<$result1['StartTime'] && $endTime>$startTime))
-      {
-        $intervals = array(); // an array to store all the time values
-        //convert start and times to seconds for unix conversion..
-        $startTimeSeconds = strtotime($startTime);
-        $endTimeSeconds = strtotime($endTime);
-
-        for($time = $startTimeSeconds; $time>$endTimeSeconds; $time-=$duration){
-          $intervals[] = date('H:i:s',$time);
-        }
-
-        foreach($intervals as $sTime)
-        {
-          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
-          $stmt = $pdo->prepare($query);
-          $stmt->execute([$sTime,$Sheet_ID]);
-        }
-      }
-      echo "bye!";
       header("Location:mystuff.php");
       exit;
      }
@@ -217,6 +200,8 @@ exit;
         <div>
             <input type="time" name="end-time" value="<?=$result1['EndTime']?>">
             <label for="end-time">Pick a end time:</label>
+            <span class="<?=!isset($errors['overlap']) ? 'hidden' : "error";?>">There is an overlap in your selected Start/End with the Existing slots. </span>
+            
         </div>
 
         <div>
