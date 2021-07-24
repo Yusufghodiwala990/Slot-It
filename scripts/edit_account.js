@@ -169,6 +169,8 @@ if(uploadError)
             passwordError.classList.add("hidden");
             
            
+    } else{
+
     }
 })
     
@@ -266,6 +268,8 @@ if(uploadError)
     else{
         ratingElement.innerHTML="";
         ratingElement.classList.remove("weakPassword");
+        ratingElement.classList.remove("moderatePassword");
+        ratingElement.classList.remove("strongPassword");
     }
 }
     
