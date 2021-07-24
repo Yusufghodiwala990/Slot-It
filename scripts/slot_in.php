@@ -16,15 +16,16 @@ $_SESSION['Guest_ID']=$GuestID['ID'];
 if(isset($_SESSION['user_id']))
 {
     $user = $_SESSION['user_id'];
+    
     if(isset($_POST['submit'])){
         $ID = explode("-", $_POST['submit']);
         $sheet_id = $ID[0];
         $Slot_ID = $ID[1];
-            }
-            else{
-                $sheet_id= $_SESSION['SheetID'];
-                $Slot_ID = $_SESSION['SlotID'];
-            }
+    }
+    else{
+         $sheet_id= $_SESSION['SheetID'];
+        $Slot_ID = $_SESSION['SlotID'];
+     }
 
         $check= "select Owner_ID from `Signup_sheets` where ID=?";
         $statement = $pdo->prepare($check);
@@ -42,8 +43,9 @@ if(isset($_SESSION['user_id']))
             $query = "UPDATE `Slots` SET User_ID=? WHERE Sheet_ID=? && Slot_ID=? ";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$user,$sheet_id,$Slot_ID]);
+            
         
-            }
+ }
         
     
 else{

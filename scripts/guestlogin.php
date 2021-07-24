@@ -1,4 +1,4 @@
-Guestlogin
+
 
 <?php
 $name = $_POST['name'] ?? null;
@@ -115,7 +115,7 @@ if(count($errors) == 0){
       </div>
       
 
-     
+      <p>Continue with Google</p>
       <div class="g-signin2" data-onsuccess="onSignIn">
       </div>
       

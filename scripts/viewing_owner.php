@@ -71,7 +71,7 @@ $list1 = $stmt2->fetchAll();
             <a href="../create.php"><li>Create</li></a>
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
-            <a href="./edit_account.php"><li>Logout</li></a>
+            <a href="./logout.php"><li>Logout</li></a>
             
                <?php if($profpicpath):?>
               <img src="<?=$profpic_url?>">

@@ -14,11 +14,6 @@ if(isset($_SESSION['user_id'])){
     $url = explode("/",$result[sizeof($result) - 1]);
     $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
   }
-  
-
-
-
-
 
 } 
 
@@ -50,7 +45,7 @@ if(isset($_SESSION['user_id'])){
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account</li></a>
-            <a href="./scripts/edit_account.php"><li>Logout</li></a>
+            <a href="./scripts/logout.php"><li>Logout</li></a>
             
                <?php if($picExists):?>
               <img src="<?=$profpic_url?>">

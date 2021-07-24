@@ -258,3 +258,16 @@ section div a:first-of-type
   background-color: #D50000;
   margin-left: 0;
 }
+
+.fa{
+  align-self: center;
+  margin-right: 2em;
+}
+
+ul div:last-of-type img{
+  height: 2em;
+  object-fit: contain;
+  margin-right: 1em;
+  align-self: center;
+  border-radius: 50%;
+}

@@ -324,3 +324,16 @@ transition: .2s transform ease-in-out;
   background-color: hsla(212, 65%, 49%, 1) ; 
 
 }
+
+ul div:last-of-type img{
+  height: 2em;
+  object-fit: contain;
+  margin-right: 1em;
+  align-self: center;
+  border-radius: 50%;
+}
+
+.fa{
+  align-self: center;
+  margin-right: 1em ;
+}
