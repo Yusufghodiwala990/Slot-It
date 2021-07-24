@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
 
 $pdo = connectDB();
 
-
+$keyword .="%";
   $query = "SELECT Signup_sheets.ID, Signup_sheets.Owner_ID, Signup_sheets.Title, Signup_sheets.Description FROM `Signup_sheets` LEFT JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$keyword,$keyword,$keyword]);
@@ -74,7 +74,7 @@ $pdo = connectDB();
             <a href="../create.php"><li>Create</li></a>
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
-            <a href="./edit_account.php"><li>Logout</li></a>
+            <a href="./logout.php"><li>Logout</li></a>
                <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
