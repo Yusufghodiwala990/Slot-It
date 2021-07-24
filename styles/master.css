@@ -52,7 +52,7 @@ a{
 }
 
 header nav a{
-  font-size: 1.2em;
+  font-size: 1em;
   color:black;
 }
 header nav ul{
@@ -243,7 +243,7 @@ main section:last-of-type  div h1{
 }
 
 ul div:first-of-type img {
-    padding-left: 5em;
+    margin-left: 5em;
     height: 10em;
     width: 10em;
 }
@@ -279,6 +279,10 @@ main section:last-of-type div button:hover{
   transform: scale(1.08);
   background-color: #FF007F;
   color: white;
+}
+.fa{
+  align-self: center;
+  margin-right: 2em;
 }
 
 
