@@ -26,7 +26,12 @@ $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result = $stmt1->fetch();
 
+if($result==false)
+{
+   echo "<h2>'Sorry! There is no such signup sheet.'</h2>";
+}
 
+else{
 $query2 = "select fname from users where ID=?"; 
 $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$result['Owner_ID']]);
@@ -36,6 +41,7 @@ $query3 = "select StartTime,Guest_ID,user_ID,Slot_ID from Slots where Sheet_ID=?
 $stmt3 = $pdo->prepare($query3);
 $stmt3->execute([$Sheet_ID]);
 $list1 = $stmt3->fetchAll();
+}
 
 ?>
 
@@ -104,8 +110,15 @@ $list1 = $stmt3->fetchAll();
 </header>
 
 <main>
+<?php if($result==false):?>
+<p> Title: *** </p>
+<p> Owner: *** </p>
+
+<?php else :?>
 <p> Title: <?=$result['Title']?></p>
-<p> Owner: <?=$result2['fname']?></p>   
+<p> Owner: <?=$result2['fname']?></p> 
+<?php endif?>
+
 <form action="./slot_in.php" method="post" novalidate autocomplete="false">
     <table>
           <thead>
@@ -117,16 +130,18 @@ $list1 = $stmt3->fetchAll();
             </tr>
           </thead>
           <tbody>
-          <?php if($list1==null) : ?>
+          <?php if($result==false||$list1==null) : ?>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
-                    <?php endif; ?>
-                    <?php if($list1!=null) : foreach ($list1 as $row):?>
+                    
+                    <?php else : ?>
+                      <?php foreach ($list1 as $row):?>
                     <tr>
+
               <td><?=$result['Description']?></td>
               <td><?=$result['StartDate']?></td>
               <td><?=$row['StartTime']?></td>
