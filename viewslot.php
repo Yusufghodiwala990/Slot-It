@@ -20,7 +20,7 @@
             
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-            <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <a href="./scripts/edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
           </div>
           </ul>
         </nav>      

@@ -1,6 +1,11 @@
 <?php 
 include "library.php";
 session_start();
+if(isset($_SESSION['user_id'])){
+  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  
+  }
 $pdo = connectDB();
 if(!isset($_SESSION['user_id']))
 {
@@ -46,6 +51,25 @@ $list1 = $stmt2->fetchAll();
 <nav>
         <ul>
           <div>
+            <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
+          </div>
+          <div>
+          
+            <a href="../index.php"><li>Home</li></a>
+            <a href="./search.php"><li>Search</li></a>
+            <a href="../create.php"><li>Create</li></a>
+            <a href="./mystuff.php"><li>View</li></a>
+            <a href="./edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
+            
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
+            
+        <ul>
+          <!-- <div>
             <li><img src="../img/logo.png" alt="Slot-it logo"></li>
           </div>
           <div>
@@ -54,7 +78,7 @@ $list1 = $stmt2->fetchAll();
           <a href="./mystuff.php"><li>View</li></a>
           <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
         </div>
-        </ul>
+        </ul> -->
       </nav>
 </header>
 

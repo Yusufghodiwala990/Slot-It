@@ -1,5 +1,10 @@
 <?php 
   session_start();
+  if(isset($_SESSION['user_id'])){
+  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  
+  } 
   include "scripts/library.php";
   if(!isset($_SESSION['user_id']))
   {
@@ -84,12 +89,21 @@
         <nav>
           <ul>
             <div>
-            <a href="index.html"><li>Home</li></a>
-            <a href="create.html"><li>Create</li></a>
-            
+            <a href="index.php"><li>Home</li></a>
+          <a href="./scripts/search.php"><li>Search</li></a>
+          
+          <?php if(isset($_SESSION['user_id'])):?>
             <a href="./scripts/mystuff.php"><li>View</li></a>
-            <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-            <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <a href="./scripts/edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
+            
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
+            
+          <?php endif ?>
           </div>
           </ul>
         </nav>      
@@ -161,7 +175,7 @@
 
       <footer>
       <ul>
-        <li><a href="">Home</a></li>
+      <li><a href="index.php">Home</a></li>
         <li><a href="mailto:slot-it@gmail.com">Contact</a></li>
         <li><i class="fas fa-phone-square-alt"></i> : +1(705)-123-1234</li>
         <li> <img src="img/logo.png" alt="Slot-it logo"></li>

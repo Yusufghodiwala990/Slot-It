@@ -73,7 +73,9 @@ header nav ul{
   justify-content: space-between;
   flex-wrap: wrap;
 }
-
+div>img{
+  margin-right: 3em;
+}
 header nav ul div:last-of-type{
   display: flex;
   flex-wrap: wrap;

@@ -1,6 +1,11 @@
 <?php
 include "library.php";
 session_start();
+if(isset($_SESSION['user_id'])){
+  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  
+  }
 $pdo = connectDB();
 if(!isset($_SESSION['user_id']))
 {
@@ -67,13 +72,17 @@ if(isset($_POST['deleteSlot']))
         <nav>
           <ul>
             <div>
-            <a href=""><li>Home</li></a>
-            <a href="create.html"><li>Create</li></a>
+            <a href="../index.php"><li>Home</li></a>
+            <a href="../create.php"><li>Create</li></a> 
+            <a href="./mystuff.php"><li>View</li></a>
+            <a href="./edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
             
-            <a href="./scripts/mystuff.php"><li>View</li></a>
-            <a href="./scripts/login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-            <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
-          </div>
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>          </div>
           </ul>
         </nav>      
       </header>
@@ -101,15 +110,15 @@ if(isset($_POST['deleteSlot']))
           </table>
           <p>Are you sure you want to continue?</p>
           <div>
-            <a href="slotCancelled.php?SlotID=<?php echo $SlotID?>">Yes</button>
-            <a href="mystuff.php">No</button>
+            <a href="slotCancelled.php?SlotID=<?php echo $SlotID?>">Yes</a>
+            <a href="mystuff.php">No</a>
           </div>
         </section>
       </main>
 
       <footer>
         <ul>
-          <li><a href="">Home</a></li>
+          <li><a href="../index.php">Home</a></li>
           <li><a href="mailto:slot-it@gmail.com">Contact</a></li>
           <li><i class="fas fa-phone-square-alt"></i> : +1(705)-123-1234</li>
           <li> <img src="../img/logo.png" alt="Slot-it logo"></li>

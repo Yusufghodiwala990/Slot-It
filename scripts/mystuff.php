@@ -2,6 +2,11 @@
 
 // $errors = array();   //declare empty array to add errors too
 session_start();
+if(isset($_SESSION['user_id'])){
+    $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+    
+    }
 if(!isset($_SESSION['user_id']))
 {
   header("location:login.php");
@@ -52,10 +57,13 @@ $list2 = $stmt1->fetchAll();
                     <a href="../create.php">
                         <li>Create</li>
                     </a>
+                    <a href="./edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
+              <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
 
-                    <a href="./edit_account.php">
-                        <li>My Account<i class="fa fa-user" aria-hidden="true"></i></li>
-                    </a>
                 </div>
             </ul>
         </nav>

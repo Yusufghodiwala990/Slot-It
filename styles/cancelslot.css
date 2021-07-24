@@ -17,7 +17,7 @@ body{
 
 /* -- nav bar -- */
 header{
-  margin: 2em 0em 5em 0em;
+  margin: 2em 0em 8em 0em;
   animation: navFade2 1.5s ease 0s forwards;
 }
 /* Copy this @keyframes block to your CSS*/
@@ -54,7 +54,6 @@ body{
   background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
   
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
- 
 }
 
 main section:first-of-type p{
@@ -69,6 +68,7 @@ header nav{
   display: flex;
   align-items: center;
   flex-direction: column;
+  
 }
 header nav a{
   font-size: 1.2em;

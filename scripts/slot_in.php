@@ -57,7 +57,7 @@ else{
         $sheet_id= $_SESSION['SheetID'];
         $Slot_ID = $_SESSION['SlotID'];
             }
-
+var_dump($sheet_id);
     if(isset($_SESSION['Guest_ID'])){
         $GuestID=$_SESSION['Guest_ID'];
     $query5 = "UPDATE `Slots` SET Guest_ID=? WHERE Sheet_ID=? && Slot_ID=? ";

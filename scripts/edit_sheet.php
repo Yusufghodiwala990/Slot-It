@@ -1,6 +1,10 @@
 <?php 
 session_start();
-include "library.php";
+if(isset($_SESSION['user_id'])){
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+
+} include "library.php";
 
 $pdo = connectDB();
 $errors = array();
@@ -141,11 +145,22 @@ exit;
             <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
-          <a href="../index.html"><li>Home</li></a>
-          <a href="../create.html"><li>Create</li></a>
-          <a href="./mystuff.php"><li>View</li></a>
-          <a href="./login.php"><li>Login <i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
-          <a href="./edit_account.php"><li>My Account <i class="fa fa-user" aria-hidden="true"></i></li></a>
+          <a href="../index.php"><li>Home</li></a>
+          <a href="./search.php"><li>Search</li></a>
+          
+          <?php if(isset($_SESSION['user_id'])):?>
+            <a href="../create.php"><li>Create</li></a>
+            <a href="./mystuff.php"><li>View</li></a>
+            <a href="./edit_account.php"><li>My Account</li></a>
+               <?php if(file_exists($profpicpath)):?>
+              <img src="<?=$profpic_url?>">
+            
+            
+            <?php else:?>
+            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <?php endif?>
+            
+          <?php endif ?>
         </div>
         </ul>
       </nav>      
