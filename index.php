@@ -1,10 +1,26 @@
 <?php
 session_start();
 if(isset($_SESSION['user_id'])){
-$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
-$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+ $filename = "profile-pic" . $_SESSION['user_id'];
+ $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
 
-}
+  $result = glob ($profpicpath . $filename . ".*" );
+  
+  if(empty($result))
+    $picExists = false;
+  else{
+    $picExists = true;
+    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+    $url = explode("/",$result[sizeof($result) - 1]);
+    $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+  }
+  
+
+
+
+
+
+} 
 
 ?>
 <!DOCTYPE html>
@@ -34,13 +50,16 @@ $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_imag
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account</li></a>
-               <?php if(file_exists($profpicpath)):?>
+            <a href="./scripts/edit_account.php"><li>Logout</li></a>
+            
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
-            
-            
+
             <?php else:?>
-            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <?php endif?>
+
+            
             
           <?php endif ?>
 
