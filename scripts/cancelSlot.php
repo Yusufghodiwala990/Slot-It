@@ -2,10 +2,21 @@
 include "library.php";
 session_start();
 if(isset($_SESSION['user_id'])){
-  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
-  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  $filename = "profile-pic" . $_SESSION['user_id'];
+  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+ 
+   $result = glob ($profpicpath . $filename . ".*" );
+   
+   if(empty($result))
+     $picExists = false;
+   else{
+     $picExists = true;
+     $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+     $url = explode("/",$result[sizeof($result) - 1]);
+     $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+   }
   
-  }
+}
 $pdo = connectDB();
 if(!isset($_SESSION['user_id']))
 {
@@ -28,10 +39,11 @@ $Title = $stmt2->fetch();
 
 $userID =$result['User_ID'];
 
-$query3 = "select username from users where ID= ?"; 
+$query3 = "select fname from users where ID= ?"; 
 $stmt3 = $pdo->prepare($query3);
 $stmt3->execute([$userID]);
 $slotUsr = $stmt3->fetch();
+var_dump($slotUsr);
 
 if(isset($_POST['Cancel']))
 {
@@ -76,7 +88,7 @@ if(isset($_POST['deleteSlot']))
             <a href="../create.php"><li>Create</li></a> 
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
-               <?php if(file_exists($profpicpath)):?>
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
             
@@ -104,7 +116,7 @@ if(isset($_POST['deleteSlot']))
                 <td><?php echo $Title['Title']?></td>
                 <td><?php echo $Title['StartDate']?></td>
                 <td><?php echo $result['StartTime']?></td>
-                <td><?php echo $slotUsr['username']?></td>
+                <td><?php echo $slotUsr['fname']?></td>
               </tr>
             </tbody>
           </table>
