@@ -37,7 +37,9 @@ function validateFile()
             }
         }
 
-        
+        const filesize = profpic.files[0].size / 1024 / 1024; // in MB
+        if(filesize > 2)
+            isValidFile = false;
 
         return isValidFile;
     }

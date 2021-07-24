@@ -4,14 +4,22 @@
 /* ADD VALIDATION FOR THE FETCH REQUEST TO NOT CHECK FOR EMPTY USERNAMES */
 window.addEventListener("DOMContentLoaded", () => {
 
-
+    
     const fname = document.getElementsByTagName("input")[0];
     const username = document.getElementsByTagName("input")[1];
+    const currUsername = username.value;
+
     const email = document.getElementsByTagName("input")[2];
     const password = document.getElementsByTagName("input")[3];
     const conpass = document.getElementsByTagName("input")[4];
-    const currUsername = username.value;
+    const profpic = document.getElementsByTagName("input")[5];
+    const profpicError = profpic.nextElementSibling;
+ 
+
+    
     const onSubmit = document.getElementById("submit1");
+    const profpicUpload = document.getElementById("submit2");
+    
 
     
     const passwordError = password.nextElementSibling.nextElementSibling;
@@ -22,8 +30,36 @@ window.addEventListener("DOMContentLoaded", () => {
     function emailValid(email){
         return 	/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(email);
     }
+
     
-    // even on submission of form, adding validation
+function validateFile() 
+{   
+    
+    if(profpic.value!=""){
+        
+    var allowedExtension = ['jpeg', 'jpg','png'];
+    var fileExtension = profpic.value.split('.').pop().toLowerCase();
+    var isValidFile = false;
+
+        for(var index in allowedExtension) {
+
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true; 
+                break;
+            }
+        }
+
+        const filesize = profpic.files[0].size / 1024 / 1024; // in MB
+        if(filesize > 2)
+            isValidFile = false;
+
+        return isValidFile;
+    }
+    else
+        return true;
+}
+    
+    // event on submission of form, adding validation
     onSubmit.addEventListener("click",(ev)=>{
     
         const fnameInput = fname.value;
@@ -33,6 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const usernameError = username.nextElementSibling.nextElementSibling;
         const conpassInput = conpass.value;
         const conpassError = conpass.nextElementSibling.nextElementSibling;
+       
 
        
     
@@ -44,11 +81,6 @@ window.addEventListener("DOMContentLoaded", () => {
         else
             fnameError.classList.add("hidden");
             
-
-
-        
-        
-        
         if(!emailValid(emailInput)){
             error = true;
             emailError.classList.remove("hidden");
@@ -91,7 +123,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         
-       
+     
         
             
     
@@ -102,7 +134,25 @@ window.addEventListener("DOMContentLoaded", () => {
     if(error){
         ev.preventDefault();
     }
-    })
+ })
+
+ profpicUpload.addEventListener("click",(ev)=>{
+     uploadError = false;
+     console.log(profpicError);
+
+    
+     if(!validateFile()){
+        uploadError = true;
+        profpicError.classList.remove("hidden");  
+    }
+    else
+        profpicError.classList.add("hidden");
+      
+
+if(uploadError)
+    ev.preventDefault();
+ })
+
     
     
     password.addEventListener("focus", ()=>{
