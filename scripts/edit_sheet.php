@@ -41,25 +41,6 @@ if (isset($_POST['submit'])) {
   }
 
 
-  if (!isset($Title) || strlen($Title) == 0 ) {
-    $errors['name'] = true;
-  }
-
-  if (!isset($description) || strlen($description) == 0 ) {
-    $errors['description'] = true;
-  }
-
-  if (!isset($Title) || strlen($Title) == 0 ) {
-    $errors['name'] = true;
-  }
-
-  if($startTime>$endTime)
-  {
-    $errors['time']= true;
-  }
-
-
-  
   
 function checkRange ($min, $max, $value){
   if(filter_var(
@@ -97,7 +78,7 @@ function checkRange ($min, $max, $value){
 
      //implement date time error later <== now*
 
-     if(count($errors) == 0){
+     //if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
       $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
@@ -120,7 +101,7 @@ function checkRange ($min, $max, $value){
 
       header("Location:mystuff.php");
       exit;
-     }
+     //}
 }
 
 // for deleting an account
@@ -148,6 +129,7 @@ exit;
     <link rel="stylesheet" href="../styles/edit_sheet.css"/>
     <link rel="stylesheet" href="../styles/errors.css" />
     <script defer src="deleteModal.js"></script>
+    <script defer src="edit_sheet.js"></script>
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
 
 </head>
@@ -172,37 +154,40 @@ exit;
     <main>
     <section>
         <h2>Edit Sheet</h2>
-        <form method="POST" novalidate autocomplete="false" enctype="multipart/form-data">
+        <form id="editForm" method="POST" novalidate autocomplete="false" enctype="multipart/form-data">
         <div>
           <input type="text" name="name" autocomplete="off"value="<?=$result1['Title']?>" id="name">
           <label for="name">Sheet Name</label>
-          <span class="error <?=!isset($errors['name']) ? 'hidden' : ""; ?>">Please enter a Title</span>
+          <span class="error hidden">Please enter a Title</span>
 
         </div>
 
         <div>
             <label for="description" id="special">Description</label>
             <textarea name="description"  id="description" cols="84" rows="5" autocomplete="off"><?=$result1['Description']?></textarea>
-            <span class="<?=!isset($errors['description']) ? 'hidden' : "error";?>">Please set a description.</span>
+            <span class="hidden error">Please set a description.</span>
         </div>
 
 
         <div>
           <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off">
           <label for="start">Start Date</label>
+          <span class="hidden error">Start date cannot be before today's date.</span>
         </div>
 
         <div>
-            <input type="time" name="start-time" value="<?=$result1['StartTime']?>">
+            <input type="time" id="start-time" name="start-time" value="<?=$result1['StartTime']?>">
             <label for="start-time">Pick a start time:</label>
+            <span class="hidden error">Please enter a start time.</span>
         </div>
 
         <div>
-            <input type="time" name="end-time" value="<?=$result1['EndTime']?>">
+            <input type="time" id="end-time" name="end-time" value="<?=$result1['EndTime']?>">
             <label for="end-time">Pick a end time:</label>
-            <span class="<?=!isset($errors['overlap']) ? 'hidden' : "error";?>">There is an overlap in your selected Start/End with the Existing slots. </span>
-            
+            <span class="hidden error">Please enter an end time.</span>
         </div>
+        
+        <span id="time-error"class="hidden error">Start time cannot be after end time, or end time before start.</span>
 
         <div>
           <label for="duration">Select slot duration length:</label>

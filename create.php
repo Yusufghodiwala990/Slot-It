@@ -27,40 +27,31 @@
       $searchable=0;
     }
     
-    if($_POST['name']==null)
-    {
-      $errors['titleError']=true;
-    }
-    
-    if($_POST['description']==null)
-    {
-      $errors['descriptionError']=true;
-    }
 
     $date  = date('Y-m-d', strtotime($startDate)); // convert date to sql supported format
  
-   //implement date time error later
-    if($_POST['name']!=null && $_POST['description']!=null){
     $pdo = connectDB();
-   
-    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_signups,StartDate,StartTime,EndTime,SlotDuration,searchable) values (?,?,?,NOW(),0,?,?,?,?,?)"; 
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$title,$description,$userid,$date,$startTime,$endTime,$duration,$searchable]);
-
-    $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
-
+  
+    
     $intervals = array(); // an array to store all the time values
     //convert start and times to seconds for unix conversion..
-    $startTime = strtotime($startTime);
-    $endTime = strtotime($endTime); 
+    $startTimeSecs = strtotime($startTime);
+    $endTimeSecs = strtotime($endTime); 
 
     $intervals = array(); // an array to store all the time values
 
     // loop to start from the startTime and run until the endTime (end time is > in seconds)
     // then time forwards by the duration specified and inserted into the array in the format mySQL likes
-    for($time = $startTime; $time<=$endTime; $time+=$duration){
+    for($time = $startTimeSecs; $time<=$endTimeSecs; $time+=$duration){
         $intervals[] = date('H:i:s',$time);
     }
+
+    $noOfSlots = count($intervals);
+    $query = "INSERT INTO Signup_sheets (Title,Description,Owner_ID,Date_created,No_of_slots,No_of_signups,StartDate,StartTime,EndTime,SlotDuration,searchable) values (?,?,?,NOW(),?,0,?,?,?,?,?)"; 
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$title,$description,$userid,$noOfSlots,$date,$startTime,$endTime,$duration,$searchable]);
+
+    $Sheet_ID = $pdo->lastInsertId(); //https://www.php.net/manual/en/pdo.lastinsertid.php
 
     foreach($intervals as $sTime)
     {
@@ -70,7 +61,7 @@
     }
     
     header("refresh:0; url=scripts/mystuff.php");
-    }
+    
   }
 
 ?>
@@ -83,6 +74,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slot-It</title>
     <link rel="stylesheet" href="styles/create.css"/>
+    <script defer src="scripts/create.js"></script>
     <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   </head>
 
@@ -111,35 +103,35 @@
           <div>
             <label for="name">Sheet Name:</label>
             <input id="name" name="name" type="text" placeholder="Enter your sheet name here">
-            <span class="<?=!isset($errors['titleError']) ? 'hidden' : "error";?>">Please Enter a title.</span>
+            <span class="hidden error">Please Enter a title.</span>
           </div>
 
           <div>
             <label for="description">Description</label>
             <textarea name="description"  id="description" cols="30" rows="10"></textarea>
-            <span class="<?=!isset($errors['descriptionError']) ? 'hidden' : "error";?>">Please set a description.</span>
+            <span class="hidden error">Please set a description.</span>
           </div>
-          
-          <div>
-            <label for="usrName">Your Name:</label>
-            <input id="usrName" name="usrName" type="text" placeholder="Enter your name here">
-          </div>
-
-
+        
           <div>
             <label for="start-date">Pick a date:</label>
             <input type="date" id="start-date" name="start-date">
+            <span class="hidden error">Start date cannot be before today's date.</span>
+            <span class="hidden error">Please set a start date.</span>
           </div>
 
           <div>
             <label for="start-time">Pick a start time:</label>
-            <input type="time" name="start-time" value="13:00">
+            <input type="time" id="start-time" name="start-time" value="13:00">
+            <span class="hidden error">Please enter a start time.</span>
           </div>
 
           <div>
             <label for="end-time">Pick a end time:</label>
-            <input type="time" name="end-time" value="16:00">
+            <input type="time" id="end-time" name="end-time" value="16:00">
+            <span class="hidden error">Please enter an end time.</span>
           </div>
+
+          <span id="time-error"class="hidden error">Start time cannot be after end time, or end time before start.</span>
 
           <div>
           <label for="duration">Select slot duration length:</label>
