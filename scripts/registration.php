@@ -215,7 +215,7 @@ if (count($errors) == 0) {
 
         <input class="profpic" type="file" id="file" name="profilepic">
         <label class="profpic" id="profilepic" for="profilepic">Choose Profile Picture(optional)<i class="far fa-user-circle"></i></label>
-        <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">Invalid Format/Size</span>
+        <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">Invalid Format/Size. Size has to be less than 2MB. </span>
 
       </aside>
       <div>

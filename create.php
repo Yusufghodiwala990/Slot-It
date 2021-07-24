@@ -1,8 +1,20 @@
 <?php 
   session_start();
   if(isset($_SESSION['user_id'])){
-  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
-  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+    $filename = "profile-pic" . $_SESSION['user_id'];
+    $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+   
+     $result = glob ($profpicpath . $filename . ".*" );
+     
+     if(empty($result))
+       $picExists = false;
+     else{
+       $picExists = true;
+       $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+       $url = explode("/",$result[sizeof($result) - 1]);
+       $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+     }
+
   
   } 
   include "scripts/library.php";
@@ -95,7 +107,7 @@
           <?php if(isset($_SESSION['user_id'])):?>
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account</li></a>
-               <?php if(file_exists($profpicpath)):?>
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
             

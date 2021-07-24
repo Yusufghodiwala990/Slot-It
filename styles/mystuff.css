@@ -43,7 +43,7 @@ a{
   }
   
   header nav ul div img {
-    padding-left: 5em;
+    margin-left: 2em;
     height: 5em;
     width: 5em;
 }
@@ -191,4 +191,21 @@ main section{
   margin: 3em;
   border-radius: 1em;
   width: fit-content;
+}
+
+ul div:last-of-type img{
+  height: 2em;
+  width: 2em;
+  margin:0em 1em 0em 0em;
+  align-self: center;
+  border-radius: 50%;
+}
+
+.fa{
+  align-self: center;
+  margin-right: 2em;
+}
+
+button .fa{
+  margin-right: .5em;
 }

@@ -175,14 +175,13 @@ if(isset($_POST['submit2'])){
     }
     return $fileError;
   }
+ 
 
   if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
     $query = "SELECT ID AS user_ID FROM `users` where ID=?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$userID]);
     $row = $stmt->fetch();
-   
-
     $uniqueid = $row['user_ID'];
     $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
     $fileroot = "profile-pic";
@@ -204,6 +203,7 @@ if(isset($_POST['submit2'])){
   }
 
 }
+
 
 // for deleting an account
 if(isset($_POST['yes'])){
@@ -270,7 +270,7 @@ $stmt5->execute(array($userID));
           </a>
           <a href="./edit_account.php"><li>My Account</li></a>
                <?php if(file_exists($profpicpath)):?>
-              <img src="<?=$profpic_url?>">
+              <!-- <img src="<?=$profpic_url?>"> -->
             
             
             <?php else:?>
@@ -330,9 +330,9 @@ $stmt5->execute(array($userID));
       <aside>
         <label id="special" class="profpic" id="profilepic" for="profilepic">Change Profile Picture<i class="far fa-user-circle"></i></label>
         <input class="profpic" type="file" id="profilepic" name="profilepic">
-        <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size</span>
+        <span class="error <?=!isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size. Size has to be less than 2MB</span>
         <div>
-          <a href=""><button type="submit" name="submit2">Change</button></a>
+          <a href=""><button type="submit" id="submit2" name="submit2">Change</button></a>
         </div>
       </aside>
     </form>

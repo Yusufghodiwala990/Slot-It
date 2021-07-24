@@ -95,6 +95,19 @@ header nav ul li{
 
 
 
+ul div:last-of-type img{
+  height: 2em;
+  width: 2em;
+  margin:0em 1em 0em 0em;
+  align-self: center;
+  border-radius: 50%;
+}
+.fa{
+  align-self: center;
+  margin-right: 1em;
+}
+
+
 header nav ul a:visited{
   color: #FF007F;
 }

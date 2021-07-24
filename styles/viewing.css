@@ -1,6 +1,7 @@
 @import url(./reset.css);
 
 @import url(//fonts.googleapis.com/css?family=Krona+One);
+
 body{    font-family: 'Krona One', sans-serif;
   background: hsla(210, 90%, 80%, 1);
 
@@ -11,10 +12,11 @@ body{    font-family: 'Krona One', sans-serif;
   background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
   
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
+  
  
 }
 header{
-    margin: 2em 0em 5em 0em;
+    margin: 2em 0em 8em 0em;
     animation: navFade2 1s ease 0s forwards;
   }
 
@@ -56,6 +58,7 @@ a{
     border-radius: 2em;
     min-width: 40vw;  /* for larger screens, it can grow*/
     height: 3.5em;
+    background-color: white;
 
   }
   
@@ -80,10 +83,23 @@ h2{
   padding-top: 2em;
   font-weight: bold;
 }
-header img{
-    height: 10em;
-    width: 10em;
-    padding-left: 7em;
+ul div:first-of-type img{
+    height: 5em;
+    width: 5em;
+    margin-left: 2em;
+}
+
+ul div:last-of-type img{
+  height: 2em;
+  object-fit: contain;
+  margin-right: 1em;
+  align-self: center;
+  border-radius: 50%;
+}
+
+.fa{
+  align-self: center;
+  margin-right: 2em;
 }
 main p{
     font-size: 1.3em;

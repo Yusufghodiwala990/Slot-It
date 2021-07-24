@@ -2,8 +2,19 @@
 include "library.php";
 session_start();
 if(isset($_SESSION['user_id'])){
-  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
-  $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+  $filename = "profile-pic" . $_SESSION['user_id'];
+ $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+
+  $result = glob ($profpicpath . $filename . ".*" );
+  
+  if(empty($result))
+    $picExists = false;
+  else{
+    $picExists = true;
+    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+    $url = explode("/",$result[sizeof($result) - 1]);
+    $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+  }
   
   }
 $pdo = connectDB();
@@ -13,7 +24,7 @@ if(!isset($_SESSION['user_id']))
   exit;
 }
 $user=$_SESSION['user_id']; 
-$Sheet_ID = $_GET['SheetID'];
+$Sheet_ID = $_GET['SheetID'] ?? null;
 
 $query1 = "select ID,Description,Title,StartDate from Signup_sheets where ID=? && Owner_ID=?"; 
 $stmt1 = $pdo->prepare($query1);
@@ -60,7 +71,9 @@ $list1 = $stmt2->fetchAll();
             <a href="../create.php"><li>Create</li></a>
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
-               <?php if(file_exists($profpicpath)):?>
+            <a href="./edit_account.php"><li>Logout</li></a>
+            
+               <?php if($profpicpath):?>
               <img src="<?=$profpic_url?>">
             
             
