@@ -43,7 +43,7 @@ $query3 = "select fname from users where ID= ?";
 $stmt3 = $pdo->prepare($query3);
 $stmt3->execute([$userID]);
 $slotUsr = $stmt3->fetch();
-var_dump($slotUsr);
+
 
 if(isset($_POST['Cancel']))
 {
