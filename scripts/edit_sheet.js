@@ -42,9 +42,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
         //date comparison to ensure it isn't before today's date.
 
-        var startDateArr = startDate.value.split("-");
-        var startDateObj = new Date(startDateArr[0], startDateArr[1] - 1, startDateArr[2]);
-        var todaysDate = new Date();
+        var startDateArr = startDate.value.split("-"); //split year/month/day into array
+        var startDateObj = new Date(startDateArr[0], startDateArr[1] - 1, startDateArr[2]);  //load values 
+        var todaysDate = new Date(); 
 
         if (startDateObj < todaysDate)
         {
@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", () => {
         var startTimeObj = new Date();
         var endTimeObj = new Date();
 
-        startTimeObj.setHours(startTimeJArr[0], startTimeJArr[1],00);
+        startTimeObj.setHours(startTimeJArr[0], startTimeJArr[1],00); //load array values into date objects to compare
         endTimeObj.setHours(endTimeJArr[0], endTimeJArr[1],00);
 
         if (startTimeObj > endTimeObj)
