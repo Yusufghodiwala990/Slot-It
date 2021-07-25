@@ -7,7 +7,7 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 100vh;
     font-family: 'Krona One', sans-serif;
     background: hsla(210, 90%, 80%, 1);
 
