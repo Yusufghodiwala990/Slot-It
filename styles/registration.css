@@ -97,11 +97,7 @@ form input:focus{
     
 }
 
-form{
-    display: flex;
-    flex-direction: column;
 
-}
 
 /* links positioning*/
 #links-reg{

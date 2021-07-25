@@ -87,11 +87,6 @@ form input:not(input[type="checkbox"]):focus{
     
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-
-}
 #links-reg{
     margin:.2em .5em;
 
