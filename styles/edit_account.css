@@ -55,7 +55,6 @@ header{
     box-shadow: 1px 2px 10px 3px rgb(173, 173, 173); /* no border but box-shadow */
     margin-right: 2em;
     border-radius: 2em;
-    min-width: 50vw;  /* for larger screens, it can grow*/
   }
   
   header nav ul li{
