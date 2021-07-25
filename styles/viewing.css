@@ -147,7 +147,7 @@ footer{
     width: 3em;
   }
 
-  td button{
+  td button, td>a{
     background-color: white; /* 25D09D */
     font-weight: bolder;
     font-size: 1em;
@@ -157,6 +157,11 @@ footer{
     padding: 0.5em 1.5em 0.5em 1.5em;
   }
 
+  tr td>a{
+    display: inline-block;
+    color: black;
+    font-size: 1em;
+  }
 td,
 th {
   padding: 0.5em;

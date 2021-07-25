@@ -76,7 +76,7 @@ $list1 = $stmt3->fetchAll();
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
             <a href="./logout.php"><li>Logout</li></a>
-               <?php if($profpicpath):?>
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
             
@@ -146,11 +146,11 @@ $list1 = $stmt3->fetchAll();
               <td><?=$row['StartTime']?></td>
               <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
                 <?php if(isset($_SESSION['user_id'])):?>
-             <td><button name="submit" type="submit" value="<?=$result['ID'] . "-" . $row['Slot_ID']?>">SLOT ME IN</button></td>
+                  <td><button name="submit" type="submit" value="<?=$result['ID'] . "-" . $row['Slot_ID']?>">SLOT ME IN</button></td>
              <?php elseif(isset($_SESSION['Guest_ID'])): ?>   
-              <td><button><a href="./slot_in.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></button></td>
+              <td><a href="./slot_in.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">SLOT ME IN</a></td>
               <?php else: ?>   
-                <td><button><a href="./login.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">Slot-me-in</a></button></td>
+                <td><a href="./login.php?SheetID=<?php echo $result['ID']?>& Slot_ID=<?php echo $row['Slot_ID']?>">SLOT ME IN</a></td>
               <?php endif; ?>
               <?php  elseif(!isset($row['Guest_ID'])): 
                 $query4 = "select fname from users where ID=?"; 
