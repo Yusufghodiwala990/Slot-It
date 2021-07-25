@@ -6,6 +6,7 @@ if(isset($_SESSION['user_id'])){
  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
 
   $result = glob ($profpicpath . $filename . ".*" );
+
   
   if(empty($result))
     $picExists = false;
@@ -73,7 +74,7 @@ $list1 = $stmt2->fetchAll();
             <a href="./edit_account.php"><li>My Account</li></a>
             <a href="./logout.php"><li>Logout</li></a>
             
-               <?php if($profpicpath):?>
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
             
