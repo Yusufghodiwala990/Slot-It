@@ -257,7 +257,6 @@ if (count($errors) == 0) {
     </form>
   </main>
   <footer>
-
     <p>&copy; 2021 - Slot-It</p>
   </footer>
 
