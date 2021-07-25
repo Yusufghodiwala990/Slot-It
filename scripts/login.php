@@ -3,61 +3,81 @@
 session_start();
 include 'library.php';
 
+
+// if the user is already logged in and somehow ended up on login, send them to mystuff
 if(isset($_SESSION['username'])){
   header("Location:mystuff.php");
   exit();
 }
+
+// get uname and password
 $username = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
 
+
+// if the user came from a redirect from viewing_user to sign up for a sheet's slot
 if(isset($_GET['Slot_ID'])){
 $_SESSION['SheetID'] = $_GET['SheetID'] ??null;
 $_SESSION['SlotID'] = $_GET['Slot_ID'] ??null;
 }
 
-// if(isset($_SESSION['Guest_ID' && 'SlotID'])){   //try this again
-//   header("Location:slot_in.php");
-//   exit();
-//}
 
-$errors = array();
+$errors = array();     // array to store the errors
 
+
+// on submit
 if (isset($_POST['submit'])) {
 
-  $pdo = connectDB();
+  $pdo = connectDB();       // create an instance of the pdo object
 
+
+  // validate username
   if (!isset($username) || strlen($username) === 0) {
     $errors['username'] = true;
   }
 
+  // validate password
   if (!isset($password) || strlen($password) === 0) {
     $errors['password'] = true;
   }
+
+  // if there were no errros
   if (count($errors) === 0) {
-    $query = "select * from `users` where username=?";
+    $query = "select * from `users` where username=?";  // retrieve the user's info from database
     $stmt = $pdo->prepare($query);
     $stmt->execute([$username]);
     
+    // if there were no results, declare an error
     if (($row = $stmt->fetch()) === false) {
       $errors['login'] = true;
     } else {
 
 
+      // verify password against the hash in the database
       if (password_verify($_POST['password'], $row['password'])) {
 
         $_SESSION['user_id'] = $row['ID'];
         $_SESSION['username'] = $username;
 
+        // if remember me was checked, store a cookie with the username which lasts one day
         if (isset($_POST['rememberme'])) {
           setcookie("slot-it", $username, time() + 60 * 60 * 24);
         }
+
+        // if user came from a redirect, a session variable slotID was set above
+        // so that we can execute slot_in.php to insert their details on that slot
+        // slot_in.php will then redirect them back to viewing_user.php
 
         if(isset($_SESSION['SlotID'])){
           header("Location:slot_in.php");
           exit();
         }
+        
+        // upon successful login, redirect to mystuff.php
         header("Location:mystuff.php");
         exit();
+
+        // else if password verification failed
       } else {
         $errors['login'] = true;
       }

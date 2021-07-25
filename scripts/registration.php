@@ -1,7 +1,7 @@
 <?php
 
 include 'library.php';
-$errors = array();
+$errors = array();  //  array to set errors
 
 
 //get values from post or set to NULL if doesn't exist
@@ -12,49 +12,54 @@ $password = $_POST['password'] ?? null;
 $confirmpass = $_POST['conpass'] ?? null;
 
 
-
-//NOTES : STRING LENGTH VALIDATION MAY BE DONE THROUGH JAVASCRIPT SO I'M SKIPPING FOR NOW
-//        ALTHOUGH IT'S JUST A STRLEN() CALL
-
-
+// on submit
 if (isset($_POST['submit'])) {
-  $pdo = connectDB();
+  $pdo = connectDB();    // initialize a pdo object
 
 
+  // validate name
   if (!isset($name) || strlen($name) == 0 || is_numeric($name) == true) {
     $errors['name'] = true;
   }
 
+
+  // validate username
   if (!isset($username) || strlen($username) == 0) {
     $errors['username'] = true;
   }
 
 
-  //. unique username
+  // unique username
+  // getting the number of usernames with the same one the user entered
   $query = "SELECT COUNT(*) as numusers from `users` where username=?";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$username]);
   $row = $stmt->fetch();
 
+
+  // if it's not 0, it's not unique
   if ($row['numusers'] !== 0) {
     $errors['unique'] = true;
   }
 
-
+  // validate email
   if (!isset($email) || strlen($email) == 0 || filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
     $errors['email'] = true;
   }
 
+
+  // validate confirm pass
   if ($password != $confirmpass) {
     $errors['match'] = true;
   }
 
 
-  // void functions in 7.1
-  //https://www.php.net/manual/en/migration71.new-features.php
+  // function to validate password with given requirements
   function checkPassword($password)
   {
-    $flag = false;
+    $flag = false;      // bool variable to check if password met reqs
+
+    // validate password, length has to be >=8
     if (!isset($password) || strlen($password) == 0 || strlen($password) < 8) {
       $flag = true;
     }
@@ -81,12 +86,16 @@ if (isset($_POST['submit'])) {
 
 
 
+  //function to hash the password entered
   function hashPass($password)
   {
     $hashedpass = password_hash($password, PASSWORD_DEFAULT);
     return $hashedpass;
   }
-  // from php notes on blackboard
+  
+
+  // Uploading a file
+// from php notes on blackboard
 
   function checkAndMoveFile($filekey, $sizelimit, $newname, $fileError){
     //modified from http://www.php.net/manual/en/features.file-upload.php
@@ -101,7 +110,7 @@ if (isset($_POST['submit'])) {
       case UPLOAD_ERR_OK:
         break;
       case UPLOAD_ERR_NO_FILE:
-        $fileError = true;
+        $fileError = true;        // bool variable to store if there was an error
 
 
 
@@ -113,13 +122,13 @@ if (isset($_POST['submit'])) {
         $fileError = true;
     }
 
-    // You should also check filesize here.
+    
     if ($_FILES[$filekey]['size'] > $sizelimit) {
       $fileError = true;
       throw new RuntimeException('Exceeded filesize limit.');
     }
 
-    // Check the File type  Note: this example assumes image upload
+    // Check the File type  
     if (
       exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_GIF
       and exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_JPEG
@@ -128,7 +137,7 @@ if (isset($_POST['submit'])) {
       $fileError = true;
     }
 
-    // $newname should be unique and tested
+    
     if($fileError == false){
     if (!move_uploaded_file($_FILES[$filekey]['tmp_name'], $newname)) {
       throw new RuntimeException('Failed to move uploaded file.');
@@ -137,7 +146,7 @@ if (isset($_POST['submit'])) {
     return $fileError;
  }
 
-
+ // call function to check password strength
   if (checkPassword($password)) {
     $errors['password'] = true;
   }
@@ -146,9 +155,9 @@ if (isset($_POST['submit'])) {
 
 
 
-
+// if no errors
 if (count($errors) == 0) {
-    // from notes
+    // from notes on file upload
   
     if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
       $query = "SELECT MAX(ID) AS latest FROM `users`";
@@ -156,10 +165,14 @@ if (count($errors) == 0) {
       $stmt->execute();
       $row = $stmt->fetch();
 
-      $uniqueid = $row['latest'] + 1;
+      $uniqueid = $row['latest'] + 1;    // building the new filename with the ID of the new user
+
+      // store it in www_data/3420project_images on "yusufghodiwala" account
       $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
       $fileroot = "profile-pic";
 
+
+      // build the name of the file
       $filename = $_FILES['profilepic']['name'];
       $exts = explode(".", $filename);
       $ext = $exts[count($exts) - 1];
@@ -168,10 +181,15 @@ if (count($errors) == 0) {
       $fileError = false;
 
 
-      if (checkAndMoveFile('profilepic', 1972864, $newname, $fileError)) {
+
+      // upload it with the specified limit; 2MB.
+      if (checkAndMoveFile('profilepic', 2000000, $newname, $fileError)) {
         $errors['file'] = true;
       }
     }
+
+    // if a file was not uploaded(optional) or there were no errors if it was, insert the user
+    //  in the database
 
     if (!isset($errors['file'])) {
       $hashedpass = hashPass($password);
@@ -180,13 +198,10 @@ if (count($errors) == 0) {
       $stmt->execute([$username, $name, $email, $hashedpass]);
     }
     
-    header("Location:login.php"); 
+    header("Location:login.php");  // redirect to login
 }
 }
 
-
-
-//At some point in an application sessions should be destroyed (i.e. when a user logs out). To destroy a session call session_destroy(), which cleans up the session variables and removes the session file.
 ?>
 
 
@@ -218,11 +233,13 @@ if (count($errors) == 0) {
         <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">Invalid Format/Size. Size has to be less than 2MB. </span>
 
       </aside>
+      <!-- Full Name -->
       <div>
         <input type="text" name="name" placeholder="John Smith" id="name" value="<?=$name ?>">
         <label for="name">Full Name</label>
         <span class="error <?= !isset($errors['name']) ? 'hidden' : ""; ?>">*Name was empty</span>
       </div>
+      <!-- Username -->
       <div>
         <input type="text" name="username" id="username" placeholder="derekpope666" autocomplete="off" value="<?=$username ?>">
         <label for="username">Username</label>
@@ -230,13 +247,13 @@ if (count($errors) == 0) {
         <span class="error <?= !isset($errors['username']) ? 'hidden' : ""; ?>">*Username was empty</span>
 
       </div>
-
+      <!-- Email -->
       <div>
         <input type="text" name="email" id="email" placeholder="derekpope666" autocomplete="off" value="<?=$email ?>">
         <label for="email">Email</label>
         <span class="error <?= !isset($errors['email']) ? 'hidden' : ""; ?>">*Email Invalid</span>
       </div>
-
+      <!-- Password -->
       <div>
         <input type="password" name="password" id="password" placeholder="inbaepn" autocomplete="off">
         <label for="password">Password</label>
@@ -244,12 +261,13 @@ if (count($errors) == 0) {
           *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
           <span class="rating"></span>
       </div>
-
+      <!-- Confirm Password -->
       <div>
         <input type="password" name="conpass" id="conpass" placeholder="inbaepn" autocomplete="off">
         <label for="conpass">Confirm Password</label>
         <span class="error <?= !isset($errors['match']) ? 'hidden' : ""; ?>">*Passwords do not match</span>
       </div>
+      <!-- Navigation links -->
       <div id="links-reg">
         <a href="../index.html"><button type="button">Back</button></a>
         <a href=""><button name="submit" id="submit">Sign-up</button></a>
