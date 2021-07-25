@@ -1,7 +1,7 @@
 @import url(./reset.css);
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
-
+/* Flex Body, column aligned*/
 body{
     display: flex;
     align-items: center;
@@ -36,6 +36,8 @@ h1{
 p{
     display: block;
 }
+
+/* Flex Form, column aligned*/
 form{
     display: flex;
     flex-direction: column;
@@ -46,7 +48,7 @@ form{
     background-color: white;
     margin: .5em;
 }
-
+/* Heading aligned center*/
 section h1{
     align-self: center;
 }
@@ -57,6 +59,8 @@ form >*{
 form div{
     transition: all .3s;
 }
+
+/* all labels have an animation which translate in the Y direction upwards and a bit right in X*/
 form label:not(label[id="special"]){
     font-size: 1.2em;
     display: block;
@@ -66,6 +70,8 @@ form label:not(label[id="special"]){
     transition: all .3s;
     color: black;
 }
+
+/* All inputs*/
 form input{
     font-weight:bolder;
     width: 50%;
@@ -82,6 +88,8 @@ form input{
      based on that for (input) and not overflow the parent*/
  
 }
+
+/* change input border on focus*/
 form input:focus{
     box-shadow: none;
     outline: none;
@@ -94,6 +102,8 @@ form{
     flex-direction: column;
 
 }
+
+/* links positioning*/
 #links-reg{
     margin:.2em .5em;
 
@@ -115,11 +125,13 @@ form input:focus + label,form input:not(:placeholder-shown)+label{
 }
 
 
+/* align the links at the bottom*/
 form #links-login, form #links-reg{
     display: flex;
     justify-content: flex-end;
 
 }
+/* rules for the form button*/
 form button{
     align-self: flex-end;
     margin-left: 1em;
@@ -157,11 +169,12 @@ form a{
 }
 
 
+/* format the profile pic input*/
 input[id="profilepic"]{
     background-color: white;
     border-style: none;
 }
-
+/* account icon*/
 .fa-user-circle{
     font-size: 1em;
 }
@@ -205,6 +218,8 @@ footer{
   
   
 /* styling for dynamic elements */
+
+/* uname availability message*/
 .available{
     color: #32babd;
     margin-bottom: 1em;

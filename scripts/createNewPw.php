@@ -1,69 +1,59 @@
 <?php
+
+/* This page is loaded when the user clicks on the link in their inbox for forgot password */
 include 'library.php';
 $errors = array();
-
-
 $password = $_POST['password'] ?? null;
 $confirmpass = $_POST['conpass'] ?? null;
 $formSelector = $_POST['selector'] ?? null;
-$formValidator = $_POST['validator'] ?? null;
+$formValidator = $_POST['validator'] ?? null; // this is grabbed from the hidden form field for
+                                                // the token
 if (isset($_POST['submit'])) {
 $pdo = connectDB();
 
-
-
-
+// validate confirm pass
 if($password != $confirmpass){
     $errors['match'] = true;
   }
 
   
-  // void functions in 7.1
-  //https://www.php.net/manual/en/migration71.new-features.php
+  // validate password
    function checkPassword($password){
      $flag = false;
     if(!isset($password) || strlen($password) == 0 || strlen($password) < 8){
     $flag = true;
       
-      echo "<h2>length short</h2>";
     }
 
 
     // no digits
     if(!preg_match('/[0-9]+/',$password)){
-      echo "<h2>no</h2>";
       $flag = true;
       
     }
     // at least one letter
     if(!preg_match('/[a-zA-Z]+/',$password)){
-      echo "<h2>no letter</h2>";
       $flag = true;
      
     }
     // uppercse
     if(!preg_match('/[A-Z]+/',$password)){
-      echo "no uppercase";
      $flag  = true;
 
     }
     // at least one special character
     if(!preg_match('/[-@_#$%^&+=]/',$password)){
-      echo"<h2>no special</h2>";
-      $flag  = true;
-      
+      $flag  = true;   
     }
     return $flag;
   }
 
 
 
+  // function to hash the password
   function hashPass($password){
     $hashedpass = password_hash($password,PASSWORD_DEFAULT);
     return $hashedpass;
-
-
-
   }
 
   if(checkPassword($password)){
@@ -71,9 +61,13 @@ if($password != $confirmpass){
   }
   
 
+
+  // get the current date to compare with the link Expiry
   $currentDate = date("U");
 
   if(count($errors) === 0){
+
+    // fetch the details from the resetSelector given the link hasn't expired
     $query = "SELECT * FROM `reset_password` WHERE resetSelector=? AND expiryDate >=? ";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$formSelector,$currentDate]);
@@ -81,30 +75,44 @@ if($password != $confirmpass){
     $result = $stmt->fetch();
 
     if($result == false){
-      echo "Could not reset, submit another submit request";
+      echo "<h2>Could not reset, submit another submit request</h2>";
       exit();
     }
     else{
+      // convert the token from hex to binary
       $binToken = hex2bin($formValidator);
+
+      // verify the token. (The token was fethced from the hidden input)
       $tokenCheck = password_verify($binToken, $result['resetToken']);
 
+      // token is not the same as in the database and the hidden input
       if($tokenCheck === false){
-        echo "Could not reset, submit another request";
+        echo "<h2>Could not reset, submit another request</h2>";
         exit();
         
       }
+
+      // else, grab the email from the reset_pw table 
       else{
         $tokenEmail = $result['resetEmail'];
 
+
+        // verify that the request came from a valid user
         $query = "SELECT * FROM `users` WHERE email=?";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$tokenEmail]);
         $result = $stmt->fetch();
 
+        // verification of the email failed, user is not found in the users table with
+        // the given email
+
+
         if($result === false){
-          echo "Could not reset, please try again";
+          echo "<h2>Could not reset, please try again</h2>";
         }
         else{
+
+          // finally hash the new password and update it since all verfications did not fail
           $hashedpass = hashPass($password);
           $query = "UPDATE `users` SET password=? WHERE email=?";
           $stmt = $pdo->prepare($query);
@@ -117,6 +125,7 @@ if($password != $confirmpass){
           $stmt = $pdo->prepare($query);
           $stmt->execute([$tokenEmail]);
 
+          // redirect to login
           header("Location:login.php");
           exit();
    
@@ -152,19 +161,30 @@ if($password != $confirmpass){
   <main>
 
     <?php
+
+    // get the selector and validator(token with selector from GET)
+    //  because it is on the url that was sent to the email of the user
     $selector = $_GET['selector'];
     $validator = $_GET['validator'];
+
+    // verify the selector and validator
     if(empty($selector) || empty($validator)){
-        echo "Could not track your reset password request";
+        echo "<h2>Could not track your reset password request</h2>";
     }
     else{
 
+        // if the selector and validator are valid hex digits
         if((ctype_xdigit($selector)) === true && (ctype_xdigit($validator)) === true){
-          
-           
+        
          ?>
+
+         <!-- All checks passed, allow them to enter a new password -->
             <h1>Enter New Password</h1>
     <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+
+    <!-- Hidden inputs to store the selector and validator from GET,
+    They are used to verify the legitimacy of the user in the php script above -->
+
     <input type="hidden" name="selector" value="<?=$selector?>">
     <input type="hidden" name="validator" value="<?=$validator?>">
     <div>
@@ -196,7 +216,5 @@ if($password != $confirmpass){
   <footer>
     <p>&copy; 2021 - Slot-It</p>
   </footer>
-
 </body>
-
 </html>

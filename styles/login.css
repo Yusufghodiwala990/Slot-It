@@ -1,6 +1,7 @@
 @import url(./reset.css);
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
+/* Identical to registration.css, please refer to that stylesheet for documentation*/
 
 body{
     display: flex;

@@ -3,7 +3,7 @@
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
 
-
+/* Identical to registration.css. Please refer to that stylesheet for documentation*/
 body{
   font-family: 'Krona One', sans-serif;
   
@@ -14,7 +14,6 @@ header{
     margin: 2em 0em 2.5em 0em;
     animation: navFade2 1.5s ease 0s forwards;
   }
-  /* Copy this @keyframes block to your CSS*/
   @keyframes navFade2{
     0.0%{
       transform:rotate(0) translate(0%,-100%);

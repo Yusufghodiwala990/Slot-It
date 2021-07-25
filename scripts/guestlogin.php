@@ -1,6 +1,7 @@
 
-
 <?php
+
+/* Two ways to continue as a guest. Google Sign In or Registering as normal with providing info */
 $name = $_POST['name'] ?? null;
 $email = $_POST['email'] ?? null;
 $errors = array();
@@ -8,9 +9,13 @@ include "library.php";
 session_start();
 $pdo = connectDB();
 
-if(isset($_POST['submit-from-js'])){
 
-  // use this details for google sign in on other pages (if applicable)
+// The JS file for google sign will post data which contains info to verify if google
+//  sign in was chosen
+
+if(isset($_POST['submit-from-js'])){
+  
+  // store the google details in session
   $_SESSION['googleName'] = $_POST['name'];
   $_SESSION['googleEmail'] = $_POST['email'];
 }
@@ -21,35 +26,49 @@ if(isset($_SESSION['googleName'])){
   $stmt = $pdo->prepare($query);
   $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
 
-  if(isset($_SESSION['SlotID'])){ 
-    header("Location:slot_in.php");
-    }
-    else{
+
+// this is the case when the user tried to slot in for a sheet and was redirected here(from login)
+  if(isset($_SESSION['SlotID'])){  
+    header("Location:slot_in.php"); // send them back to slot_in.php
+  }
+
+  // if they didn't come from slot_in.php, grab the guest_id and redirect to search.php
+  else{
   $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
   $stmt1 = $pdo->prepare($query1);
   $stmt1->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
   $GuestID = $stmt1->fetch();
   $_SESSION['Guest_ID']=$GuestID['ID'];
   header("Location:search.php");
-  }}
+  exit();
+}}
 
 
+// if the other option to continue as guest was used, i.e registering normally
 if (isset($_POST['submit'])) {
 
+
+  // validate name
   if (!isset($name) || strlen($name) === 0) {
     $errors['name'] = true;
   }
 
+  // validate email
   if (!isset($email) || strlen($email) == 0 || filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
     $errors['email'] = true;
   }
 
+
+  // if no errors
 if(count($errors) == 0){
 
+
+  // insert them in the database
     $query = "INSERT INTO `Guest_users` (Name, Email) values(?,?)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$name,$email]);
 
+    // this is the case when the user tried to slot in for a sheet and was redirected here(from login)
     if(isset($_SESSION['SlotID'])){
     $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
     $stmt1 = $pdo->prepare($query1);
@@ -57,16 +76,17 @@ if(count($errors) == 0){
     $GuestID = $stmt1->fetch();
     $_SESSION['Guest_ID']=$GuestID['ID'];
 
-    header("Location:slot_in.php");
+    header("Location:slot_in.php"); // send them back to slot_in.php
     exit();
     }
-
+// else get the guest_id and redirect back to search.php
     $query1 = "SELECT * FROM `Guest_users` WHERE Name=? && Email=?";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->execute([$name,$email]);
     $GuestID = $stmt1->fetch();
     $_SESSION['Guest_ID']=$GuestID['ID'];
     header("Location:search.php");
+    exit();
     }
   }
 

@@ -1,19 +1,28 @@
 <?php
 session_start();
 if(isset($_SESSION['user_id'])){
- $filename = "profile-pic" . $_SESSION['user_id'];
- $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
 
-  $result = glob ($profpicpath . $filename . ".*" );
-  
-  if(empty($result))
-    $picExists = false;
-  else{
-    $picExists = true;
-    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
-    $url = explode("/",$result[sizeof($result) - 1]);
-    $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
-  }
+ // fetching the profile picture if available.
+
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
+
+$filename = "profile-pic" . $_SESSION['user_id'];
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/"; 
+
+
+// glob function to run a search with a wildcard to return all matching filenames.
+ $result = glob ($profpicpath . $filename . ".*" );
+
+ // if array is empty, no match, else build URL.
+ if(empty($result))
+   $picExists = false;
+ else{
+   $picExists = true;
+   $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+   $url = explode("/",$result[sizeof($result) - 1]);  // get the latest pic the user uploaded
+   $profpic_url = $profpic_url . $url[sizeof($url)-1]; // build URL
+ }
 
 } 
 
@@ -30,6 +39,7 @@ if(isset($_SESSION['user_id'])){
   </head>
   <body>
 
+    <!-- Nav bar -->
     <header>
       <nav>
         <ul>
@@ -37,16 +47,18 @@ if(isset($_SESSION['user_id'])){
             <img src="./img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
-          
+          <!-- Links -->
           <a href=""><li>Home</li></a>
           <a href="./scripts/search.php"><li>Search</li></a>
           
+          <!-- Dynamic Navbar if Session Variable exists -->
           <?php if(isset($_SESSION['user_id'])):?>
             <a href="create.php"><li>Create</li></a>
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account</li></a>
             <a href="./scripts/logout.php"><li>Logout</li></a>
-            
+
+            <!-- load the picture if it exists, else insert an icon -->
                <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
 
@@ -82,9 +94,9 @@ if(isset($_SESSION['user_id'])){
       
       </section>
 
-      <section>
-        
 
+      <!-- info section -->
+      <section>
         <div>
           <h1>What is Slot-It?</h1>
           <p>Slot-It is a simple way to create,manage and publish online sign-up sheets. You can create sign-up sheets for people to sign up for, enter times and dates for a set of tasks and activites, and publish/share it.</p>
@@ -102,11 +114,9 @@ if(isset($_SESSION['user_id'])){
           <p>Yes! Thanks to our remarkable team of unpaid interns, we managed to cut costs down by a whopping 100%! Our outsourced customer service team is always available to help sort out any issues you may have, so don't worry!</p>
           <a href="mailto:slot-it@gmail.com"><button>Contact Us</button></a>
         </div>
-
-        
       </section>
-     
     </main>
+    <!-- footer -->
     <footer>
       <ul>
         <li><a href="">Home</a></li>

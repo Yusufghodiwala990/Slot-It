@@ -1,37 +1,52 @@
 <?php
 
 session_start();
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
+  // fetching the profile picture if available.
+
+  /* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
+
   $filename = "profile-pic" . $_SESSION['user_id'];
   $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
- 
-   $result = glob ($profpicpath . $filename . ".*" );
-   
-   if(empty($result))
-     $picExists = false;
-   else{
-     $picExists = true;
-     $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
-     $url = explode("/",$result[sizeof($result) - 1]);
-     $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
-   }
-  
+
+
+  // glob function to run a search with a wildcard to return all matching filenames.
+  $result = glob($profpicpath . $filename . ".*");
+
+  // if array is empty, no match, else build URL.
+  if (empty($result))
+    $picExists = false;
+  else {
+    $picExists = true;
+    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+    $url = explode("/", $result[sizeof($result) - 1]);  // get the latest pic the user uploaded
+    $profpic_url = $profpic_url . $url[sizeof($url) - 1]; // build URL
   }
+}
+
+// if the user somehow ended up here without a session set, send them to login
 if (!isset($_SESSION['user_id'])) {
   header("Location:login.php");
   exit();
 }
+
+// get the user ID
 $userID = $_SESSION['user_id'];
 include 'library.php';
-$errors = array();
 
-$pdo = connectDB();
+$errors = array();  // array to store all errors
+$pdo = connectDB();   // creating an instance of a pdo object
+
+
+// load the users details
 $query = "SELECT * FROM `users` where ID=?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$userID]);
-
 $userInfo = $stmt->fetch();
 
+
+// on Submit (update)
 if (isset($_POST['submit'])) {
   $name = $_POST['name'] ?? null;
   $username = $_POST['username'] ?? null;
@@ -96,7 +111,7 @@ if (isset($_POST['submit'])) {
     return $hashedpass;
   }
 
-  
+
 
 
 
@@ -112,30 +127,32 @@ if (isset($_POST['submit'])) {
   }
 
 
-  if(count($errors) == 0) {
-      if (strlen($_POST['password']) !== 0) {
-        $hashedpass = hashPass($password);
-        $query = "UPDATE `users` SET username=?, fname=?, email=?, password=? WHERE ID=?";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$username, $name, $email, $hashedpass, $userID]);
-        $update = true;
-        echo "UPDATE WITH PASS DONE";
-      } else {
-        $query = "UPDATE `users` SET username=?, fname=?, email=? WHERE ID=?";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$username, $name, $email, $userID]);
-        $update = true;
-      }
+  if (count($errors) == 0) {
+    if (strlen($_POST['password']) !== 0) {
+      $hashedpass = hashPass($password);
+      $query = "UPDATE `users` SET username=?, fname=?, email=?, password=? WHERE ID=?";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$username, $name, $email, $hashedpass, $userID]);
+      $update = true;
+      echo "UPDATE WITH PASS DONE";
+    } else {
+      $query = "UPDATE `users` SET username=?, fname=?, email=? WHERE ID=?";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$username, $name, $email, $userID]);
+      $update = true;
+    }
 
-      header("Refresh:0 url=edit_account.php");
-    
+    header("Refresh:0 url=edit_account.php");
+    exit();
   }
 }
 
 
 // for the profile change form
+// Uploading a file
+// from php notes on blackboard
 
-if(isset($_POST['submit2'])){
+if (isset($_POST['submit2'])) {
   // from notes
   function checkAndMoveFile($filekey, $sizelimit, $newname, $fileError)
   {
@@ -151,7 +168,7 @@ if(isset($_POST['submit2'])){
       case UPLOAD_ERR_OK:
         break;
       case UPLOAD_ERR_NO_FILE:
-        $fileError = true;
+        $fileError = true;          // bool variable to store if there was an error
 
 
 
@@ -169,7 +186,7 @@ if(isset($_POST['submit2'])){
       throw new RuntimeException('Exceeded filesize limit.');
     }
 
-    // Check the File type  Note: this example assumes image upload
+    // Check the File type
     if (
       exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_GIF
       and exif_imagetype($_FILES[$filekey]['tmp_name']) != IMAGETYPE_JPEG
@@ -178,7 +195,7 @@ if(isset($_POST['submit2'])){
       $fileError = true;
     }
 
-   
+
     if ($fileError == false) {
       if (!move_uploaded_file($_FILES[$filekey]['tmp_name'], $newname)) {
         throw new RuntimeException('Failed to move uploaded file.');
@@ -186,14 +203,17 @@ if(isset($_POST['submit2'])){
     }
     return $fileError;
   }
- 
 
+
+  // if a file was uploaded
   if (is_uploaded_file($_FILES['profilepic']['tmp_name'])) {
+
+    // build filename
     $query = "SELECT ID AS user_ID FROM `users` where ID=?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$userID]);
     $row = $stmt->fetch();
-    $uniqueid = $row['user_ID'];
+    $uniqueid = $row['user_ID']; // filename built with the user's ID.
     $path = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
     $fileroot = "profile-pic";
 
@@ -204,46 +224,54 @@ if(isset($_POST['submit2'])){
     $newname = $path . $filename;
     $fileError = false;
 
-
-    if (checkAndMoveFile('profilepic', 1972864, $newname, $fileError)) {
+    // upload it with the specified limit; 2MB.
+    if (checkAndMoveFile('profilepic', 2000000, $newname, $fileError)) {
       $errors['file'] = true;
-    }
-    else{
-      echo "Profile was updated.";
+    } else {
+      echo "Profile-Picture was updated.";
     }
   }
-
 }
 
 
 // for deleting an account
-if(isset($_POST['yes'])){
-  $query1 = "UPDATE Slots set User_ID=null where User_ID=?"; 
+if (isset($_POST['yes'])) {
+
+  // delete the users info from all the tables
+
+  // update slots the user signed up and set it to null
+  $query1 = "UPDATE Slots set User_ID=null where User_ID=?";
   $stmt1 = $pdo->prepare($query1);
   $stmt1->execute([$userID]);
 
-  $query4 = "select ID from Signup_sheets where Owner_ID=?"; 
-$stmt4 = $pdo->prepare($query4);
-$stmt4->execute([$userID]);
-$table_IDs = $stmt4->fetchAll();
 
-foreach($table_IDs as $row):
-  $query2 = "DELETE from Slots where Sheet_ID = ?"; 
-  $stmt2 = $pdo->prepare($query2);
-  $stmt2->execute(array($row['ID']));
-endforeach;
+  // fetch all the users sign up sheets where they are an owner
+  $query4 = "select ID from Signup_sheets where Owner_ID=?";
+  $stmt4 = $pdo->prepare($query4);
+  $stmt4->execute([$userID]);
+  $table_IDs = $stmt4->fetchAll();
 
-$query5 = "DELETE from Signup_sheets where Owner_ID = ?"; 
-$stmt5 = $pdo->prepare($query5);
-$stmt5->execute(array($userID));
+  // delete all the slots of the sheet the user owned
+  foreach ($table_IDs as $row) :
+    $query2 = "DELETE from Slots where Sheet_ID = ?";
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->execute(array($row['ID']));
+  endforeach;
 
-  $query3 = "DELETE from users where ID = ?"; 
+  // delete all sheets the user owned
+  $query5 = "DELETE from Signup_sheets where Owner_ID = ?";
+  $stmt5 = $pdo->prepare($query5);
+  $stmt5->execute(array($userID));
+
+  // finally, delete the user from the users table
+  $query3 = "DELETE from users where ID = ?";
   $stmt3 = $pdo->prepare($query3);
   $stmt3->execute([$userID]);
 
-  header("refresh:0.5; url=login.php");
+  // send the user to logout.php which will destroy session and redirect to index.php
+  header("Location:logout.php");
+  exit();
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -259,7 +287,6 @@ $stmt5->execute(array($userID));
   <link rel="stylesheet" href="../styles/errors.css" />
   <script defer src="deleteModal.js"></script>
   <script defer src="./edit_account.js"></script>
-
 </head>
 
 <body>
@@ -279,14 +306,17 @@ $stmt5->execute(array($userID));
           <a href="mystuff.php">
             <li>View</li>
           </a>
-          <a href="./edit_account.php"><li>My Account</li></a>
-               <?php if($picExists):?>
-               <img src="<?=$profpic_url?>">
-            
-            
-            <?php else:?>
+          <a href="./edit_account.php">
+            <li>My Account</li>
+          </a>
+          <!-- display the profile picture if it exists, otherwise display an icon -->
+          <?php if ($picExists) : ?>
+            <img src="<?= $profpic_url ?>">
+
+
+          <?php else : ?>
             <i class="fa fa-user" aria-hidden="true"></i></li></a>
-            <?php endif?>
+          <?php endif ?>
         </div>
       </ul>
     </nav>
@@ -296,7 +326,7 @@ $stmt5->execute(array($userID));
     <section>
       <h2>Account Information</h2>
       <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false">
-
+        <!-- All inputs are populated from the database -->
         <div>
           <input type="text" name="name" placeholder="John Smith" id="name" value="<?= $userInfo['fname'] ?>">
           <label for="name">Full Name</label>
@@ -319,7 +349,7 @@ $stmt5->execute(array($userID));
           <label for="password">Password</label>
           <span class="error <?= !isset($errors['password']) ? 'hidden' : ""; ?>">
             *Invalid Password. Atleast 1 number, 1 special character, 1 uppercase letter and >=8</span>
-            <span class="rating"></span>
+          <span class="rating"></span>
         </div>
         <div>
           <input type="password" name="conpass" id="conpass" placeholder="inbaepn" autocomplete="off" value="">
@@ -336,36 +366,38 @@ $stmt5->execute(array($userID));
 
     </section>
 
-
+    <!-- Optional form to change profile picture -->
     <form id="profpic" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
       <aside>
         <label id="special" class="profpic" id="profilepic" for="profilepic">Change Profile Picture<i class="far fa-user-circle"></i></label>
         <input class="profpic" type="file" id="profilepic" name="profilepic">
-        <span class="error <?=!isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size. Size has to be less than 2MB</span>
+        <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size. Size has to be less than 2MB</span>
         <div>
           <a href=""><button type="submit" id="submit2" name="submit2">Change</button></a>
         </div>
       </aside>
     </form>
-    
+
   </main>
+
+  <!-- Modal on Delete -->
   <div class="deletebutton">
     <button id="delete">Delete Account</button>
   </div>
+
+  <!-- form for deleting the account -->
   <form id="delete" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
 
-  <div id="ModalWindow" class="modal">
-
-  <div class="content">
-  <p>Are you sure you want to continue?</p>
-          <div>
-            <button type="submit" name="no"id="no">No</button>
-            <button type="submit" name="yes" id="yes">Yes</button>
-          </div>  
-  </div>
-
-</div>
-</form>
-
+    <div id="ModalWindow" class="modal">
+      <div class="content">
+        <p>Are you sure you want to continue?</p>
+        <div>
+          <button type="submit" name="no" id="no">No</button>
+          <button type="submit" name="yes" id="yes">Yes</button>
+        </div>
+      </div>
+    </div>
+  </form>
 </body>
+
 </html>

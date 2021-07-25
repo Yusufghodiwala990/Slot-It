@@ -81,18 +81,7 @@ $list1 = $stmt2->fetchAll();
             <?php else:?>
             <i class="fa fa-user" aria-hidden="true"></i></li></a>
             <?php endif?>
-            
-        <ul>
-          <!-- <div>
-            <li><img src="../img/logo.png" alt="Slot-it logo"></li>
-          </div>
-          <div>
-          <a href="../index.html"><li>Home</li></a>
-          <a href="../create.html"><li>Create</li></a>          
-          <a href="./mystuff.php"><li>View</li></a>
-          <a href="derek.html"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
-        </div>
-        </ul> -->
+           </ul>
       </nav>
 </header>
 

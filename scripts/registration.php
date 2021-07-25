@@ -199,6 +199,7 @@ if (count($errors) == 0) {
     }
     
     header("Location:login.php");  // redirect to login
+    exit();
 }
 }
 

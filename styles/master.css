@@ -3,13 +3,10 @@
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
 
-
+/* font on body */
 body{
   font-family: 'Krona One', sans-serif;
   
-  
-
-
 }
 
 /* yusuf */
@@ -20,7 +17,7 @@ header{
   margin: 2em 0em 5em 0em;
   animation: navFade2 1.5s ease 0s forwards;
 }
-/* Copy this @keyframes block to your CSS*/
+/* For the animation of nav bar to come from the top and translate down in Y co-ordinates */
 @keyframes navFade2{
   0.0%{
     transform:rotate(0) translate(0%,-100%);
@@ -47,6 +44,7 @@ main section:first-of-type p{
   font-size: 1.3em;
 }
 
+/* no underline */
 a{
   text-decoration: none;
 }
@@ -55,6 +53,7 @@ header nav a{
   font-size: 1em;
   color:black;
 }
+/* flex nav bar*/
 header nav ul{
   display: flex;
   flex-direction: row;
@@ -62,6 +61,7 @@ header nav ul{
   flex-wrap: wrap;
 }
 
+/*flex, all the links */
 header nav ul div:last-of-type{
   display: flex;
   flex-wrap: wrap;
@@ -74,7 +74,7 @@ header nav ul div:last-of-type{
 header nav ul li{
   margin:0em 1.5em 0em .5em;
   padding:1em;
-  transition: .2s transform ease-in-out; /*scaling transformation*/
+  transition: .2s transform ease-in-out; /*scaling transformation on hover to be used*/
   border-radius: 2em;
 }
 
@@ -84,7 +84,7 @@ header nav ul a:visited{
   color: #FF007F;
 }
 header nav ul div:last-of-type li:hover{
-  transform: scale(0.85); 
+  transform: scale(0.85);         /* scale down on hover*/
   background-color: #FF007F; 
   color: white; 
 }
@@ -103,8 +103,8 @@ main section:first-of-type{
   flex-wrap: wrap;
   margin:0em 3em 3em 1em;
   justify-content: space-between;
-  animation: sectionFade 1.5s ease 0s forwards;
-  transition: .2s transform ease-in-out;
+  animation: sectionFade 1.5s ease 0s forwards; /* use the sectionFade defined above*/
+  transition: .2s transform ease-in-out;     
 }
 main section:first-of-type span{
   color: aqua;
@@ -118,7 +118,7 @@ main section div{
   padding-top: 2em;
 }
 
-/* Copy this @keyframes block to your CSS*/
+/* for the welcome section, animation which will come from the left in X co-ordinates*/
 @keyframes sectionFade{
   0.0%{
     transform: rotate(0) translate(-30%);
@@ -129,6 +129,8 @@ main section div{
     opacity: 1;
   }
 }
+
+/* body of the welcome section*/
 main section:first-of-type div:nth-of-type(2),
 main section:first-of-type div:nth-of-type(3){
   font-size: 1em;
@@ -141,6 +143,7 @@ main section:first-of-type h2{
 }
 
 
+/* sign up button on welcome section*/
 main section:first-of-type button{
   align-self: center;
   background-color: white; /* 25D09D */
@@ -153,7 +156,7 @@ main section:first-of-type button{
   padding: 1em 3em 1em 3em;
   transition: .2s transform ease-in-out;
 }
-
+/* sign up button on welcome section on hover*/
 main section:first-of-type button:hover{
   transform: scale(1.08);
   background-color: #FF007F;
@@ -162,6 +165,8 @@ main section:first-of-type button:hover{
 
 
 /* daud */
+
+/* footer */
 footer{
   background: black;
   color:white;
@@ -202,6 +207,8 @@ header nav ul li i{
 
 /* Kris - Panels*/
 
+
+/* same animation rules as defined above*/
 @keyframes cardFade{
   0.0%{
     transform: rotate(0) translateY(40%);
@@ -213,6 +220,8 @@ header nav ul li i{
   }
 }
 
+
+/* Flexbox rules same as above defined*/
 main section:last-of-type {
   display: flex;
   flex-direction: row;
@@ -261,6 +270,7 @@ main section:last-of-type div:hover{
 }
 
 
+/* button on the panels*/
 main section:last-of-type  div button{
   align-self: center;
   background-color: white; /* 25D09D */
@@ -275,11 +285,14 @@ main section:last-of-type  div button{
   margin: 1em;
 }
 
+/* button on the panels on hover*/
 main section:last-of-type div button:hover{
   transform: scale(1.08);
   background-color: #FF007F;
   color: white;
 }
+
+/* for the icons*/
 .fa{
   align-self: center;
   margin-right: 2em;

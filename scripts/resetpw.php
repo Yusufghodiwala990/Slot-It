@@ -1,15 +1,14 @@
 <?php
 
-
+/* Explaination of the resetpw mechanism retreived 
+     from https://www.youtube.com/watch?v=wUkKCMEYj9M */
 include 'library.php';
 $pdo = connectDB();
 $email  = $_POST['email'] ?? null;
 $sent = false;
 if(isset($_POST['submit'])){
     
-
-
-
+  // generate a hex selector an a bytes token
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
 
@@ -19,19 +18,23 @@ if(isset($_POST['submit'])){
     // 30 mins
     $linkExpiry = date("U") + 1800; 
 
+    // delete previous password requests before initializing a new one
     $query = "DELETE FROM `reset_password` where resetEmail=?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$email]);
 
+    // hashing the bytes token
     $hashedToken = password_hash($token, PASSWORD_DEFAULT);
      
+    // inserting the token with the selector into the reset_password table
     $query = "INSERT INTO `reset_password` (resetEmail, resetSelector, resetToken, expiryDate) VALUES (?,?,?,?)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$email,$selector,$hashedToken,$linkExpiry]);
     
-    
+
+    // Sending Email example grabbed from Blackboard
       require_once "Mail.php";  //this includes the pear SMTP mail library
-      $from = "Slot-It <yusufghodiwala@trentu.ca>"; // change this.
+      $from = "Slot-It <yusufghodiwala@trentu.ca>"; 
       $to = $email;  //put user's email here
       $subject = "Reset your password for Slot-it";
       $message = '<p>Request for Passord Reset was received. Click on the link below
@@ -55,13 +58,8 @@ if(isset($_POST['submit'])){
         echo ("<p>" . $mail->getMessage() . "</p>");
       }
 
-    $sent = true;
-    //header("Refresh: 3; url=https://loki.trentu.ca/~yusufghodiwala/3420/project/scripts/resetpw.php?reset=success");
-   
+    $sent = true;   
 }
-
-
-
 
 ?>
 
@@ -85,6 +83,8 @@ if(isset($_POST['submit'])){
 
     <h1>Reset</h1>
     <p style="margin-bottom: 1.5em;">You'll be sent a link to your registered email, follow instructions in the mail to reset your password</p>
+    
+    <!-- Form to get the email of the user -->
     <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
       <div>
         <input type="text" name="email" id="email" placeholder="derekpope666"  autocomplete="off">
@@ -99,10 +99,9 @@ if(isset($_POST['submit'])){
       
       <?php
     
+    // if email was sent
     if($sent):?>
     <span style="color:#FF007F">* Please check your email</span>
-      
-     
     <?php endif?>
     
 
