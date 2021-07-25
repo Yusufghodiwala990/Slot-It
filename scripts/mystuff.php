@@ -9,18 +9,26 @@ if(!isset($_SESSION['user_id']))
   exit;
 }
 
+// fetching the profile picture if available.
+
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
 
 $filename = "profile-pic" . $_SESSION['user_id'];
-$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/"; 
 
+
+// glob function to run a search with a wildcard to return all matching filenames.
  $result = glob ($profpicpath . $filename . ".*" );
+
+ // if array is empty, no match, else build URL.
  if(empty($result))
    $picExists = false;
  else{
    $picExists = true;
    $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
-   $url = explode("/",$result[sizeof($result) - 1]);
-   $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+   $url = explode("/",$result[sizeof($result) - 1]);  // get the latest pic the user uploaded
+   $profpic_url = $profpic_url . $url[sizeof($url)-1]; // build URL
  }
 
 
@@ -70,7 +78,7 @@ $list2 = $stmt1->fetchAll();
                         <li>Create</li>
                     </a>
                     <a href="./edit_account.php"><li>My Account</li></a>
-                    <a href="./scripts/edit_account.php"><li>Logout</li></a>
+                    <a href="./logout.php"><li>Logout</li></a>
                <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
               <?php else:?>
