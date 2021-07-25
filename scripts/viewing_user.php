@@ -110,6 +110,7 @@ $list1 = $stmt3->fetchAll();
 </header>
 
 <main>
+<section>
 <?php if($result==false):?>
 <p> Title: *** </p>
 <p> Owner: *** </p>
@@ -117,22 +118,21 @@ $list1 = $stmt3->fetchAll();
 <?php else :?>
 <p> Title: <?=$result['Title']?></p>
 <p> Owner: <?=$result2['fname']?></p> 
+<p> Description: <?=$result['Description']?></p> 
+
 <?php endif?>
 
 <form action="./slot_in.php" method="post" novalidate autocomplete="false">
     <table>
           <thead>
             <tr>
-              <th scope="col">Purpose</th>
               <th scope="col">Date</th>
               <th scope="col">Time</th>
-              <th scope="col">Name</th>
             </tr>
           </thead>
           <tbody>
           <?php if($result==false||$list1==null) : ?>
                     <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -142,7 +142,6 @@ $list1 = $stmt3->fetchAll();
                       <?php foreach ($list1 as $row):?>
                     <tr>
 
-              <td><?=$result['Description']?></td>
               <td><?=$result['StartDate']?></td>
               <td><?=$row['StartTime']?></td>
               <?php if(!isset($row['user_ID'])&&!isset($row['Guest_ID'])): ?>
@@ -174,6 +173,7 @@ $list1 = $stmt3->fetchAll();
           </tbody>
         </table>
 </form>
+</section>
 </main>
 <footer>
       <ul>
