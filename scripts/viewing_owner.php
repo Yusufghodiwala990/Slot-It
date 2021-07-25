@@ -96,6 +96,7 @@ $list1 = $stmt2->fetchAll();
 </header>
 
 <main>
+<section>
 <p> Title: <?=$result['Title']?? '*****' ?></p>
     <table>
           <thead>
@@ -159,6 +160,7 @@ $list1 = $stmt2->fetchAll();
           </tbody>
         </table>
 </main>
+</section>
 <footer>
       <ul>
         <li><a href="../index.html">Home</a></li>

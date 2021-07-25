@@ -13,7 +13,9 @@ body{    font-family: 'Krona One', sans-serif;
   
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
   
- 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 header{
     margin: 2em 0em 8em 0em;
@@ -115,6 +117,8 @@ footer{
     color:white;
     padding: 1em;
   font-size: 1.5em;
+  margin-top: auto;
+
   }
   
   footer ul{
