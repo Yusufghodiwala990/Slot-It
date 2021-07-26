@@ -1,10 +1,13 @@
 <?php 
 session_start();
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
 if(isset($_SESSION['user_id'])){
-$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
-$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";      //set profile pic path
+$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg"; //set profile pic url
 
 } include "library.php";
+
 
 $pdo = connectDB();
 $errors = array();
@@ -16,7 +19,7 @@ if(isset($_POST['no'])){
 
 if(!isset($_SESSION['user_id']))
 {
-  header("location:login.php");
+  header("location:login.php");   //redirect to login if session doesn't user_id
   exit;
 }
 $query1 = "select * from Signup_sheets where ID=?"; 
@@ -25,7 +28,7 @@ $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
 
 if (isset($_POST['submit'])) {
-
+// pull variables to update table
   $Title = $_POST['name'] ?? null;
   $description = $_POST['description'] ?? null;
   $start = $_POST['start'] ?? null;
@@ -45,7 +48,7 @@ if (isset($_POST['submit'])) {
   }
 
 
-  
+  //functiont to check if there's an overlap between the new set of time slots to be inserted and the old set
 function checkRange ($min, $max, $value){
   if(filter_var(
     $value, 
@@ -69,7 +72,7 @@ function checkRange ($min, $max, $value){
   $endInSeconds = strtotime($endTime);
 
   
-
+  //set to true if overlap exists
   if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$startInSeconds))
     $errors['overlap'] = true;
 
@@ -108,7 +111,7 @@ function checkRange ($min, $max, $value){
      //}
 }
 
-// for deleting an account
+// for deleting a signup sheet
 if(isset($_POST['yes'])){
 $Sheet_ID = $_POST['yes'];
   $query2 = "DELETE from Slots where Sheet_ID = ?"; 
@@ -143,7 +146,7 @@ exit;
         <ul>
           <div>
             <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
-          </div>
+          </div> <!-- Navbar-->
           <div>
           <a href="../index.php"><li>Home</li></a>
           <a href="./search.php"><li>Search</li></a>
@@ -207,6 +210,7 @@ exit;
         <div>
           <label for="duration">Select slot duration length:</label>
           <select name="duration" id="slotDuration">
+              <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet updation-->
               <option value="<?="300"?>" <?php if($result1['SlotDuration']==300) echo 'selected'?> >5 mins</option>
               <option value="<?="600"?>" <?php if($result1['SlotDuration']==600) echo 'selected'?>>10 mins</option>
               <option value="<?="900"?>" <?php if($result1['SlotDuration']==900) echo 'selected'?>>15 mins</option>

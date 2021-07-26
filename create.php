@@ -1,11 +1,15 @@
 <?php 
   session_start();
   if(isset($_SESSION['user_id'])){
+    /* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
     $filename = "profile-pic" . $_SESSION['user_id'];
     $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
-   
+     // glob function to run a search with a wildcard to return all matching filenames.
+
      $result = glob ($profpicpath . $filename . ".*" );
-     
+    // if array is empty, no match, else build URL.
+
      if(empty($result))
        $picExists = false;
      else{
@@ -27,7 +31,7 @@
 
   $userid=$_SESSION['user_id'];
   if(isset($_POST['submit']))
-  {
+  { //pull values from form
     $title=$_POST['name'];
     $description=$_POST['description'];
     $startDate=$_POST['start-date'];
@@ -36,6 +40,7 @@
     $endTime = $_POST['end-time'];   
     $duration = $_POST['duration'];
 
+    //convert searchable to 0/1 values for sql insertion
     if($searchable==true){
       $searchable=1;
     }
@@ -161,6 +166,7 @@
 
           <div>
           <label for="duration">Select slot duration length:</label>
+          <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet creation-->
           <select name="duration" id="slotDuration">
               <option value="<?="300"?>">5 mins</option>
               <option value="<?="600"?>">10 mins</option>
