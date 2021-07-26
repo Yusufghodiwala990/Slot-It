@@ -1,27 +1,26 @@
+/* resetting the css */
 @import url(./reset.css);
-
+/* Improrting the google font style */
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
+/* flex body, column aligned */
 body{    font-family: 'Krona One', sans-serif;
   background: hsla(210, 90%, 80%, 1);
-
-  background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
-  
+  background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%); 
   background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
-  
   background: -webkit-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
-  
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
-  
-  min-height: 100vh;   /* ensures the gradient covers the entire page background and footer stays at the bottom */
+  min-height: 100vh; /* ensures the gradient covers the entire page background and footer stays at the bottom */
   display: flex;
   flex-direction: column;
 }
+
+/* the nav bar */
 header{
     margin: 2em 0em 8em 0em;
     animation: navFade2 1s ease 0s forwards;
   }
-
+  /* tranformation used for the header */
 @keyframes navFade2{
     0.0%{
       transform:rotate(0) translate(0%,-100%);
@@ -32,19 +31,23 @@ header{
       opacity: 1;
     }
   }
+  /* removing the underlines in links */
 a{
     text-decoration: none;
   }
   
+  /* links in the nav bar */
   header nav a{
     font-size: 1.2em;
     color:black;
   }
     
+  /* when the links in the nav bar are visited */
   header nav ul a:visited{
     color: #FF007F;
   }
 
+  /* flex unordered list */
   header nav ul{
     display: flex;
     flex-direction: row;
@@ -75,15 +78,18 @@ a{
     background-color: #FF007F; 
     color: white; 
   }
+  /* icons in the nav bar */
   header nav ul li i{
     margin-left: .5em;
   }
+  /* all headers 2 */
 h2{
   font-size: 1.4em;
   padding-left: 4em;
   padding-top: 2em;
   font-weight: bold;
 }
+/* profile picture */
 ul div:first-of-type img{
     height: 5em;
     width: 5em;
@@ -98,9 +104,12 @@ ul div:last-of-type img{
   border-radius: 50%;
 }
 
+/* font awesome icon */
 .fa{
   align-self: center;
+  margin-right: 2em;
 }
+/* paragraph within the main tag */
 main p{
     font-size: 1.3em;
 }
@@ -116,14 +125,16 @@ footer{
     color:white;
     padding: 1em;
   font-size: 1.5em;
-  margin-top: auto;  /* ensures footer stays at bottom */
+  margin-top: auto; /* ensures footer stays at bottom */
 
   }
   
+  /* even spaced, flexed list */
   footer ul{
     display: flex;
     justify-content: space-evenly;
   }
+  /* centered paragraph in the footer */
   footer p{
     padding-top: 1em;
   text-align: center;
@@ -135,9 +146,11 @@ footer{
   footer li a{
     color: white;
   }
+  /* when links in the footer are visited */
   footer li a:visited{
     color:#FF007F;
   }
+  /* links in the footer when hovered */
   footer li a:hover{
     color:#94BBDB;
   }
@@ -156,7 +169,7 @@ footer{
     border-radius: 2em;
     padding: 0.5em 1.5em 0.5em 1.5em;
   }
-
+/* links directly within the table data */
   tr td>a{
     display: inline-block;
     color: black;
@@ -171,6 +184,7 @@ th {
   padding-top:1em;
 }
 
+/* when hovering over the links or buttons in the table */
 td a:hover, td button:hover{
     color:#FF007F ;
     cursor: hand;
@@ -182,11 +196,12 @@ td,th{
 }
 
 tr th{
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px 0px 0px; 
   background-color: #2196F3;
   color: white;
 }
 
+/* table with signup sheet details */
 table{
   margin-top: 2em;
   margin-left: auto;
@@ -196,7 +211,7 @@ table{
   text-align: center;
 }
 
-
+/* rounded top corners */
 th
 {
   border-radius: 5px 0px 0px 5px;

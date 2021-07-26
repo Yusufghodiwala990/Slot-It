@@ -2,36 +2,45 @@
 include "library.php";
 session_start();
 if(isset($_SESSION['user_id'])){
+  // fetching the profile picture if available.
+
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
   $filename = "profile-pic" . $_SESSION['user_id'];
   $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
  
+  // glob function to run a search with a wildcard to return all matching filenames.
    $result = glob ($profpicpath . $filename . ".*" );
-   
+
+    // if array is empty, no match, else build URL.
    if(empty($result))
      $picExists = false;
    else{
      $picExists = true;
      $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
-     $url = explode("/",$result[sizeof($result) - 1]);
-     $profpic_url = $profpic_url . $url[sizeof($url)-1]; 
+     $url = explode("/",$result[sizeof($result) - 1]); // get the latest pic the user uploaded
+     $profpic_url = $profpic_url . $url[sizeof($url)-1];  // build URL
    }
   
 }
-$pdo = connectDB();
+$pdo = connectDB(); //Connect to the database
+//Redirect if not logged in.
 if(!isset($_SESSION['user_id']))
 {
   header("location:login.php");
-  exit;
+  exit();
 }
-$SlotID = $_GET['SlotID'];
+$SlotID = $_GET['SlotID']; //Get the slotID for the slot to be cancelled
 
+//Selecting the slot details
 $query1 = "select * from Slots where Slot_ID = ?"; 
 $stmt= $pdo->prepare($query1);
 $stmt->execute([$SlotID]);
 $result = $stmt->fetch();
 
-$Sheet_ID=$result['Sheet_ID'];
+$Sheet_ID=$result['Sheet_ID']; //storing the details returned
 
+//selecting the title and startdate of the target sheet
 $query2 = "select Title,StartDate from Signup_sheets where ID = ?"; 
 $stmt2 = $pdo->prepare($query2);
 $stmt2->execute([$Sheet_ID]);
@@ -39,31 +48,11 @@ $Title = $stmt2->fetch();
 
 $userID =$result['User_ID'];
 
+//Selecting the users name
 $query3 = "select fname from users where ID= ?"; 
 $stmt3 = $pdo->prepare($query3);
 $stmt3->execute([$userID]);
 $slotUsr = $stmt3->fetch();
-
-
-if(isset($_POST['Cancel']))
-{
-  header("Location: mystuff.php");
-}
-
-if(isset($_POST['deleteSlot']))
-{
-  $query4 = "UPDATE Signup_sheets SET No_of_Signups=No_of_Signups-1 where ID=?"; 
-  $stmt4 = $pdo->prepare($query4);
-  $stmt4->execute([$Sheet_ID]);
-
-  $query5 = "UPDATE Slots SET Slots.Guest_ID=NULL, Slots.User_ID=NULL WHERE Slots.Slot_ID=?"; 
-  $stmt5 = $pdo->prepare($query5);
-  $stmt5->execute([$SlotID]);
-
-  header("refresh:0.5; url=mystuff.php");
-
-
-}
 
 ?>
 
@@ -82,24 +71,28 @@ if(isset($_POST['deleteSlot']))
 
     <header>
         <nav>
+          <!-- navigational bar -->
           <ul>
             <div>
             <a href="../index.php"><li>Home</li></a>
             <a href="../create.php"><li>Create</li></a> 
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
+               <!-- if a profile picture is uploaded -->
                <?php if($picExists):?>
-              <img src="<?=$profpic_url?>">
+              <img src="<?=$profpic_url?>"alt="Profile picture">
             
-            
+            <!-- if a profile picture is not uploaded, show the user icon -->
             <?php else:?>
             <i class="fa fa-user" aria-hidden="true"></i></li></a>
-            <?php endif?>          </div>
+            <?php endif?>         
+           </div>
           </ul>
         </nav>      
       </header>
 
       <main>
+        <!-- Details of slot being cancelled  -->
         <section>
           <h1>You are about to cancel the following slot :</h1>
           <table>
@@ -119,6 +112,7 @@ if(isset($_POST['deleteSlot']))
                 <td><?php echo $slotUsr['fname']?></td>
               </tr>
             </tbody>
+            <!-- Alerting the user -->
           </table>
           <p>Are you sure you want to continue?</p>
           <div>

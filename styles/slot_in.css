@@ -1,5 +1,6 @@
+/* resetting the css */
 @import url(./reset.css);
-
+/* Improring the google font style */
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 @keyframes navFade2 {
     0.0% {
@@ -11,6 +12,7 @@
       opacity: 1;
     }
   }
+  /* tranformation used for the header */
   @keyframes navFade {
     0.0% {
       transform: rotate(0) translate(0, 30%);
@@ -22,22 +24,25 @@
       opacity: 1;
     }
   }
+
 body {
   font-family: "Krona One", sans-serif;
   
 }
-
+/* flex form with column direction */
 form {
     display: flex;
     flex-direction: column;
     margin-left: 20em;
   }
 
+  /* all headers 2 */
   h2 {
     text-indent: 10em;
     font-size: 2em;
   }
   
+  /* div within a form */
   form div {
     transition: all 0.3s;
     margin-bottom: 1em;
@@ -46,6 +51,7 @@ form {
     
   }
 
+  /* labels within the form */
   form label {
     font-size: 1.3em;
     display: block;
@@ -53,8 +59,9 @@ form {
     cursor: text;
     transform-origin: 0 0;
     transition: all 0.3s;
-    color: black;
+    color: black;  /*font-color: black*/
   }
+  /* transparent placeholder */
   form input::placeholder {
     color: transparent;
   }
@@ -63,7 +70,7 @@ form {
     transform: scale(1.02);
   }
 
-  /* REF https://css-tricks.com/float-labels-css/ */
+  /* REF: https://css-tricks.com/float-labels-css/ */
 form input:focus + label,
 form input:not(:placeholder-shown) + label {
   transform: translateY(-3.4em);

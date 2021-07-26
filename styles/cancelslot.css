@@ -3,50 +3,12 @@
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
 
-
+/* flex body, column aligned */
 body{
-  font-family: 'Krona One', sans-serif;
-  
+  font-family: 'Krona One', sans-serif; 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
-
-}
-
-/* yusuf */
-
-
-/* -- nav bar -- */
-header{
-  margin: 2em 0em 8em 0em;
-  animation: navFade2 1.5s ease 0s forwards;
-}
-/* Copy this @keyframes block to your CSS*/
-@keyframes navFade2{
-  0.0%{
-    transform:rotate(0) translate(0%,-100%);
-    opacity: 0;
-  }
-  100%{
-    transform:rotate(0);
-    opacity: 1;
-  }
-}
-@keyframes navFade{
-  0.0%{
-    transform: rotate(0) translate(0,30%);
-   
-    opacity: 0;
-  }
-  100%{
-    transform: rotate(0) translate(0,0);
-    opacity: 1;
-  }
-}
-
-body{
-  font-family: 'Krona One', sans-serif;
   background: hsla(210, 90%, 80%, 1);
 
   background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
@@ -58,32 +20,57 @@ body{
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
 }
 
+
+/* -- nav bar -- */
+header{
+  margin: 2em 0em 8em 0em;
+  animation: navFade2 1.5s ease 0s forwards;
+}
+
+/* tranformation used for the header */
+@keyframes navFade2{
+  0.0%{
+    transform:rotate(0) translate(0%,-100%);
+    opacity: 0;
+  }
+  100%{
+    transform:rotate(0);
+    opacity: 1;
+  }
+}
+
+
 main section:first-of-type p{
   font-size: 1.3em;
 }
 
+/* Removing the underline */
 a{
   text-decoration: none;
 }
 
+/* flex header, column aligned */
 header nav{
   display: flex;
   align-items: center;
   flex-direction: column;
   
 }
+/* links in the header */
 header nav a{
   font-size: 1.2em;
   color:black;
 }
+
+/* list of links in the navigation bar */
 header nav ul{
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-header nav ul div:last-of-type{
+
+header nav ul div{
   display: flex;
   flex-wrap: wrap;
   box-shadow: 1px 2px 10px 3px rgb(173, 173, 173); /* no border but box-shadow */
@@ -102,7 +89,7 @@ header nav ul li{
 }
 
 
-
+/* pink color when visited */
 header nav ul a:visited{
   color: #FF007F;
 }
@@ -122,10 +109,13 @@ footer{
   margin-top: auto;
 }
 
+/* flex footer, with even space between the content */
 footer ul{
   display: flex;
   justify-content: space-evenly;
 }
+
+/* centre aligning the paragraph within the footer */
 footer p{
   padding-top: 1em;
 text-align: center;
@@ -137,6 +127,7 @@ footer .fas{
 footer li a{
   color: white;
 }
+/* pink when links are visited */
 footer li a:visited{
   color:#FF007F;
 }
@@ -144,29 +135,20 @@ footer li a:hover{
   color:#94BBDB;
 }
 
+/* scaling the page logo */
 footer ul li img{
   height:3em;
   width: 3em;
 }
 
-
-/* Kris - Signup - CLEAN SHEET*/
-
-@keyframes cardFade{
-  0.0%{
-    transform: rotate(0) translateY(40%);
-    opacity: 0;
-  }
-  100%{
-    transform: rotate(0) translate(0,0);
-    opacity: 1;
-  }
-}
+/* flex main with centre aligned content  */
 main{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+/*section within main container*/
 main section{
   padding: 2em;
   border: 5px solid black;
@@ -176,6 +158,7 @@ main section{
   background-color: white;
 }
 
+
 main section h1{
   font-weight: bold;
   font-size: 1.5em;
@@ -183,6 +166,7 @@ main section h1{
   text-align: center;
 }
 
+/* paragraph within main */
 main section p{
   text-align: center;
   padding-top: 1em;
@@ -195,6 +179,7 @@ main section div{
   justify-content: center;
 }
 
+/* link within the main section  */
 main section div a{
   background-color: hsla(212, 65%, 49%, 1); /* 25D09D */
   color: white;
@@ -208,11 +193,13 @@ main section div a{
   margin-left: 1em;
 }
 
+/* when hovering over the link */
 main section a:hover{
   transform: scale(1.08);
   border-color: #FF007F;
 }
 
+/* table row and table data */
 td,th{
   border:0.1em solid white;
   padding:0.5em;
@@ -224,6 +211,7 @@ tr th{
   color: white;
 }
 
+/* table for slot details */
 table{
   margin-top: 2em;
   margin-left: auto;
@@ -232,6 +220,7 @@ table{
   color: black;
   text-align: center;
 }
+
 
 tr{
   background-color: #90CAF9;
@@ -243,11 +232,13 @@ section div a:first-of-type
   margin-left: 0;
 }
 
+/* font awesome icons */
 .fa{
   align-self: center;
   margin-right: 2em;
 }
 
+/* profile picture */
 ul div:last-of-type img{
   height: 2em;
   object-fit: contain;
