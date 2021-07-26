@@ -3,8 +3,29 @@ session_start();
 /* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
    in 3420project_images folder in www_data on yusufghodiwala account  */
 if(isset($_SESSION['user_id'])){
-$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";      //set profile pic path
-$profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg"; //set profile pic url
+
+   // fetching the profile picture if available.
+
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
+
+$filename = "profile-pic" . $_SESSION['user_id'];
+$profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/"; 
+
+
+// glob function to run a search with a wildcard to return all matching filenames.
+ $result = glob ($profpicpath . $filename . ".*" );
+
+ // if array is empty, no match, else build URL.
+ if(empty($result))
+   $picExists = false;
+ else{
+   $picExists = true;
+   $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/";
+   $url = explode("/",$result[sizeof($result) - 1]);  // get the latest pic the user uploaded
+   $profpic_url = $profpic_url . $url[sizeof($url)-1]; // build URL
+ }
+
 
 } include "library.php";
 
@@ -12,16 +33,22 @@ $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_imag
 $pdo = connectDB();
 $errors = array();
 
+// get the sheet id from the url
 $Sheet_ID = $_GET['SheetID']??null;
+
+// delete sheet, yes or no (modal)
 if(isset($_POST['no'])){
   $Sheet_ID =$_POST['no'];
 }
 
 if(!isset($_SESSION['user_id']))
 {
-  header("location:login.php");   //redirect to login if session doesn't user_id
+  header("location:login.php");   //redirect to login if session doesn't have user_id
   exit;
 }
+
+
+// fetch the signup sheet details
 $query1 = "select * from Signup_sheets where ID=?"; 
 $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
@@ -37,6 +64,19 @@ if (isset($_POST['submit'])) {
   $endTime = $_POST['end-time'];   
   $duration = $_POST['duration'];
   $searchable = $_POST['searchability'] ?? false;
+
+
+  // get the start and end time into a UNIX timestamp
+  $startInSeconds = strtotime($startTime);
+  $endInSeconds = strtotime($endTime);
+
+$date_now = new DateTime();
+$date_entered = new DateTime($start);
+if($date_entered < $date_now){
+  $errors['date'] = true;
+}
+
+
  
   
   if($searchable==true){
@@ -47,58 +87,94 @@ if (isset($_POST['submit'])) {
     $searchable=0;
   }
 
+// validation for title and desc
+  if (!isset($Title) || strlen($Title) == 0) {
+    $errors['title'] = true;
+  }
 
-  //functiont to check if there's an overlap between the new set of time slots to be inserted and the old set
+  if (!isset($description) || strlen($description) == 0) {
+    $errors['desc'] = true;
+  }
+
+
+  // checking if start and end time are valid
+  if($startInSeconds > $endInSeconds || $endInSeconds < $startInSeconds ){
+    $errors['invalid_time'] = true;
+  }
+
+
+  // checking if start or end time are empty
+  if($startTime==''){
+      $errors['start'] = true;
+  }
+
+  if($endTime==''){
+    $errors['end'] = true;
+  }
+
+  
+
+
+  
+
+
+  //function to check if there's an overlap between the new set of time slots to be inserted and the old set
 function checkRange ($min, $max, $value){
   if(filter_var(
     $value, 
     FILTER_VALIDATE_INT, 
     array(
-        'options' => array(
+        'options' => array( // options array which defines min max
             'min_range' => $min, 
             'max_range' => $max
         )
     )
 )){
-  return true;
+  return true;      // if it's range
 } else{
-  return false;
+  return false;    // not in range
  
 }
 
 }
 
-  $startInSeconds = strtotime($startTime);
-  $endInSeconds = strtotime($endTime);
 
   
-  //set to true if overlap exists
+  //set to true if overlap exists between start_time and the previous(result1) starttime-endtime
   if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$startInSeconds))
     $errors['overlap'] = true;
 
+  // set to true if overlap exists between end time and the previous(result1) starttime-endtime
   if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$endInSeconds))
     $errors['overlap'] = true;
 
   
+  // check if overlaps the entire previous starttime and endtime
   if(checkRange($startInSeconds,$endInSeconds,strtotime($result1['EndTime'])))
     $errors['overlap'] = true;
 
-     //implement date time error later <== now*
 
-     //if(count($errors) == 0){
+  // update if no errors
+    if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
       $stmt2 = $pdo->prepare($query2);
       $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
 
       
         $intervals = array(); // an array to store all the time values
-        //convert start and times to seconds for unix conversion..
+       
        
 
-        for($time = $startInSeconds; $time<=$endInSeconds; $time+=$duration){
-          $intervals[] = date('H:i:s',$time);
-        }
 
+        // loop from start-time to endtime the user provided and forward the loop
+        // by the duration in seconds the user provided
+        for($time = $startInSeconds; $time<=$endInSeconds; $time+=$duration){
+          $intervals[] = date('H:i:s',$time); // populate the interval array with each slot 
+                                              // timestamp
+        }
+        
+
+        // insert each interval into the slots table
         foreach($intervals as $sTime)
         {
           $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
@@ -108,7 +184,7 @@ function checkRange ($min, $max, $value){
 
       header("Location:mystuff.php");
       exit;
-     //}
+      }
 }
 
 // for deleting a signup sheet
@@ -155,7 +231,7 @@ exit;
             <a href="../create.php"><li>Create</li></a>
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
-               <?php if(file_exists($profpicpath)):?>
+               <?php if($picExists):?>
               <img src="<?=$profpic_url?>">
             
             
@@ -176,7 +252,7 @@ exit;
         <div>
           <input type="text" name="name" autocomplete="off"value="<?=$result1['Title']?>" id="name">
           <label for="name">Sheet Name</label>
-          <span class="error hidden">Please enter a Title</span>
+          <span class="error <?= !isset($errors['title']) ? 'hidden' : ""; ?>">Please enter a title </span>
 
         </div>
 
@@ -184,6 +260,7 @@ exit;
             <label for="description" id="special">Description</label>
             <textarea name="description"  id="description" cols="84" rows="5" autocomplete="off"><?=$result1['Description']?></textarea>
             <span class="hidden error">Please set a description.</span>
+            <span class="error <?= !isset($errors['desc']) ? 'hidden' : ""; ?>">Please set a description </span>
         </div>
 
 
@@ -191,26 +268,30 @@ exit;
           <input type="date" name="start" id="start" value="<?=$result1['StartDate']?>" autocomplete="off">
           <label for="start">Start Date</label>
           <span class="hidden error">Start date cannot be before today's date.</span>
+          <span class="error <?= !isset($errors['date']) ? 'hidden' : ""; ?>">Start Date cannot be before today's date </span>
         </div>
 
         <div>
             <input type="time" id="start-time" name="start-time" value="<?=$result1['StartTime']?>">
             <label for="start-time">Pick a start time:</label>
             <span class="hidden error">Please enter a start time.</span>
+            <span class="error <?= !isset($errors['start']) ? 'hidden' : ""; ?>">Please enter a start time </span>
         </div>
 
         <div>
             <input type="time" id="end-time" name="end-time" value="<?=$result1['EndTime']?>">
             <label for="end-time">Pick a end time:</label>
             <span class="hidden error">Please enter an end time.</span>
+            <span class="error <?= !isset($errors['end']) ? 'hidden' : ""; ?>">Please enter an end time </span>
         </div>
         
         <span id="time-error"class="hidden error">Start time cannot be after end time, or end time before start.</span>
-
+        <span class="error <?= !isset($errors['invalid_time']) ? 'hidden' : ""; ?>">Start time cannot be after end time, or end time before start. </span>
+        
         <div>
           <label for="duration">Select slot duration length:</label>
           <select name="duration" id="slotDuration">
-              <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet updation-->
+              <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet update-->
               <option value="<?="300"?>" <?php if($result1['SlotDuration']==300) echo 'selected'?> >5 mins</option>
               <option value="<?="600"?>" <?php if($result1['SlotDuration']==600) echo 'selected'?>>10 mins</option>
               <option value="<?="900"?>" <?php if($result1['SlotDuration']==900) echo 'selected'?>>15 mins</option>

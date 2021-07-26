@@ -288,3 +288,8 @@ form select{
   margin-top: 0.2em;
   width: auto;
 }
+.fa
+{
+  align-self: center;
+  margin-right: 1em;
+}
