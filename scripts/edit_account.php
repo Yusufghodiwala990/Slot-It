@@ -270,10 +270,8 @@ if (isset($_POST['yes'])) {
   $stmt3->execute([$userID]);
 
   foreach($result as $pic){
-    var_dump($pic);
     unlink($pic);
   }
-die;
   // send the user to logout.php which will destroy session and redirect to index.php
   header("Location:logout.php");
   exit();
