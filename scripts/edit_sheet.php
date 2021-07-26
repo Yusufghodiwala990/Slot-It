@@ -99,7 +99,7 @@ if($date_entered < $date_now){
 
 
   // checking if start and end time are valid
-  if($startInSeconds > $endInSeconds || $endInSeconds < $startInSeconds ){
+  if($startInSeconds > $endInSeconds){
     $errors['invalid_time'] = true;
   }
 
