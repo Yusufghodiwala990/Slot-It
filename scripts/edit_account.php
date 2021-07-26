@@ -269,6 +269,7 @@ if (isset($_POST['yes'])) {
   $stmt3 = $pdo->prepare($query3);
   $stmt3->execute([$userID]);
 
+  // deleting all profile pictures the user uploaded from LOKI
   foreach($result as $pic){
     unlink($pic);
   }
