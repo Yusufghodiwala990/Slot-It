@@ -68,7 +68,7 @@ $keyword .="%";
             <img src="../img/logo.png" alt="Slot-it logo" width="60px" height="60px">
           </div>
           <div>
-          
+          <!-- Navbar-->
           <a href="../index.php"><li>Home</li></a>          
           <?php if(isset($_SESSION['user_id'])):?>
             <a href="../create.php"><li>Create</li></a>
@@ -93,18 +93,7 @@ $keyword .="%";
         </div>
         </ul>
       </nav>      
-      <!-- <nav>
-        <ul>
-          <div>
-            <li><img src="../img/logo.png" alt="Slot-it logo"></li>
-          </div>
-          <div>
-          <a href="../index.php"><li>Home</li></a>
-          <a href="./mystuff.php"><li>View</li></a>
-          <a href="./edit_account.php"><li>My Account<i class="fa fa-user" aria-hidden="true"></i></li></a>
-        </div>
-        </ul>
-      </nav>       -->
+
     </header>
   <main>
     <section>
@@ -118,7 +107,7 @@ $keyword .="%";
               </div>
               
           </form>
-          
+<!--if the results obtained from sql query are empty, show no results found -->
 <?php if(isset($empty) && $empty==true):?>
   <div>
     <h2>No results found.</h2>
@@ -145,6 +134,7 @@ $keyword .="%";
                     <?php endif; ?>
                 <?php if($list1!=null) : foreach ($list1 as $row): ?>
                     <tr>
+                      <!--Pull Title, description. If user is logged in and owns the sheet, then redirect to viewing_owner with id passed in url, else viewing_user-->
                       <?php 
                       if(isset($_SESSION['user_id'])):
                       if($_SESSION['user_id']==$row['Owner_ID']):?>
