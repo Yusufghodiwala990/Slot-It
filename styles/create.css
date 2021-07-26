@@ -1,4 +1,4 @@
-@import url(./reset.css);
+@import url(./reset.css);   /*import fonts*/
 
 @import url(//fonts.googleapis.com/css?family=Krona+One);
 
@@ -13,7 +13,7 @@ header{
   margin: 2em 0em 5em 0em;
   animation: navFade2 1.5s ease 0s forwards;
 }
-/* Copy this @keyframes block to your CSS*/
+/* Animations - Copy this @keyframes block to your CSS*/ 
 @keyframes navFade2{
   0.0%{
     transform:rotate(0) translate(0%,-100%);
@@ -39,7 +39,7 @@ header{
 body{
   font-family: 'Krona One', sans-serif;
   background: hsla(210, 90%, 80%, 1);
-
+/*background gradient*/
   background: linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
   
   background: -moz-linear-gradient(270deg, hsla(210, 90%, 80%, 0.3) 0%, hsla(212, 93%, 49%, 1) 100%);
@@ -230,14 +230,15 @@ button{
   margin-top: 0.5em;
 }
 
+
 button:hover{
-  transform: scale(1.08);
+  transform: scale(1.08); /*animate on hover*/
   border-color: #FF007F;
 }
 
 
 .hidden {
-  display: none;
+  display: none;   /* used to hide error messages until needed */
 }
 
 .error{
