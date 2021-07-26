@@ -229,6 +229,7 @@ if (isset($_POST['submit2'])) {
       $errors['file'] = true;
     } else {
       echo "Profile-Picture was updated.";
+      header("Refresh:0 url=edit_account.php");
     }
   }
 }
@@ -268,6 +269,11 @@ if (isset($_POST['yes'])) {
   $stmt3 = $pdo->prepare($query3);
   $stmt3->execute([$userID]);
 
+  foreach($result as $pic){
+    var_dump($pic);
+    unlink($pic);
+  }
+die;
   // send the user to logout.php which will destroy session and redirect to index.php
   header("Location:logout.php");
   exit();
@@ -387,7 +393,8 @@ if (isset($_POST['yes'])) {
 
   <!-- form for deleting the account -->
   <form id="delete" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
-
+    
+  <!-- Modal Window on Delete -->
     <div id="ModalWindow" class="modal">
       <div class="content">
         <p>Are you sure you want to continue?</p>
