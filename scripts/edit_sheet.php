@@ -1,5 +1,7 @@
 <?php 
 session_start();
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
 if(isset($_SESSION['user_id'])){
 $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg";      //set profile pic path
 $profpic_url = "https://loki.trentu.ca/~yusufghodiwala/www_data/3420project_images/profile-pic" . $_SESSION['user_id'] . ".jpg"; //set profile pic url
@@ -208,6 +210,7 @@ exit;
         <div>
           <label for="duration">Select slot duration length:</label>
           <select name="duration" id="slotDuration">
+              <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet updation-->
               <option value="<?="300"?>" <?php if($result1['SlotDuration']==300) echo 'selected'?> >5 mins</option>
               <option value="<?="600"?>" <?php if($result1['SlotDuration']==600) echo 'selected'?>>10 mins</option>
               <option value="<?="900"?>" <?php if($result1['SlotDuration']==900) echo 'selected'?>>15 mins</option>

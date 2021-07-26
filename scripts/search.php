@@ -3,12 +3,15 @@
 // $errors = array();   //declare empty array to add errors too
 session_start();
 include "library.php";
+/* FORMAT OF THE PROFILE PICTURE STORED ON LOKI : profile-pic{ID}.extension stored
+   in 3420project_images folder in www_data on yusufghodiwala account  */
 if(isset($_SESSION['user_id'])){
   $filename = "profile-pic" . $_SESSION['user_id'];
  $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
+  // glob function to run a search with a wildcard to return all matching filenames.
 
   $result = glob ($profpicpath . $filename . ".*" );
-  
+    // if array is empty, no match, else build URL.
   if(empty($result))
     $picExists = false;
   else{
@@ -27,13 +30,13 @@ if(isset($_POST['submit'])){
 
 
 $pdo = connectDB();
-
+//concatentate a % at the end of the keyword for sql searching
 $keyword .="%";
   $query = "SELECT Signup_sheets.ID, Signup_sheets.Owner_ID, Signup_sheets.Title, Signup_sheets.Description FROM `Signup_sheets` LEFT JOIN users on Signup_sheets.Owner_ID=users.ID WHERE username LIKE ? OR Description LIKE ? OR TITLE LIKE ? AND SEARCHABLE=true";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$keyword,$keyword,$keyword]);
   $list1 = $stmt->fetchAll();
-
+//if rowcount is 0, set empty to true to display no results found in html
   if($stmt->rowCount()==0){
     $empty = true;
   }
@@ -69,8 +72,9 @@ $keyword .="%";
           </div>
           <div>
           <!-- Navbar-->
-          <a href="../index.php"><li>Home</li></a>          
-          <?php if(isset($_SESSION['user_id'])):?>
+          <a href="../index.php"><li>Home</li></a> 
+          <!-- if user id set in session (logged in), show the below navbar elements-->         
+          <?php if(isset($_SESSION['user_id'])):?> 
             <a href="../create.php"><li>Create</li></a>
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
@@ -84,7 +88,7 @@ $keyword .="%";
             <?php endif?>
             
           <?php endif ?>
-
+          <!-- if user id not present in session (not logged in) , show navbar elements to sign up or login-->
           <?php if(!isset($_SESSION['user_id'])): ?>
             <a href="./registration.php"><li>Sign-up<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
             <a href="./login.php"><li>Login<i class="fa fa-sign-in" aria-hidden="true"></i></li></a>
