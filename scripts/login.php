@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
         <label id="special" for="rememberme">Remember Me?</label>
       </div>
       <div id="links-login">
-        <a href="../index.html"><button type="button">Back</button></a>
+        <a href="../index.php"><button type="button">Back</button></a>
         <a href=""><button type="submit" id="submit" name="submit">Login</button></a>
       </div>
       <div id="forgotpass">

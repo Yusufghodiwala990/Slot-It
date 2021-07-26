@@ -270,7 +270,7 @@ if (count($errors) == 0) {
       </div>
       <!-- Navigation links -->
       <div id="links-reg">
-        <a href="../index.html"><button type="button">Back</button></a>
+        <a href="../index.php"><button type="button">Back</button></a>
         <a href=""><button name="submit" id="submit">Sign-up</button></a>
       </div>
     </form>

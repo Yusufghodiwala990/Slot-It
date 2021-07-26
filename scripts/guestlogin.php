@@ -101,10 +101,12 @@ if(count($errors) == 0){
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google API Key -->
   <meta name="google-signin-client_id" content="661589590202-us1vtruq46mvta14t83d4fekdmtrp4mf.apps.googleusercontent.com">
   <title>Guest</title>
   <link rel="stylesheet" href="../styles/login.css" />
   <link rel="stylesheet" href="../styles/errors.css" />
+  
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   <script src="./googleSignIn.js" async defer></script>
@@ -134,7 +136,7 @@ if(count($errors) == 0){
         <a href=""><button type="submit" name="submit">Continue</button></a>
       </div>
       
-
+      <!-- Added a div from Google's API which automatically styles a button for sign in -->
       <p>Continue with Google</p>
       <div class="g-signin2" data-onsuccess="onSignIn">
       </div>
