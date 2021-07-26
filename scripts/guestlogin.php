@@ -10,7 +10,7 @@ session_start();
 $pdo = connectDB();
 
 
-var_dump($_SESSION);
+
 
 // The JS file for google sign will post data which contains info to verify if google
 //  sign in was chosen
@@ -30,7 +30,7 @@ if(isset($_SESSION['googleName'])){
   $stmt = $pdo->prepare($checkQuery);
   $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
   $row = $stmt->fetch();
-  var_dump($row);
+ 
 
   // insert them if they don't
   if($row == false){
