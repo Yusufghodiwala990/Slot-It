@@ -233,24 +233,6 @@ table{
   text-align: center;
 }
 
-
-tr:nth-child(2) td:nth-child(1),tr:nth-child(3) td:nth-child(1),tr:nth-child(4) td:nth-child(1),tr:nth-child(5) td:nth-child(1),tr:nth-child(6) td:nth-child(1),tr:nth-child(7) td:nth-child(1)
-{
-  border-radius: 5px 0px 0px 5px;
-}
-
-tr:nth-child(8)
-{
-  background-color: #8c93a8;
-  color: white;
-
-}
-
-tr:nth-child(8) td:nth-child(1)
-{
-  border-radius: 5px 0px 0px 5px;
-}
-
 tr{
   background-color: #90CAF9;
 }
