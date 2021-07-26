@@ -31,7 +31,10 @@
 
   $userid=$_SESSION['user_id'];
   if(isset($_POST['submit']))
-  { //pull values from form
+  { 
+    $pdo = connectDB();
+    
+    //pull values from form
     $title=$_POST['name'];
     $description=$_POST['description'];
     $startDate=$_POST['start-date'];
@@ -39,6 +42,12 @@
     $startTime = $_POST['start-time'];
     $endTime = $_POST['end-time'];   
     $duration = $_POST['duration'];
+
+    $date_now = new DateTime();
+$date_entered = new DateTime($startDate);
+if($date_entered < $date_now){
+  $errors['invalid_date'] = true;
+}
 
     //convert searchable to 0/1 values for sql insertion
     if($searchable==true){
@@ -48,11 +57,61 @@
     else{
       $searchable=0;
     }
+
+
+    // validation for title and desc
+  if (!isset($Title) || strlen($Title) == 0) {
+    $errors['title'] = true;
+  }
+
+  if (!isset($description) || strlen($description) == 0) {
+    $errors['desc'] = true;
+  }
+
+
+  // checking if start and end time are valid
+  if($startInSeconds > $endInSeconds || $endInSeconds < $startInSeconds ){
+    $errors['invalid_time'] = true;
+  }
+
+
+  // checking if start or end time are empty
+  if($startTime==''){
+      $errors['start'] = true;
+  }
+
+  if($endTime==''){
+    $errors['end'] = true;
+  }
+
+
+  if($startDate==""){
+    $errors['date'] = true;
+
+  }
+  
+
+
     
 
     $date  = date('Y-m-d', strtotime($startDate)); // convert date to sql supported format
  
-    $pdo = connectDB();
+  
+  // validation for title and desc
+  if (!isset($Title) || strlen($Title) == 0) {
+    $errors['title'] = true;
+  }
+
+  if (!isset($Title) || strlen($Title) == 0) {
+    $errors['desc'] = true;
+  }
+
+
+  // checking if start and end time are valid
+  if($endInSeconds > $startInSeconds){
+    $errors['invalid_time'];
+  }
+
   
     
     $intervals = array(); // an array to store all the time values
@@ -85,7 +144,6 @@
     header("refresh:0; url=scripts/mystuff.php");
     
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -135,12 +193,14 @@
             <label for="name">Sheet Name:</label>
             <input id="name" name="name" type="text" placeholder="Enter your sheet name here">
             <span class="hidden error">Please Enter a title.</span>
+            <span class="error <?= !isset($errors['title']) ? 'hidden' : ""; ?>">Please enter a title </span>
           </div>
 
           <div>
             <label for="description">Description</label>
             <textarea name="description"  id="description" cols="30" rows="10"></textarea>
             <span class="hidden error">Please set a description.</span>
+            <span class="error <?= !isset($errors['desc']) ? 'hidden' : ""; ?>">Please enter a description </span>
           </div>
         
           <div>
@@ -148,21 +208,26 @@
             <input type="date" id="start-date" name="start-date">
             <span class="hidden error">Start date cannot be before today's date.</span>
             <span class="hidden error">Please set a start date.</span>
+            <span class="error <?= !isset($errors['date']) ? 'hidden' : ""; ?>">Please enter a start date </span>
+            <span class="error <?= !isset($errors['invalid_date']) ? 'hidden' : ""; ?>">Start date cannot be before today's date </span>
           </div>
 
           <div>
             <label for="start-time">Pick a start time:</label>
             <input type="time" id="start-time" name="start-time" value="13:00">
             <span class="hidden error">Please enter a start time.</span>
+            <span class="error <?= !isset($errors['start']) ? 'hidden' : ""; ?>">Please enter a start time </span>
           </div>
 
           <div>
             <label for="end-time">Pick a end time:</label>
             <input type="time" id="end-time" name="end-time" value="16:00">
             <span class="hidden error">Please enter an end time.</span>
+            <span class="error <?= !isset($errors['end']) ? 'hidden' : ""; ?>">Please enter an end time </span>
           </div>
 
           <span id="time-error"class="hidden error">Start time cannot be after end time, or end time before start.</span>
+          <span class="error <?= !isset($errors['invalid_time']) ? 'hidden' : ""; ?>">Start time cannot be after end time, or end time before start. </span>
 
           <div>
           <label for="duration">Select slot duration length:</label>
