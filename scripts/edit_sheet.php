@@ -54,6 +54,7 @@ $stmt1 = $pdo->prepare($query1);
 $stmt1->execute([$Sheet_ID]);
 $result1 = $stmt1->fetch();
 
+
 if (isset($_POST['submit'])) {
 // pull variables to update table
   $Title = $_POST['name'] ?? null;
@@ -137,9 +138,11 @@ function checkRange ($min, $max, $value){
 }
 
 }
+  // only check for overlaps if new start and end time were entered to allow update
+  // of other fields
 
+  if($result1['StartTime'] !== $startTime && $result1['EndTime'] !== $endTime){
 
-  
   //set to true if overlap exists between start_time and the previous(result1) starttime-endtime
   if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$startInSeconds))
     $errors['overlap'] = true;
@@ -153,7 +156,7 @@ function checkRange ($min, $max, $value){
   if(checkRange($startInSeconds,$endInSeconds,strtotime($result1['EndTime'])))
     $errors['overlap'] = true;
 
-
+}
   // update if no errors
     if(count($errors) == 0){
       $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
@@ -301,6 +304,8 @@ exit;
             </select>
           </div>
 
+          
+          <span class="error <?= !isset($errors['overlap']) ? 'hidden' : ""; ?>">There is an overlap between this set and the current set of slots. Please check your start/end times </span>
         <div>
             <input id="searchable" name="searchability" type="checkbox" <?php if($result1['searchable']==1) echo 'checked';?> />
             <label for="searchable">Make my sheet searchable</label> 
