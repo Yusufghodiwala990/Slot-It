@@ -6,7 +6,14 @@ include 'library.php';
 $pdo = connectDB();
 $email  = $_POST['email'] ?? null;
 $sent = false;
+$errors = array();
 if(isset($_POST['submit'])){
+
+  if (!isset($email) || strlen($email) == 0 || filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+    $errors['email'] = true;
+  }
+
+  if(count($errors) == 0){
     
   // generate a hex selector an a bytes token
     $selector = bin2hex(random_bytes(8));
@@ -58,7 +65,8 @@ if(isset($_POST['submit'])){
         echo ("<p>" . $mail->getMessage() . "</p>");
       }
 
-    $sent = true;   
+    $sent = true; 
+  }  
 }
 
 ?>
@@ -69,13 +77,12 @@ if(isset($_POST['submit'])){
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-signin-client_id" content="661589590202-us1vtruq46mvta14t83d4fekdmtrp4mf.apps.googleusercontent.com">
   <title>Reset Password</title>
   <link rel="stylesheet" href="../styles/login.css" />
   <link rel="stylesheet" href="../styles/errors.css" />
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://kit.fontawesome.com/6ab0b12156.js" crossorigin="anonymous"></script>
   <script src="./googleSignIn.js" async defer></script>
+  <script src="./resetpw.js" defer></script>
 </head>
 
 <body>
@@ -89,12 +96,12 @@ if(isset($_POST['submit'])){
       <div>
         <input type="text" name="email" id="email" placeholder="derekpope666"  autocomplete="off">
         <label for="email">Email</label>
-        <span class="error <?= !isset($errors['username']) ? 'hidden' : "errors"; ?>">*Username was empty</span>
+        <span class="error <?= !isset($errors['email']) ? 'hidden' : "errors"; ?>">* Invalid Email</span>
       </div>
 
       <div id="links-login">
         <a href="../index.html"><button type="button">Back</button></a>
-        <a href=""><button type="submit" name="submit">Reset</button></a>
+        <a href=""><button type="submit" id="submit" name="submit">Reset</button></a>
       </div>
       
       <?php
