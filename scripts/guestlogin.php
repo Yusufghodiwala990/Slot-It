@@ -10,6 +10,8 @@ session_start();
 $pdo = connectDB();
 
 
+var_dump($_SESSION);
+
 // The JS file for google sign will post data which contains info to verify if google
 //  sign in was chosen
 
@@ -22,9 +24,20 @@ if(isset($_POST['submit-from-js'])){
 
 // inserting the details of the guest onto the guest table in the database
 if(isset($_SESSION['googleName'])){
+
+  // check if the user already exists in our database
+  $checkQuery = "SELECT * FROM `Guest_users` WHERE Name=? AND Email=?";
+  $stmt = $pdo->prepare($checkQuery);
+  $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
+  $row = $stmt->fetch();
+  var_dump($row);
+
+  // insert them if they don't
+  if($row == false){
   $query = "INSERT INTO `Guest_users` (Name, Email) values(?,?)";
   $stmt = $pdo->prepare($query);
   $stmt->execute([$_SESSION['googleName'],$_SESSION['googleEmail']]);
+  }
 
 
 // this is the case when the user tried to slot in for a sheet and was redirected here(from login)
