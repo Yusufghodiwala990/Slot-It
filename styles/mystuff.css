@@ -1,5 +1,8 @@
+/* resetting the css */
 @import url(./reset.css);
 @import url(//fonts.googleapis.com/css?family=Krona+One);
+
+/* flex body, column aligned */
 body{    font-family: 'Krona One', sans-serif;
   background: hsla(210, 90%, 80%, 1);
 
@@ -11,16 +14,18 @@ body{    font-family: 'Krona One', sans-serif;
   
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9fccfa", endColorstr="#0974f1", GradientType=1 );
  
-  min-height: 100vh; /* ensures gradient covers entire page background and footer stays at bottom */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 
 }
+/* -- nav bar -- */
 header{
     margin: 2em 0em 5em 0em;
     animation: navFade2 1.5s ease 0s forwards;
   }
 
+  /* tranformation used for the header */
 @keyframes navFade2{
     0.0%{
       transform:rotate(0) translate(0%,-100%);
@@ -31,14 +36,18 @@ header{
       opacity: 1;
     }
   }
+  /* Removing the underline in all links*/
 a{
     text-decoration: none;
   }
   
+  /* links within the nav bar */
   header nav a{
     font-size: 1.2em;
     color:black;
   }
+
+  /* unordered list within the nav bar */
   header nav ul{
     display: flex;
     flex-direction: row;
@@ -46,11 +55,14 @@ a{
     flex-wrap: wrap;
   }
   
+  /* profile picture in the nav bar */
   header nav ul div img {
     margin-left: 2em;
     height: 5em;
     width: 5em;
 }
+
+/* flex header */
   header nav ul div:last-of-type{
     display: flex;
     flex-wrap: wrap;
@@ -67,14 +79,17 @@ a{
     border-radius: 2em;
   }
   
+  /* links when hovered over */
   header nav ul a:visited{
     color: #FF007F;
   }
+
   header nav ul div:last-of-type li:hover{
     transform: scale(0.85); 
     background-color: #FF007F; 
     color: white; 
   }
+  /* icons in the nav bar */
   header nav ul li i{
     margin-left: .5em;
   }
@@ -83,10 +98,12 @@ a{
     background-color: white;
   }
 
+  /* all header 2 */
   h2{
       text-align: center;
       font-size: 2em;
   }
+    /* all header 3 */
   h3{
     text-align: center;
     padding: 1em;
@@ -98,7 +115,7 @@ a{
     font-size: 1.5em;
 }
 
-
+/* table headers and table data */
 td,
 th {
   padding: 0.5em;
@@ -106,16 +123,22 @@ th {
   height: 1.5em;
   font-size: 0.6em;
   padding-top:1em;
+  border:0.1em solid white;
+
 }
+
+/* links and buttons in the table */
 td a, td button{
   font-family: 'Krona One', sans-serif;
   font-weight: 500;
   color: blue;
 }
+/* when hovering over buttons or links in the table data */
 td a:hover, td button:hover{
     color:#FF007F ;
     cursor: hand;
 }
+
 footer{
     background: black;
     color:white;
@@ -124,10 +147,12 @@ footer{
     margin-top: auto; /* ensures footer stays at bottom */
   }
   
+  /* unordered list in the footer */
   footer ul{
     display: flex;
     justify-content: space-evenly;
   }
+  /* paragraph in the footer */
   footer p{
     padding-top: 1em;
   text-align: center;
@@ -139,9 +164,11 @@ footer{
   footer li a{
     color: white;
   }
+  /* when links are visited */
   footer li a:visited{
     color:#FF007F;
   }
+/* when hovering over the links in the footer */
   footer li a:hover{
     color:#94BBDB;
   }
@@ -151,17 +178,15 @@ footer{
     width: 3em;
   }
 
-  td,th{
-    border:0.1em solid white;
-    padding:0.5em;
-  }
   
+  /* table headers */
   tr th{
     border-radius: 5px 5px 0px 0px;
     background-color: #2196F3;
     color: white;
   }
   
+  /* table for signup sheets and slots */
   table{
     margin-top: 2em;
     margin-left: auto;
@@ -177,6 +202,7 @@ footer{
     border-radius: 5px 0px 0px 5px;
   }
   
+  /* buttons in the table data */
   td button{
     background: none;
     border: none;
@@ -186,6 +212,7 @@ footer{
     border-radius: 5px 0px 0px 5px;
   }
   
+  /* table rows */
   tr{
     background-color: #90CAF9;
   }
@@ -207,11 +234,13 @@ ul div:last-of-type img{
   border-radius: 50%;
 }
 
+/* font awesome icons */
 .fa{
   align-self: center;
   margin-right: 2em;
 }
 
+/* icon within a button */
 button .fa{
   margin-right: .5em;
 }
