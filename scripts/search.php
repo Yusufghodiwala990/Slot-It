@@ -105,7 +105,7 @@ $keyword .="%";
           <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
               
               <div>
-              <input type="text" autocomplete="on" placeholder="Enter a keyword.." name="keyword"/>
+              <input type="text" autocomplete="on" placeholder="Enter a keyword.." name="keyword" value="<?=str_replace("%","",$keyword)?>"/>
               <button name="submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
               
               </div>

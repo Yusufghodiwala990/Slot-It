@@ -242,3 +242,6 @@ footer{
   tr{
     background-color: #90CAF9;
   }
+   nav ul div:last-of-type .fa{
+    margin-right: 1em;
+  }

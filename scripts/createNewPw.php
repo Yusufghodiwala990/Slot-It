@@ -75,14 +75,14 @@ if($password != $confirmpass){
     $result = $stmt->fetch();
 
     if($result == false){
-      echo "<h2>Could not reset, submit another submit request</h2>";
+      echo "<h2>Could not reset, submit another request</h2>";
       exit();
     }
     else{
       // convert the token from hex to binary
       $binToken = hex2bin($formValidator);
 
-      // verify the token. (The token was fethced from the hidden input)
+      // verify the token. (The token was fetched from the hidden input)
       $tokenCheck = password_verify($binToken, $result['resetToken']);
 
       // token is not the same as in the database and the hidden input
@@ -164,8 +164,8 @@ if($password != $confirmpass){
 
     // get the selector and validator(token with selector from GET)
     //  because it is on the url that was sent to the email of the user
-    $selector = $_GET['selector'];
-    $validator = $_GET['validator'];
+    $selector = $_GET['selector'] ?? null;
+    $validator = $_GET['validator'] ?? null;
 
     // verify the selector and validator
     if(empty($selector) || empty($validator)){
