@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
       $from = "Slot-It <yusufghodiwala@trentu.ca>"; 
       $to = $email;  //put user's email here
       $subject = "Reset your password for Slot-it";
-      $message = '<p>Request for Passord Reset was received. Click on the link below
+      $message = '<p>Request for Password Reset was received. Click on the link below
         to Reset your password. If you did not request for one, ignore this email.</p>';
       $message .= '<p>Password Link: <br>';
       $message .= '<a href="' . $link . '">' . $link . '</a></p>';
