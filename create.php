@@ -161,6 +161,7 @@
 
           <div>
           <label for="duration">Select slot duration length:</label>
+          <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet creation-->
           <select name="duration" id="slotDuration">
               <option value="<?="300"?>">5 mins</option>
               <option value="<?="600"?>">10 mins</option>
