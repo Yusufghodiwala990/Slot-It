@@ -16,7 +16,8 @@ window.addEventListener("DOMContentLoaded", () => {
         const nullDateError = startDate.nextElementSibling.nextElementSibling;
 
         const startTime = document.querySelector("#start-time");
-        
+        const duration = document.getElementById("slotDuration");
+        const durationValue = duration.options[duration.selectedIndex].value;
         const endTime = document.querySelector("#end-time");
 
         const timeError = document.querySelector("#time-error");
@@ -40,6 +41,10 @@ window.addEventListener("DOMContentLoaded", () => {
             error = true;
             descriptionError.classList.remove("hidden");
         }
+
+
+        
+        
 
         //date comparison to ensure it isn't before today's date.
 
@@ -82,6 +87,21 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         else {
             timeError.classList.add("hidden");
+        }
+
+       
+        var startTimeUnix = Math.round(startTimeObj.getTime() / 1000);
+        var endTimeUnix = Math.round(endTimeObj.getTime() / 1000);
+
+
+        const durationError = document.getElementById("duration-error");
+        console.log(durationError);
+        if(durationValue > (startTimeUnix - endTimeUnix)){
+            error = true;
+            durationError.classList.remove("hidden");
+        }
+        else{
+            durationError.classList.add("hidden");
         }
         
         if(error)
