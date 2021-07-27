@@ -141,7 +141,7 @@ function checkRange ($min, $max, $value){
   // only check for overlaps if new start and end time were entered to allow update
   // of other fields
 
-  if($result1['StartTime'] !== $startTime && $result1['EndTime'] !== $endTime){
+  if($result1['StartTime'] !== $startTime || $result1['EndTime'] !== $endTime){
 
   //set to true if overlap exists between start_time and the previous(result1) starttime-endtime
   if(checkRange(strtotime($result1['StartTime']),strtotime($result1['EndTime']),$startInSeconds))
