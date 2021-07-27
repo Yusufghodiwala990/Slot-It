@@ -95,8 +95,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
         const durationError = document.getElementById("duration-error");
-        console.log(durationError);
-        if(durationValue > (startTimeUnix - endTimeUnix)){
+        durationInt = parseInt(durationValue);
+        if(durationInt > (endTimeUnix - startTimeUnix)){
             error = true;
             durationError.classList.remove("hidden");
         }
