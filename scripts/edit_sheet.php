@@ -159,32 +159,45 @@ function checkRange ($min, $max, $value){
 }
   // update if no errors
     if(count($errors) == 0){
-      $query2 = "update Signup_sheets set Title= ?, Description=?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
-      $stmt2 = $pdo->prepare($query2);
-      $stmt2->execute([$Title,$description,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
+      if($result1['StartTime'] !== $startTime || $result1['EndTime'] !== $endTime){
 
-      
-        $intervals = array(); // an array to store all the time values
-       
-       
+      $intervals = array(); // an array to store all the time values
 
-
-        // loop from start-time to endtime the user provided and forward the loop
+       // loop from start-time to endtime the user provided and forward the loop
         // by the duration in seconds the user provided
         for($time = $startInSeconds; $time<=$endInSeconds; $time+=$duration){
           $intervals[] = date('H:i:s',$time); // populate the interval array with each slot 
                                               // timestamp
         }
         
+        $noOfSlots = count($intervals);
+            // insert each interval into the slots table
+            foreach($intervals as $sTime)
+            {
+              $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
+              $stmt = $pdo->prepare($query);
+              $stmt->execute([$sTime,$Sheet_ID]);
+            }
+      }
+      else{
+        $noOfSlots = 0;
+      }
+      
+      $query2 = "update Signup_sheets set Title= ?, Description=?, No_of_slots = No_of_slots + ?, StartDate=?, StartTime=?, EndTime=?, SlotDuration=?, searchable=? where ID=?"; 
+      $stmt2 = $pdo->prepare($query2);
+      $stmt2->execute([$Title,$description,$noOfSlots,$start,$startTime,$endTime,$duration,$searchable,$Sheet_ID]);
 
-        // insert each interval into the slots table
-        foreach($intervals as $sTime)
-        {
-          $query = "INSERT INTO Slots(StartTime,Sheet_ID) values (?,?)"; 
-          $stmt = $pdo->prepare($query);
-          $stmt->execute([$sTime,$Sheet_ID]);
-        }
+     
+ 
+      
+       
+       
+       
 
+
+       
+
+     
       header("Location:mystuff.php");
       exit;
       }
@@ -303,6 +316,7 @@ exit;
               <option value="<?="7200"?>" <?php if($result1['SlotDuration']==7200) echo 'selected'?>>2 hours</option>
             </select>
           </div>
+          <span id="duration-error"class="hidden error">Your start/end time is too short for the duration selected</span>
 
           
           <span class="error <?= !isset($errors['overlap']) ? 'hidden' : ""; ?>">There is an overlap between this set and the current set of slots. Please check your start/end times </span>
