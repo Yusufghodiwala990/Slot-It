@@ -2,6 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const editForm = document.querySelector("#editForm");
 
+
     editForm.addEventListener('submit', (ev) => {
         let error = false;
 
@@ -14,10 +15,13 @@ window.addEventListener("DOMContentLoaded", () => {
         const startDate = document.querySelector("#start");
         const startDateError = startDate.nextElementSibling.nextElementSibling;
 
+        const duration = document.getElementById("slotDuration");
+        const durationValue = duration.options[duration.selectedIndex].value;
+
+       
         const startTime = document.querySelector("#start-time");
 
         const endTime = document.querySelector("#end-time");
-
         const timeError = document.querySelector("#time-error");
 
         if (sheetName.value != "")
@@ -73,6 +77,20 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         else {
             timeError.classList.add("hidden");
+        }
+
+        var startTimeUnix = Math.round(startTimeObj.getTime() / 1000);
+        var endTimeUnix = Math.round(endTimeObj.getTime() / 1000);
+
+
+        const durationError = document.getElementById("duration-error");
+        durationInt = parseInt(durationValue);
+        if(durationInt > (endTimeUnix - startTimeUnix)){
+            error = true;
+            durationError.classList.remove("hidden");
+        }
+        else{
+            durationError.classList.add("hidden");
         }
         
         if (error)
