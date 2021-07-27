@@ -29,9 +29,12 @@
 
   $errors=array();
 
+
   $userid=$_SESSION['user_id'];
   if(isset($_POST['submit']))
   { 
+
+    
     $pdo = connectDB();
     
     //pull values from form
@@ -42,6 +45,11 @@
     $startTime = $_POST['start-time'];
     $endTime = $_POST['end-time'];   
     $duration = $_POST['duration'];
+
+
+    $startInSeconds = strtotime($startTime);
+    $endInSeconds = strtotime($endTime);
+
 
     $date_now = new DateTime();
 $date_entered = new DateTime($startDate);
@@ -60,7 +68,7 @@ if($date_entered < $date_now){
 
 
     // validation for title and desc
-  if (!isset($Title) || strlen($Title) == 0) {
+  if (!isset($title) || strlen($title) == 0) {
     $errors['title'] = true;
   }
 
@@ -70,7 +78,7 @@ if($date_entered < $date_now){
 
 
   // checking if start and end time are valid
-  if($startInSeconds > $endInSeconds || $endInSeconds < $startInSeconds ){
+  if($startInSeconds > $endInSeconds){
     $errors['invalid_time'] = true;
   }
 
@@ -98,22 +106,37 @@ if($date_entered < $date_now){
  
   
   // validation for title and desc
-  if (!isset($Title) || strlen($Title) == 0) {
+  if (!isset($title) || strlen($title=== 0)) {
     $errors['title'] = true;
   }
 
-  if (!isset($Title) || strlen($Title) == 0) {
+  if (!isset($description) || strlen($description) == 0) {
     $errors['desc'] = true;
   }
 
 
   // checking if start and end time are valid
-  if($endInSeconds > $startInSeconds){
-    $errors['invalid_time'];
+  if($startInSeconds > $endInSeconds){
+    $errors['invalid_time'] = true;
+  }
+
+
+  // checking if start or end time are empty
+  if($startTime==''){
+      $errors['start'] = true;
+  }
+
+  if($endTime==''){
+    $errors['end'] = true;
   }
 
   
-    
+  if($duration > ($endInSeconds - $startInSeconds)){
+    $errors['invalid_duration'] = true;
+  }
+  
+
+    if(count($errors)=== 0){
     $intervals = array(); // an array to store all the time values
     //convert start and times to seconds for unix conversion..
     $startTimeSecs = strtotime($startTime);
@@ -144,6 +167,7 @@ if($date_entered < $date_now){
     header("refresh:0; url=scripts/mystuff.php");
     
   }
+}
 ?>
 
 <!DOCTYPE html>
@@ -241,6 +265,8 @@ if($date_entered < $date_now){
               <option value="<?="7200"?>">2 hours</option>
             </select>
           </div>
+
+          <span id="duration-error"class="hidden error">Your start/end time is too short for the duration selected</span>
 
           <div>
               <input id="searchable" name="searchability" type="checkbox"/>
