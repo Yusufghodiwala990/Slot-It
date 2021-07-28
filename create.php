@@ -294,3 +294,4 @@ if($date_entered < $date_now){
     </footer>
     
 </body>
+</html>
