@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
   <main>
 
     <h1>Login</h1>
-    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="off">
       <div>
         <input type="text" name="username" id="username" placeholder="derekpope666" value="<?= isset($_COOKIE['slot-it']) ? $_COOKIE['slot-it'] : "" ?>" autocomplete="off">
         <label for="username">Username</label>

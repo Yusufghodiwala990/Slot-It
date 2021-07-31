@@ -129,7 +129,7 @@ if(count($errors) == 0){
   <main>
 
     <h1>Guest</h1>
-    <form action="" method="post" novalidate autocomplete="false">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="off">
       <div>
         <input type="text" name="name" id="name" placeholder="derekpope666" value="<?=$name?>" autocomplete="off">
         <label for="name">Name</label>

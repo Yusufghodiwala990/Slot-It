@@ -223,14 +223,14 @@ if (count($errors) == 0) {
   <main>
 
     <h1>Create Account</h1>
-    <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
+    <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="off" enctype="multipart/form-data">
 
     <aside>
         <!-- soft limit -->
         <input type="hidden" name="MAX_FILE_SIZE" value="1972864" />
 
         <input class="profpic" type="file" id="file" name="profilepic">
-        <label class="profpic" id="profilepic" for="profilepic">Choose Profile Picture(optional)<i class="far fa-user-circle"></i></label>
+        <label class="profpic" id="profilepic" for="file">Choose Profile Picture(optional)<i class="far fa-user-circle"></i></label>
         <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">Invalid Format/Size. Size has to be less than 2MB. </span>
 
       </aside>

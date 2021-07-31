@@ -374,8 +374,8 @@ if (isset($_POST['yes'])) {
     <!-- Optional form to change profile picture -->
     <form id="profpic" action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="post" novalidate autocomplete="false" enctype="multipart/form-data">
       <aside>
-        <label id="special" class="profpic" id="profilepic" for="profilepic">Change Profile Picture<i class="far fa-user-circle"></i></label>
-        <input class="profpic" type="file" id="profilepic" name="profilepic">
+        <label id="special" class="profpic" id="profilepic" for="profile_pic">Change Profile Picture<i class="far fa-user-circle"></i></label>
+        <input class="profpic" type="file" id="profile_pic" name="profilepic">
         <span class="error <?= !isset($errors['file']) ? 'hidden' : ""; ?>">*Invalid format/size. Size has to be less than 2MB</span>
         <div>
           <a href=""><button type="submit" id="submit2" name="submit2">Change</button></a>

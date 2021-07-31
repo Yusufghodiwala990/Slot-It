@@ -40,7 +40,6 @@ $Sheet_ID=$result['Sheet_ID'];
 ?>
 
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -51,13 +50,10 @@ $Sheet_ID=$result['Sheet_ID'];
   </head>
 
 <body>
-
     <header>
       <nav>
     <ul>
-   
           <div>
-          
           <a href="../index.php"><li>Home</li></a>
           <!--navbar-->
           <?php if(isset($_SESSION['user_id'])):?>
@@ -101,3 +97,4 @@ $Sheet_ID=$result['Sheet_ID'];
       </footer>
       
 </body>
+</html>

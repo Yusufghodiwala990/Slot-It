@@ -264,7 +264,7 @@ exit;
     <main>
     <section>
         <h2>Edit Sheet</h2>
-        <form id="editForm" method="POST" novalidate autocomplete="false" enctype="multipart/form-data">
+        <form id="editForm" method="POST" novalidate autocomplete="off" enctype="multipart/form-data">
         <div>
           <input type="text" name="name" autocomplete="off"value="<?=$result1['Title']?>" id="name">
           <label for="name">Sheet Name</label>

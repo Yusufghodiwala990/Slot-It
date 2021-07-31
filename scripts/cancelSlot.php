@@ -57,7 +57,6 @@ $slotUsr = $stmt3->fetch();
 ?>
 
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -134,3 +133,4 @@ $slotUsr = $stmt3->fetch();
       </footer>
       
 </body>
+</html>

@@ -102,7 +102,7 @@ $keyword .="%";
   <main>
     <section>
       <h1> Search for Sign-ups </h1>
-          <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+          <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="off">
               
               <div>
               <input type="text" autocomplete="on" placeholder="Enter a keyword.." name="keyword" value="<?=str_replace("%","",$keyword)?>"/>

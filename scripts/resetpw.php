@@ -92,7 +92,7 @@ if(isset($_POST['submit'])){
     <p style="margin-bottom: 1.5em;">You'll be sent a link to your registered email, follow instructions in the mail to reset your password</p>
     
     <!-- Form to get the email of the user -->
-    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="off">
       <div>
         <input type="text" name="email" id="email" placeholder="derekpope666"  autocomplete="off">
         <label for="email">Email</label>

@@ -180,7 +180,7 @@ if($password != $confirmpass){
 
          <!-- All checks passed, allow them to enter a new password -->
             <h1>Enter New Password</h1>
-    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="false">
+    <form action="<?=htmlentities($_SERVER['PHP_SELF']);?>" method="post" novalidate autocomplete="off">
 
     <!-- Hidden inputs to store the selector and validator from GET,
     They are used to verify the legitimacy of the user in the php script above -->
