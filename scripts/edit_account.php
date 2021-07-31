@@ -316,11 +316,11 @@ if (isset($_POST['yes'])) {
           </a>
           <!-- display the profile picture if it exists, otherwise display an icon -->
           <?php if ($picExists) : ?>
-            <img src="<?= $profpic_url ?>">
+            <img src="<?= $profpic_url ?>" alt="Profile Picture">
 
 
           <?php else : ?>
-            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <i class="fa fa-user" aria-hidden="true"></i>
           <?php endif ?>
         </div>
       </ul>

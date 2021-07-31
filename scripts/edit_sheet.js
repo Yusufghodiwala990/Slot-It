@@ -79,12 +79,20 @@ window.addEventListener("DOMContentLoaded", () => {
             timeError.classList.add("hidden");
         }
 
+
+         // validation for duration being longer than
+        // the specified start and end time
+
+
+        // getting epoch time
         var startTimeUnix = Math.round(startTimeObj.getTime() / 1000);
         var endTimeUnix = Math.round(endTimeObj.getTime() / 1000);
 
-
+        // getting the duration time
         const durationError = document.getElementById("duration-error");
         durationInt = parseInt(durationValue);
+
+        // checking if duration is greater
         if(durationInt > (endTimeUnix - startTimeUnix)){
             error = true;
             durationError.classList.remove("hidden");

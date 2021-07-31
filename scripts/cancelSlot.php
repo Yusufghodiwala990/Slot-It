@@ -84,7 +84,7 @@ $slotUsr = $stmt3->fetch();
             
             <!-- if a profile picture is not uploaded, show the user icon -->
             <?php else:?>
-            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <?php endif?>         
            </div>
           </ul>

@@ -78,7 +78,7 @@ if($date_entered < $date_now){
 
 
   // checking if start and end time are valid
-  if($startInSeconds > $endInSeconds){
+  if($startInSeconds > $endInSeconds) {
     $errors['invalid_time'] = true;
   }
 
@@ -198,7 +198,7 @@ if($date_entered < $date_now){
             
             
             <?php else:?>
-            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <?php endif?>
             
           <?php endif ?>
@@ -253,7 +253,7 @@ if($date_entered < $date_now){
           <span class="error <?= !isset($errors['invalid_time']) ? 'hidden' : ""; ?>">Start time cannot be after end time, or end time before start. </span>
 
           <div>
-          <label for="duration">Select slot duration length:</label>
+          <label for="slotDuration">Select slot duration length:</label>
           <!-- values are stored in seconds, used to calculate time interval of each blank slot inserted on signup sheet creation-->
           <select name="duration" id="slotDuration">
               <option value="<?="300"?>">5 mins</option>

@@ -60,7 +60,7 @@ $profpicpath = "/home/yusufghodiwala/public_html/www_data/3420project_images/";
 
             <!-- load the picture if it exists, else insert an icon -->
                <?php if($picExists):?>
-              <img src="<?=$profpic_url?>">
+              <img src="<?=$profpic_url?>" alt="Profile Picture">
 
             <?php else:?>
             <i class="fa fa-user" aria-hidden="true"></i>

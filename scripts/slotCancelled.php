@@ -66,11 +66,11 @@ $Sheet_ID=$result['Sheet_ID'];
             <a href="./mystuff.php"><li>View</li></a>
             <a href="./edit_account.php"><li>My Account</li></a>
                <?php if(file_exists($profpicpath)):?>
-              <img src="<?=$profpic_url?>">
+              <img src="<?=$profpic_url?>" alt="Profile Picture">
             
             
             <?php else:?>
-            <i class="fa fa-user" aria-hidden="true"></i></li></a>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <?php endif?>
             
           <?php endif ?>
