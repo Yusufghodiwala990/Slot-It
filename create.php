@@ -171,7 +171,6 @@ if($date_entered < $date_now){
 ?>
 
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -195,7 +194,7 @@ if($date_entered < $date_now){
             <a href="./scripts/mystuff.php"><li>View</li></a>
             <a href="./scripts/edit_account.php"><li>My Account</li></a>
                <?php if($picExists):?>
-              <img src="<?=$profpic_url?>">
+              <img src="<?=$profpic_url?>" alt="Profile Picture">
             
             
             <?php else:?>
